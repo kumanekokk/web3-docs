@@ -1,1 +1,1 @@
-# amazing-docs.github.io
+# amazing-docs
