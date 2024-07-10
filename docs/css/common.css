@@ -1,0 +1,114 @@
+[data-md-color-scheme="kumanekokk"] {
+    --md-primary-fg-color:        #404020;
+    --md-primary-fg-color--light: #F0F0E0;
+    --md-primary-fg-color--dark:  #606040;
+    --md-default-bg-color:        #E0E0C0;
+}
+
+[data-md-color-scheme="youtube"] {
+    --md-primary-fg-color:        #EE0F0F;
+    --md-primary-fg-color--light: #ECB7B7;
+    --md-primary-fg-color--dark:  #90030C;
+}
+
+[data-md-color-scheme="simplez"] {
+    --md-primary-fg-color:        #d9230f;
+    --md-primary-fg-color--light: #EE0F0F;
+    --md-primary-fg-color--dark:  #68615e;
+}
+
+small.update {
+    float: right;
+    margin-top: -32px;
+    font-weight: bold;
+}
+
+
+body {
+    font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif !important;
+}
+/*
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --md-text-font-family: var(--md-text-font,_),-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+    --md-code-font-family: var(--md-code-font,_),SFMono-Regular,Consolas,Menlo,monospace;
+
+    --md-text-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif !important;
+    --md-code-font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif !important;
+}
+*/
+
+/* img.logo {
+    width: 80px !important;
+    height: 80px !important;
+} */
+
+.md-header__button.md-logo :-webkit-any(img,svg) {
+    height: 1.5rem;
+}
+
+[dir=ltr] .md-header__title {
+    margin-left: 0;
+}
+
+.fa-github-alt {
+    font-size: 1.2rem !important;
+    padding:0 4px 0 16px;
+}
+
+.md-nav__title {
+    font-size: 1rem;
+}
+
+.md-typeset h1, .md-typeset h2 {
+    font-weight: 500;
+    letter-spacing: -.01em;
+}
+
+.md-header__button.md-logo {
+    padding: 0 4px 0 0;
+}
+
+/* .md-typeset ul li a {
+    font-size: .75em;
+} */
+
+table th {
+    background-color: #C0C0A0;
+}
+
+table td {
+    background-color: #F0F0E0;
+}
+
+table th::before {
+	border-bottom-color: #606040 !important;
+}
+table th::after {
+	border-top-color: #606040 !important;
+}
+.table th.asc::before {
+	border-bottom-color: #606040 !important;
+}
+.table th.desc::after {
+	border-top-color: #606040 !important;
+}
+
+div.admonition {
+    background-color: #F0F0E0 !important;
+}
+
+.rst-content .admonition-title, .wy-alert-title {
+    font-weight: 700;
+    display: block;
+    color: #333;
+    background: #F18D5F;
+    padding: 12px;
+    margin: -12px -12px 12px;
+}
+
+.wy-nav-content {
+    max-width: 100%;
+}
