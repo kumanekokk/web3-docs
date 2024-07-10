@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>VALL-E-X導入 - Amazing Docs</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../css/common.css" rel="stylesheet" />
+        <link href="//use.fontawesome.com/releases/v6.2.0/css/all.css" rel="stylesheet" />
+        <link href="//fonts.googleapis.com/earlyaccess/notosansjp.css" rel="stylesheet" />
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "VALL-E-X\u5c0e\u5165";
+        var mkdocs_page_input_path = "vall-e-x.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Amazing Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Version History</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">社内研修動画</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../python-dev/">Python導入</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">VALL-E-X導入</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_1">概要</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#python">Python動作環境導入</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cuiai">CUIの生成AI環境導入</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2">② 音声合成用の機械学習データをダウンロードして配置する。</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3">③ テストコードを実行して動作確認する。</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#webuigui">WebUIを使用したGUIツール導入</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">参考サイト</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Officialサイト</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../wordpress/">WordPress改修</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Amazing Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>社内研修動画 &raquo;</li><li>VALL-E-X導入</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="vall-e-x-20240628">VALL-E-X導入 (2024/06/28)<a class="headerlink" href="#vall-e-x-20240628" title="Permanent link">&para;</a></h1>
+<h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center">ライセンス</th>
+<th align="center">GitHubリポジトリ (OSS)</th>
+<th align="center">論文 (Microsoft)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">MIT (商用利用可能)</td>
+<td align="center"><a href="https://github.com/Plachtaa/VALL-E-X">https://github.com/Plachtaa/VALL-E-X</a></td>
+<td align="center"><a href="https://arxiv.org/abs/2303.03926">https://arxiv.org/abs/2303.03926</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>社内研修動画などのナレーションに利用することを目的として、音声合成モデル「VALL-E-X」を導入を検討する。<ul>
+<li>はじめにPythonが動作する環境にCUIの生成AI環境を導入し、次にWebUIを使用したGUIツールを導入する。</li>
+<li>「VALL-E-X」自体の概要説明は下記参照。</li>
+</ul>
+</li>
+</ul>
+<pre><code>VALL-E-XはMicrosoftが開発した音声合成モデルのOSS実装です。
+Microsoftのものは論文は公開されていますが、ソースコードと学習済みモデルはMicrosoftから公開されていないため、非公式の実装となっています。
+単一言語の音声合成モデルのVALL-Eを、多言語対応した音声合成モデルがVALL-E-Xとなります。
+</code></pre>
+<hr />
+<h2 id="python">Python動作環境導入<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center">OS</th>
+<th align="center">MEMORY</th>
+<th align="center">CPU</th>
+<th align="center">GPU</th>
+<th align="center">STRAGE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Windows11 Pro</td>
+<td align="center">DDR3 16GB</td>
+<td align="center">i7 4770</td>
+<td align="center">GeForce RTX2060 6GB</td>
+<td align="center">Intel SSD128GB + SSD256GB</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>このドキュメントの内容は、上記ハードウェア構成のパソコンで動作確認しています。<ul>
+<li>生成AIで必須のPyTorchモジュールを動作させる構成としては、ギリギリアウトな感じです。<br><ul>
+<li>「GeForce RTX 3060 8GB」以上のGPU推奨。</li>
+<li>「Intel第8世代Core」以降のCPU推奨。 (上記CPUはWindows11非サポート)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Python動作環境導入の詳細は「Python仮想環境導入.pdf」をご参照ください。</li>
+</ul>
+<hr />
+<h2 id="cuiai">CUIの生成AI環境導入<a class="headerlink" href="#cuiai" title="Permanent link">&para;</a></h2>
+<h3 id="1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<pre><code class="language-powershell">cd ~/
+rmdir /s /q VALL-E-X
+git clone --recursive https://github.com/Plachtaa/VALL-E-X
+cd VALL-E-X
+python -m pip install -r requirements.txt
+mkdir checkpoints
+</code></pre>
+<ul>
+<li>Gitクライアントはあらかじめインストールしておいてください。</li>
+</ul>
+<h3 id="2">② 音声合成用の機械学習データをダウンロードして配置する。<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<ol>
+<li><a href="https://drive.google.com/uc?id=10gdQWvP-K_e1undkvv0p2b7SU6I4Egy">https://drive.google.com/uc?id=10gdQWvP-K_e1undkvv0p2b7SU6I4Egy</a></li>
+<li>上記URLにアクセスして「vallex-checkpoint.pt」をダウンロードする。</li>
+<li>ダウンロードしたファイルを「checkpoints」フォルダ直下に配置する。</li>
+</ol>
+<h3 id="3">③ テストコードを実行して動作確認する。<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<ol>
+<li>「VALL-E-X」フォルダ直下に「tts.py」を作成し、下記のコードを記述する。</li>
+</ol>
+<pre><code class="language-python">from utils.generation import SAMPLE_RATE, generate_audio, preload_models
+from scipy.io.wavfile import write as write_wav
+preload_models()
+text_prompt = &quot;&quot;&quot;
+最先端技術とデジタル人材で、お客様に感動を与えられるサービスを生み出すと同時に、
+社会との信頼を大事にするという意志が込めて、名付けました。
+毎日「すごい」で満たせる感動を、お客様と一緒に進めて参ります。
+&quot;&quot;&quot;
+audio_array = generate_audio(text_prompt)
+write_wav(&quot;chapter1-1.wav&quot;, SAMPLE_RATE, audio_array)
+</code></pre>
+<ol>
+<li>下記のコマンドを実行する。</li>
+</ol>
+<pre><code class="language-python">py tts.py
+</code></pre>
+<ul>
+<li>テストコードの実行に成功すると、「VALL-E-X」フォルダ直下に「chapter1-1.wav」が出力されます。</li>
+<li>「VALL-E-Xを自動でインストール＆実行してくれるスクリプト」もあるようですが未確認です。<ul>
+<li><a href="https://note.com/0me84/n/nb32b81d195ff">https://note.com/0me84/n/nb32b81d195ff</a></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="webuigui">WebUIを使用したGUIツール導入<a class="headerlink" href="#webuigui" title="Permanent link">&para;</a></h2>
+<ul>
+<li>準備中・・・</li>
+</ul>
+<hr />
+<h2 id="_2">参考サイト<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.kkaneko.jp/ai/win/vall_e_x.html">https://www.kkaneko.jp/ai/win/vall_e_x.html</a></li>
+<li><a href="https://github.com/kuwacom/VALL-E-X-JP">https://github.com/kuwacom/VALL-E-X-JP</a></li>
+<li><a href="https://torish.hatenablog.com/entry/2023/09/02/142004">https://torish.hatenablog.com/entry/2023/09/02/142004</a></li>
+<li><a href="https://note.com/0me84/n/nb32b81d195ff">https://note.com/0me84/n/nb32b81d195ff</a></li>
+<li><a href="https://medium.com/axinc/vall-e-x-977efc19ac84">https://medium.com/axinc/vall-e-x-977efc19ac84</a></li>
+<li><a href="https://qiita.com/fuyu_quant/items/0bf07e43e03c2251a53f">https://qiita.com/fuyu_quant/items/0bf07e43e03c2251a53f</a></li>
+</ul>
+<p><br></p>
+<style>
+font-family: 'Note Sans JP','Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3, Meiryo', メイリオ, Arial, sans-serif;
+table {border-left:1px solid #333;}
+th {background:#eee;color:#000 !important;border-top:1px solid #333;}
+td {background:#fff;color:#333;border-bottom:1px solid #333;}
+th,td {border-left:dotted 1px #333;}
+th:first-of-type {border-left:1px solid #333;}
+td:first-of-type {border-left:1px solid #333;}
+th:last-of-type {border-right:1px solid #333;}
+td:last-of-type {border-right:1px solid #333;}
+hr {border-bottom:1px dashed #999;}
+</style>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../python-dev/" class="btn btn-neutral float-left" title="Python導入"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../wordpress/" class="btn btn-neutral float-right" title="WordPress改修">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright © 2023-2024 kumanekokk.com</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../python-dev/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../wordpress/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

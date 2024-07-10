@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Contributing to MkDocs - Amazing Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/common.css" rel="stylesheet" />
+        <link href="//use.fontawesome.com/releases/v6.2.0/css/all.css" rel="stylesheet" />
+        <link href="//fonts.googleapis.com/earlyaccess/notosansjp.css" rel="stylesheet" />
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Contributing to MkDocs";
+        var mkdocs_page_input_path = "about/contributing.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Amazing Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Version History</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">社内研修動画</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../python-dev/">Python導入</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../vall-e-x/">VALL-E-X導入</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Officialサイト</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../wordpress/">WordPress改修</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Amazing Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Contributing to MkDocs</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="contributing-to-mkdocs">Contributing to MkDocs<a class="headerlink" href="#contributing-to-mkdocs" title="Permanent link">&para;</a></h1>
+<p>An introduction to contributing to the MkDocs project.</p>
+<p>The MkDocs project welcomes, and depends, on contributions from developers and
+users in the open source community. Contributions can be made in a number of
+ways, a few examples are:</p>
+<ul>
+<li>Code patches via pull requests</li>
+<li>Documentation improvements</li>
+<li>Bug reports and patch reviews</li>
+</ul>
+<h2 id="code-of-conduct">Code of Conduct<a class="headerlink" href="#code-of-conduct" title="Permanent link">&para;</a></h2>
+<p>Everyone interacting in the MkDocs project's codebases, issue trackers, chat
+rooms, and mailing lists is expected to follow the <a href="https://www.pypa.io/en/latest/code-of-conduct/">PyPA Code of Conduct</a>.</p>
+<h2 id="reporting-an-issue">Reporting an Issue<a class="headerlink" href="#reporting-an-issue" title="Permanent link">&para;</a></h2>
+<p>Please include as much detail as you can. Let us know your platform and MkDocs
+version. If the problem is visual (for example a theme or design issue) please
+add a screenshot and if you get an error please include the full error and
+traceback.</p>
+<h2 id="testing-the-development-version">Testing the Development Version<a class="headerlink" href="#testing-the-development-version" title="Permanent link">&para;</a></h2>
+<p>If you want to just install and try out the latest development version of
+MkDocs you can do so with the following command. This can be useful if you
+want to provide feedback for a new feature or want to confirm if a bug you
+have encountered is fixed in the git master. It is <strong>strongly</strong> recommended
+that you do this within a <a href="https://virtualenv.pypa.io/en/latest/userguide.html">virtualenv</a>.</p>
+<pre><code class="language-bash">pip install https://github.com/mkdocs/mkdocs/archive/master.tar.gz
+</code></pre>
+<h2 id="installing-for-development">Installing for Development<a class="headerlink" href="#installing-for-development" title="Permanent link">&para;</a></h2>
+<p>First you'll need to fork and clone the repository. Once you have a local
+copy, run the following command. It is <strong>strongly</strong> recommended that you do
+this within a <a href="https://virtualenv.pypa.io/en/latest/userguide.html">virtualenv</a>.</p>
+<pre><code class="language-bash">pip install --editable .
+</code></pre>
+<p>This will install MkDocs in development mode which binds the <code>mkdocs</code> command
+to the git repository.</p>
+<h2 id="running-the-tests">Running the tests<a class="headerlink" href="#running-the-tests" title="Permanent link">&para;</a></h2>
+<p>To run the tests, it is recommended that you use <a href="https://tox.readthedocs.io/en/latest/">Tox</a>. This just needs
+to be pip installed and then the test suite can be ran for MkDocs but running
+the command <code>tox</code> in the root of your MkDocs repository.</p>
+<p>It will attempt to run the tests against all of the Python versions we
+support. So don't be concerned if you are missing some and they fail. The rest
+will be verified by <a href="https://travis-ci.org/repositories">Travis</a> when you submit a pull request.</p>
+<h2 id="submitting-pull-requests">Submitting Pull Requests<a class="headerlink" href="#submitting-pull-requests" title="Permanent link">&para;</a></h2>
+<p>Once you are happy with your changes or you are ready for some feedback, push
+it to your fork and send a pull request. For a change to be accepted it will
+most likely need to have tests and documentation if it is a new feature.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright © 2023-2024 kumanekokk.com</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Python導入 - Amazing Docs</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../css/common.css" rel="stylesheet" />
+        <link href="//use.fontawesome.com/releases/v6.2.0/css/all.css" rel="stylesheet" />
+        <link href="//fonts.googleapis.com/earlyaccess/notosansjp.css" rel="stylesheet" />
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Python\u5c0e\u5165";
+        var mkdocs_page_input_path = "python-dev.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Amazing Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Version History</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">社内研修動画</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Python導入</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_1">概要</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#python">利用するPythonバージョン</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#windowspython">WindowsのPython仮想環境導入</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-python-310">① Pythonをインストールする。 (以下は3.10系を想定)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2">② プロジェクトを新規作成する。</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3">③ 仮想環境を起動する。</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-python">④ 仮想環境でPythonを実行する。</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5">⑤ 仮想環境を終了する。</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">参考サイト</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../vall-e-x/">VALL-E-X導入</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Officialサイト</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../wordpress/">WordPress改修</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Amazing Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>社内研修動画 &raquo;</li><li>Python導入</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="python-20240626">Python仮想環境導入 (2024/06/26)<a class="headerlink" href="#python-20240626" title="Permanent link">&para;</a></h1>
+<h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>venv (ブイエンブ)を利用して、プロジェクト毎に必要なPythonモジュールをインストールした仮想環境を導入する。<ul>
+<li>生成AIの普及によりPythonを利用するケースが増えてきたため、その場合の注意点もあわせて記載する。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="python">利用するPythonバージョン<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
+<ul>
+<li>仮想環境内でPythonのバージョン切替はできないため、はじめに使用するPythonのバージョンを選定する。<ul>
+<li>新規プロジェクト、またはPythonのバージョン指定がないアプリケーションの場合、ひとまず最新版のPythonで仮想環境を利用してみる。<ul>
+<li>Pythonが原因と思われるエラーが発生した場合、3.10系のバージョンで仮想環境を利用してみる。<br>
+(特にGPUを利用した生成AIのPyTorch系モジュールでエラーが発生する場合、このバージョンで仮想環境の利用を検討する。)</li>
+</ul>
+</li>
+<li>Pythonのバージョン指定があるアプリケーションの場合、基本的には指定されたバージョンで仮想環境を利用する。<br>
+(最新版のPythonを利用することによるメリットが大きい場合、正常に動作しない可能性をじゅうぶんに考慮した上で、最新版のPythonで仮想環境の導入を検討する。)</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="windowspython">WindowsのPython仮想環境導入<a class="headerlink" href="#windowspython" title="Permanent link">&para;</a></h2>
+<h3 id="1-python-310">① Pythonをインストールする。 (以下は3.10系を想定)<a class="headerlink" href="#1-python-310" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://www.python.org/downloads">https://www.python.org/downloads</a><ul>
+<li>インストールするPythonのバージョンについては、前項「venvを利用するPythonのバージョン」を参照。</li>
+<li>「Python Launcher」が有効な状態でインストールする。<br>(Pythonのバージョン3.3以降はデフォルトで有効。)</li>
+<li>複数プロジェクト間でPythonモジュールが競合しない場合など、開発端末のシステム構成によっては仮想環境の導入が必須ではないため、手順②以降は仮想環境が必要な場合のみ実施する。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2">② プロジェクトを新規作成する。<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<pre><code class="language-powershell">$ mkdir ~/[プロジェクト名]
+$ cd ~/[プロジェクト名]
+$ py -3.10 -m venv [仮想環境名]
+</code></pre>
+<h3 id="3">③ 仮想環境を起動する。<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<pre><code class="language-powershell">$\[仮想環境名]\Scripts\activate
+</code></pre>
+<h3 id="4-python">④ 仮想環境でPythonを実行する。<a class="headerlink" href="#4-python" title="Permanent link">&para;</a></h3>
+<pre><code class="language-powershell">([仮想環境名])$ py -V 
+Python 3.10.11
+</code></pre>
+<h3 id="5">⑤ 仮想環境を終了する。<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<pre><code class="language-powershell">([仮想環境名])$ deactivate
+</code></pre>
+<hr />
+<h2 id="_2">参考サイト<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://qiita.com/fiftystorm36/items/b2fd47cf32c7694adc2e">https://qiita.com/fiftystorm36/items/b2fd47cf32c7694adc2e</a></li>
+<li><a href="https://gammasoft.jp/blog/find-out-python-launcher">https://gammasoft.jp/blog/find-out-python-launcher</a></li>
+</ul>
+<p><br></p>
+<style>
+font-family: 'Note Sans JP','Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3, Meiryo', メイリオ, Arial, sans-serif;
+table {border-left:1px solid #333;}
+th {background:#eee;color:#000 !important;border-top:1px solid #333;}
+td {background:#fff;color:#333;border-bottom:1px solid #333;}
+th,td {border-left:dotted 1px #333;}
+th:first-of-type {border-left:1px solid #333;}
+td:first-of-type {border-left:1px solid #333;}
+th:last-of-type {border-right:1px solid #333;}
+td:last-of-type {border-right:1px solid #333;}
+hr {border-bottom:1px dashed #999;}
+</style>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Version History"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../vall-e-x/" class="btn btn-neutral float-right" title="VALL-E-X導入">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright © 2023-2024 kumanekokk.com</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../vall-e-x/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
