@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>VOICEBOX導入 - Kumanekokk Tips</title>
+    <title>静的サイトジェネレータ - Kumanekokk Tips</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -16,8 +16,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "VOICEBOX\u5c0e\u5165";
-        var mkdocs_page_input_path = "voicebox.md";
+        var mkdocs_page_name = "\u9759\u7684\u30b5\u30a4\u30c8\u30b8\u30a7\u30cd\u30ec\u30fc\u30bf";
+        var mkdocs_page_input_path = "static-gen.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -49,7 +49,7 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">生成AI</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="#">共通設定</a>
     <ul>
                 <li class="toctree-l2"><a class="reference internal" href="../python-dev/">Python導入</a>
@@ -74,34 +74,18 @@
                 </li>
     </ul>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">音声合成モデル</a>
-    <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="#">音声合成モデル</a>
+    <ul>
                 <li class="toctree-l2"><a class="reference internal" href="../vall-e-x/">VALL-E-X導入</a>
                 </li>
-                <li class="toctree-l2 current"><a class="reference internal current" href="./">VOICEBOX導入</a>
-    <ul class="current">
-    <li class="toctree-l3"><a class="reference internal" href="#_1">概要</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_2">導入</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#prompt">Prompt</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#windows-voicebox">Windows コマンドプロンプトからVOICEBOX で音声を作る。</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#windows-voicevox">Windows で VOICEVOXのサーバー (エンジン) を起動し、ローカルネットワークに存在する端末から音声合成のコマンドを実行し再生する。</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#gpts-voicevox">GPTS × VOICEVOXで推しキャラが毎回違う内容で話しかけてくれるアラーム</a>
-    </li>
-        </ul>
-    </li>
-    </ul>
+                <li class="toctree-l2"><a class="reference internal" href="../voicebox/">VOICEBOX導入</a>
                 </li>
     </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">その他</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../static-gen/">静的サイトジェネレータ</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">静的サイトジェネレータ</a>
                   </li>
               </ul>
       </div>
@@ -118,8 +102,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>生成AI &raquo;</li>
-          <li>音声合成モデル &raquo;</li><li>VOICEBOX導入</li>
+          <li>その他 &raquo;</li><li>静的サイトジェネレータ</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -129,40 +112,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="voicebox">VOICEBOX導入<a class="headerlink" href="#voicebox" title="Permanent link">&para;</a></h1>
-<h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<ul>
-<li>テキスト音声合成ソフトウェア 「VOICEVOX」 の使い方を紹介するドキュメントです。</li>
-</ul>
-<h2 id="_2">導入<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<ul>
-<li>https://voicevox.hiroshiba.jp/how_to_use/</li>
-</ul>
-<h2 id="prompt">Prompt<a class="headerlink" href="#prompt" title="Permanent link">&para;</a></h2>
-<h3 id="windows-voicebox">Windows コマンドプロンプトからVOICEBOX で音声を作る。<a class="headerlink" href="#windows-voicebox" title="Permanent link">&para;</a></h3>
-<ul>
-<li>https://note.com/aoi68k/n/n0ale26ed39f4</li>
-</ul>
-<pre><code class="language-shell">chcp 65001
-echo &quot;こんにちは、音声合成の世界へようこそ&quot;&gt;text.txt
-curl -s-X POST&quot;http://127.0.0.1:50021/audio_query_from_preset?preset_id=-gel-data-urlencode text@text.txt &gt; query.json
-curl -s-H &quot;Content-Type: application/json&quot;-X POST-d @query.json&quot;127.0.0.1:50021/synthesis? speaker=48&quot;&gt;audio.wav
-</code></pre>
-<h3 id="windows-voicevox">Windows で VOICEVOXのサーバー (エンジン) を起動し、ローカルネットワークに存在する端末から音声合成のコマンドを実行し再生する。<a class="headerlink" href="#windows-voicevox" title="Permanent link">&para;</a></h3>
-<ul>
-<li>https://qiita.com/yamanohappa/items/b75d069e3cb0708d8709</li>
-</ul>
-<h3 id="gpts-voicevox">GPTS × VOICEVOXで推しキャラが毎回違う内容で話しかけてくれるアラーム<a class="headerlink" href="#gpts-voicevox" title="Permanent link">&para;</a></h3>
-<ul>
-<li>https://note.com/yuki_tech/n/n07261c754c03</li>
-</ul>
-<p><br></p>
+                <p>1/1
+- 80% +
+静的サイトジェネレータ
+VitePress (from Vue.js)
+概要
+・今フロントエンド開発のトレンドでデファクトスタンダードなビルドツールになりつつある「Vite(ヴィート)」を利用しています。 この3年で現場のドキュメント作成も「Sphinx」⇒「MkDocs」⇒「VitePress」という変遷をたどっています。
+導入手順
+これまでの静的サイトジェネレータのメリット 「Markdownで迅速にドキュメント作成が可能」を継承しつつ、Wue.jsで「高度なSPAアプリケーシ ョン開発もできる」という、いいとこどりで無限の可能性を感じる静的サイトジェネレータです。
+https://qiita.com/99no_exit/items/a54708c8a3586167f894
+https://ma-vericks.com/blog/vitepress/
+• https://zenn.dev/rlab/articles/77a702dd61a08a
+表示サンプル
+• https://pinia.vuejs.org/
+https://unorss.dev/
+• https://vueuse.org/
+ReadTheDocs (from MkDocs/Sphinx)
+概要
+「MkDocs/Sphinx」 両対応という事もあって、B2B ドキュメントでよく使われています。
+導入手順
+○「MkDocs」 は 「Markdown」 形式の静的サイトジェネレータです。
+○」は「reStructuredText」 形式の静的サイトジェネレータです。
+https://blog.goedly.com/?p=502
+○次項「Material」 の導入手順も同じページ参照
+表示サンプル
+https://docs.readthedocs.io/en/stable/
+Material (from MkDocs)
+概要
+「ReadTheDocs」 がどちらかというとドキュメント作成を意識しているのに対し、「Material」は静的サイト作成を意識している印象です。 デザイン的に洗練されていて拡張性もわりと高いので、個人的には 「ReadTheDocs」 より 「Material」 の方が好きです。
+導入手順
+https://blog.goedly.com/?p=502
+前項 「ReadTheDocs」の導入手順も同じページ参照
+表示サンプル
+https://squidfunk github.io/mkdocs-material/</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../vall-e-x/" class="btn btn-neutral float-left" title="VALL-E-X導入"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../static-gen/" class="btn btn-neutral float-right" title="静的サイトジェネレータ">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../voicebox/" class="btn btn-neutral float-left" title="VOICEBOX導入"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -186,10 +173,8 @@ curl -s-H &quot;Content-Type: application/json&quot;-X POST-d @query.json&quot;1
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../vall-e-x/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../voicebox/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
-    
-      <span><a href="../static-gen/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
