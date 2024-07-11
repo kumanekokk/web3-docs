@@ -86,11 +86,11 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#prompt">Prompt</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#windows-voicebox">Windows コマンドプロンプトからVOICEBOX で音声を作る。</a>
+    <li class="toctree-l4"><a class="reference internal" href="#windowsvoicebox">WindowsコマンドプロンプトからVOICEBOXで音声を作る。</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#windows-voicevox">Windows で VOICEVOXのサーバー (エンジン) を起動し、ローカルネットワークに存在する端末から音声合成のコマンドを実行し再生する。</a>
+    <li class="toctree-l4"><a class="reference internal" href="#windowsvoicevox">WindowsでVOICEVOXのサーバー (エンジン) を起動し、ローカルネットワークに存在する端末から音声合成のコマンドを実行し再生する。</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#gpts-voicevox">GPTS × VOICEVOXで推しキャラが毎回違う内容で話しかけてくれるアラーム</a>
+    <li class="toctree-l4"><a class="reference internal" href="#gptsvoicevox">GPTS×VOICEVOXで推しキャラが毎回違う内容で話しかけてくれるアラーム</a>
     </li>
         </ul>
     </li>
@@ -132,14 +132,14 @@
                 <h1 id="voicebox">VOICEBOX導入<a class="headerlink" href="#voicebox" title="Permanent link">&para;</a></h1>
 <h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
-<li>テキスト音声合成ソフトウェア 「VOICEVOX」 の使い方を紹介するドキュメントです。</li>
+<li>テキスト音声合成ソフトウェア「VOICEVOX」の導入方法やプロンプトについてまとめます。</li>
 </ul>
 <h2 id="_2">導入<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li>https://voicevox.hiroshiba.jp/how_to_use/</li>
 </ul>
 <h2 id="prompt">Prompt<a class="headerlink" href="#prompt" title="Permanent link">&para;</a></h2>
-<h3 id="windows-voicebox">Windows コマンドプロンプトからVOICEBOX で音声を作る。<a class="headerlink" href="#windows-voicebox" title="Permanent link">&para;</a></h3>
+<h3 id="windowsvoicebox">WindowsコマンドプロンプトからVOICEBOXで音声を作る。<a class="headerlink" href="#windowsvoicebox" title="Permanent link">&para;</a></h3>
 <ul>
 <li>https://note.com/aoi68k/n/n0ale26ed39f4</li>
 </ul>
@@ -148,11 +148,11 @@ echo &quot;こんにちは、音声合成の世界へようこそ&quot;&gt;text.
 curl -s-X POST&quot;http://127.0.0.1:50021/audio_query_from_preset?preset_id=-gel-data-urlencode text@text.txt &gt; query.json
 curl -s-H &quot;Content-Type: application/json&quot;-X POST-d @query.json&quot;127.0.0.1:50021/synthesis? speaker=48&quot;&gt;audio.wav
 </code></pre>
-<h3 id="windows-voicevox">Windows で VOICEVOXのサーバー (エンジン) を起動し、ローカルネットワークに存在する端末から音声合成のコマンドを実行し再生する。<a class="headerlink" href="#windows-voicevox" title="Permanent link">&para;</a></h3>
+<h3 id="windowsvoicevox">WindowsでVOICEVOXのサーバー (エンジン) を起動し、ローカルネットワークに存在する端末から音声合成のコマンドを実行し再生する。<a class="headerlink" href="#windowsvoicevox" title="Permanent link">&para;</a></h3>
 <ul>
 <li>https://qiita.com/yamanohappa/items/b75d069e3cb0708d8709</li>
 </ul>
-<h3 id="gpts-voicevox">GPTS × VOICEVOXで推しキャラが毎回違う内容で話しかけてくれるアラーム<a class="headerlink" href="#gpts-voicevox" title="Permanent link">&para;</a></h3>
+<h3 id="gptsvoicevox">GPTS×VOICEVOXで推しキャラが毎回違う内容で話しかけてくれるアラーム<a class="headerlink" href="#gptsvoicevox" title="Permanent link">&para;</a></h3>
 <ul>
 <li>https://note.com/yuki_tech/n/n07261c754c03</li>
 </ul>
