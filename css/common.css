@@ -112,3 +112,7 @@ div.admonition {
 .wy-nav-content {
     max-width: 100%;
 }
+
+div.admonition {
+    background-color: #eee !important;
+}
