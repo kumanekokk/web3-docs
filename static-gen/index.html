@@ -87,33 +87,37 @@
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">静的サイトジェネレータ</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_2">【メリット】</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_3">【デメリット】</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#vitepress-from-vuejs">VitePress (from Vue.js)</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#_2">概要</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_4">概要</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_3">導入手順</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_5">導入手順</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_4">表示サンプル</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_6">表示サンプル</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#readthedocs-from-mkdocssphinx">ReadTheDocs (from MkDocs/Sphinx)</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#_5">概要</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_7">概要</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_6">導入手順</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_8">導入手順</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_7">表示サンプル</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_9">表示サンプル</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#material-from-mkdocs">Material (from MkDocs)</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#_8">概要</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_10">概要</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_9">導入手順</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_11">導入手順</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_10">表示サンプル</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_12">表示サンプル</a>
     </li>
         </ul>
     </li>
@@ -145,8 +149,45 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="_1">静的サイトジェネレータ<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<ul>
+<li>ドキュメント作成やランディングページの作成に、静的サイトジェネレータを使用することで、コスト軽減と品質向上が期待できます。<ul>
+<li>静的サイトジェネレータを使用する事で、下記のメリット・デメリットがあると考えます。</li>
+</ul>
+</li>
+</ul>
+<h3 id="_2">【メリット】<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>git (Github/GilLabなども含む)でドキュメントを管理した場合、特殊な事をしなくても標準機能で変更差分を確認できる。<ul>
+<li>エクセルファイルでも確認できなくはないですが、Markdownほど手軽ではありません。</li>
+<li>ファイル容量も「Markdown + SVG (+Yaml)」という構成により、エクセルファイルに比べてかなり軽量です。 </li>
+</ul>
+</li>
+<li>図形描画に 「draw.io」 を利用することにより、高品質なベクター画像をSVG形式で手軽に作成・編集できます。<ul>
+<li>SVG ファイルの図形に説明文などを挿入している場合、それらの文字列もブラウザからの検索対象になります。</li>
+</ul>
+</li>
+<li>Swagger (OpenAPI)などのAPIドキュメントツールと連携することにより、 APIスタブ機能なども容易に作成可能。<ul>
+<li>Swagger (OpenAPI)はYaml形式を採用していますが、 Markdownと同じぐらい手軽に編集が可能です。</li>
+</ul>
+</li>
+<li>ドキュメントはHTMLとして出力されるため、 更新が発生した場合もで随時Webサーバーにアップロードして確認が可能。<ul>
+<li>最終的にはPDFとして納品する必要がある場合も、ページ単位で手軽にPDF出力できて便利です。</li>
+</ul>
+</li>
+</ul>
+<h3 id="_3">【デメリット】<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>業界全体で「仕様書はエクセルやパワポで作成する」という考え方がいまだに根強く、会社のルールや現場の判断に対して折り合いをつける必要がある。<ul>
+<li>今の現場はわりと先進的な部署が多く、会社全体として静的サイトジェネレータを積極的に活用しているため、チーム内でも静的サイトジェネレータを使用することに批判的な意見は出なくなっています。 (そうなるまでにはそれなりの時間と労力が必要でしたが、 ドキュメント作成の品質やコストを改善できたと思っています。)</li>
+</ul>
+</li>
+<li>自分が提案したやり方である以上、チームメンバーのリテラシー向上のために、作成時のフォローや導入資料の作成は必須になります。<ul>
+<li>Markdown でドキュメントを作成したことのある若手も増えてきましたので、今後はそれほど大変ではないかなと思っています。</li>
+</ul>
+</li>
+</ul>
 <h2 id="vitepress-from-vuejs">VitePress (from Vue.js)<a class="headerlink" href="#vitepress-from-vuejs" title="Permanent link">&para;</a></h2>
-<h3 id="_2">概要<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<h3 id="_4">概要<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>今フロントエンド開発のトレンドでデファクトスタンダードなビルドツールになりつつある「Vite(ヴィート)」を利用しています。<ul>
 <li>この3年で現場のドキュメント作成も「Sphinx」⇒「MkDocs」⇒「VitePress」という変遷をたどっています。</li>
@@ -154,20 +195,20 @@
 </ul>
 </li>
 </ul>
-<h3 id="_3">導入手順<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h3 id="_5">導入手順<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://qiita.com/99no_exit/items/a54708c8a3586167f894">https://qiita.com/99no_exit/items/a54708c8a3586167f894</a></li>
 <li><a href="https://ma-vericks.com/blog/vitepress/">https://ma-vericks.com/blog/vitepress/</a></li>
 <li><a href="https://zenn.dev/rlab/articles/77a702dd61a08a">https://zenn.dev/rlab/articles/77a702dd61a08a</a></li>
 </ul>
-<h3 id="_4">表示サンプル<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<h3 id="_6">表示サンプル<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://pinia.vuejs.org/">https://pinia.vuejs.org/</a></li>
-<li><a href="https://unorss.dev/">https://unorss.dev/</a></li>
+<li><a href="https://unocss.dev/">https://unocss.dev/</a></li>
 <li><a href="https://vueuse.org/">https://vueuse.org/</a></li>
 </ul>
 <h2 id="readthedocs-from-mkdocssphinx">ReadTheDocs (from MkDocs/Sphinx)<a class="headerlink" href="#readthedocs-from-mkdocssphinx" title="Permanent link">&para;</a></h2>
-<h3 id="_5">概要<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<h3 id="_7">概要<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <ul>
 <li>「MkDocs/Sphinx」 両対応という事もあって、B2B ドキュメントでよく使われています。<ul>
 <li>「MkDocs」は「Markdown」形式の静的サイトジェネレータです。</li>
@@ -175,33 +216,33 @@
 </ul>
 </li>
 </ul>
-<h3 id="_6">導入手順<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<h3 id="_8">導入手順<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://blog.goedly.com/?p=502">https://blog.goedly.com/?p=502</a><ul>
+<li><a href="https://blog.goedly.com/?p=502">https://blog.goediy.com/?p=502</a><ul>
 <li>次項「Material」の導入手順も同じページ参照</li>
 </ul>
 </li>
 </ul>
-<h3 id="_7">表示サンプル<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<h3 id="_9">表示サンプル<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://docs.readthedocs.io/en/stable/">https://docs.readthedocs.io/en/stable/</a></li>
 </ul>
 <h2 id="material-from-mkdocs">Material (from MkDocs)<a class="headerlink" href="#material-from-mkdocs" title="Permanent link">&para;</a></h2>
-<h3 id="_8">概要<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<h3 id="_10">概要<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
 <ul>
 <li>「ReadTheDocs」がどちらかというとドキュメント作成を意識しているのに対し「Material」は静的サイト作成を意識している印象です。<ul>
 <li>デザイン的に洗練されていて拡張性もわりと高いので、個人的には「ReadTheDocs」より「Material」の方が好きです。</li>
 </ul>
 </li>
 </ul>
-<h3 id="_9">導入手順<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<h3 id="_11">導入手順<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://blog.goedly.com/?p=502">https://blog.goedly.com/?p=502</a><ul>
+<li><a href="https://blog.goedly.com/?p=502">https://blog.goediy.com/?p=502</a><ul>
 <li>前項「ReadTheDocs」の導入手順も同じページ参照</li>
 </ul>
 </li>
 </ul>
-<h3 id="_10">表示サンプル<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<h3 id="_12">表示サンプル<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://squidfunk.github.io/mkdocs-material/">https://squidfunk.github.io/mkdocs-material/</a></li>
 </ul>
