@@ -17,7 +17,7 @@
       <script>
         // Current page data
         var mkdocs_page_name = "\u9759\u7684\u30b5\u30a4\u30c8\u30b8\u30a7\u30cd\u30ec\u30fc\u30bf";
-        var mkdocs_page_input_path = "static-gen.md";
+        var mkdocs_page_input_path = "static-gen.full.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -84,56 +84,8 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">その他</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">静的サイトジェネレータ</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#_2">【メリット】</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_3">【デメリット】</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#powercms-from-movabletype">PowerCMS (from MovableType)</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#_4">概要</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_5">導入手順</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_6">表示サンプル</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#vitepress-from-vuejs">VitePress (from Vue.js)</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#_7">概要</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_8">導入手順</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_9">表示サンプル</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#readthedocs-from-mkdocssphinx">ReadTheDocs (from MkDocs/Sphinx)</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#_10">概要</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_11">導入手順</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_12">表示サンプル</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#material-from-mkdocs">Material (from MkDocs)</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#_13">概要</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_14">導入手順</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_15">表示サンプル</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_16">その他</a>
-    </li>
-    </ul>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../static-gen/">静的サイトジェネレータ</a>
                   </li>
               </ul>
       </div>
@@ -149,8 +101,7 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>その他 &raquo;</li><li>静的サイトジェネレータ</li>
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>静的サイトジェネレータ</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -189,7 +140,7 @@
 </ul>
 <h3 id="_3">【デメリット】<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <ul>
-<li>業界全体で「仕様書はエクセルやパワポで作成する」「WEBサイトは動的なCMSで作成する」という考え方がいまだに根強く、会社のルールや現場の判断に対して折り合いをつける必要がある。<ul>
+<li>業界全体で「仕様書はエクセルやパワポで作成する」という考え方がいまだに根強く、会社のルールや現場の判断に対して折り合いをつける必要がある。<ul>
 <li>今の現場はわりと先進的な部署が多く、会社全体として静的サイトジェネレータを積極的に活用しているため、チーム内でも静的サイトジェネレータを使用することに批判的な意見は出なくなっています。 (そうなるまでにはそれなりの時間と労力が必要でしたが、 ドキュメント作成の品質やコストを改善できたと思っています。)</li>
 </ul>
 </li>
@@ -198,12 +149,12 @@
 </ul>
 </li>
 </ul>
-<hr />
 <h2 id="powercms-from-movabletype">PowerCMS (from MovableType)<a class="headerlink" href="#powercms-from-movabletype" title="Permanent link">&para;</a></h2>
 <h3 id="_4">概要<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>「MovableType」は20年以上の歴史と実績を持つ静的サイトジェネレータで、Perlで作られているためセキュリティ的に信頼性が高く、今尚国内外の大学や官公庁のサイト構築で絶大な支持を受けています。<ul>
-<li>「PowerCMS」は「MovableType」で機能的に不足している部分を補う形で誕生したパッケージですが、現在は一部機能が「MovableType」のコアパッケージにも取り込まれています。</li>
+<li>「PowerCMS」は「MovableType」で機能的に不足している部分を補う形で誕生したパッケージですが、現在は一部機能が「MovableType」のコアパッケージにも取り込まれています。
+（短い期間ではありますが、自社パッケージ開発業務として「PowerCMS」に関わりましたので、一応概要だけ紹介させていただきます。）</li>
 <li>国内C向けのCMSとしては圧倒的なシェアを持つ「WordPress」や、最近台頭してきた「ConcreteCMS」など数多くのCMSパッケージが存在しますが、PHPで作られている時点でセキュリティ的な懸念が生じてしまうため、大学や官公庁などセキュリティを重視するサイトでは「PowerCMS」に分があります。</li>
 </ul>
 </li>
@@ -214,10 +165,9 @@
 </ul>
 <h3 id="_6">表示サンプル<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://olympics.com/en/olympic-games/tokyo-2020">https://olympics.com/en/olympic-games/tokyo-2020</a></li>
-<li><a href="https://concrete5-japan.org/partners/showcase/">https://concrete5-japan.org/partners/showcase/</a></li>
+<li>https://olympics.com/en/olympic-games/tokyo-2020</li>
+<li>https://concrete5-japan.org/partners/showcase/</li>
 </ul>
-<hr />
 <h2 id="vitepress-from-vuejs">VitePress (from Vue.js)<a class="headerlink" href="#vitepress-from-vuejs" title="Permanent link">&para;</a></h2>
 <h3 id="_7">概要<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <ul>
@@ -229,7 +179,7 @@
 </ul>
 <h3 id="_8">導入手順<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://qiita.com/99no_exit/items/a54708c8a3586f67f894">https://qiita.com/99no_exit/items/a54708c8a3586f67f894</a></li>
+<li><a href="https://qiita.com/99no_exit/items/a54708c8a3586167f894">https://qiita.com/99no_exit/items/a54708c8a3586167f894</a></li>
 <li><a href="https://ma-vericks.com/blog/vitepress/">https://ma-vericks.com/blog/vitepress/</a></li>
 <li><a href="https://zenn.dev/rlab/articles/77a702dd61a08a">https://zenn.dev/rlab/articles/77a702dd61a08a</a></li>
 </ul>
@@ -239,7 +189,6 @@
 <li><a href="https://unocss.dev/">https://unocss.dev/</a></li>
 <li><a href="https://vueuse.org/">https://vueuse.org/</a></li>
 </ul>
-<hr />
 <h2 id="readthedocs-from-mkdocssphinx">ReadTheDocs (from MkDocs/Sphinx)<a class="headerlink" href="#readthedocs-from-mkdocssphinx" title="Permanent link">&para;</a></h2>
 <h3 id="_10">概要<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
 <ul>
@@ -251,7 +200,7 @@
 </ul>
 <h3 id="_11">導入手順<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://blog.goediy.com/?p=502">https://blog.goediy.com/?p=502</a><ul>
+<li><a href="https://blog.goedly.com/?p=502">https://blog.goediy.com/?p=502</a><ul>
 <li>次項「Material」の導入手順も同じページ参照</li>
 </ul>
 </li>
@@ -260,7 +209,6 @@
 <ul>
 <li><a href="https://docs.readthedocs.io/en/stable/">https://docs.readthedocs.io/en/stable/</a></li>
 </ul>
-<hr />
 <h2 id="material-from-mkdocs">Material (from MkDocs)<a class="headerlink" href="#material-from-mkdocs" title="Permanent link">&para;</a></h2>
 <h3 id="_13">概要<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
 <ul>
@@ -271,7 +219,7 @@
 </ul>
 <h3 id="_14">導入手順<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://blog.goediy.com/?p=502">https://blog.goediy.com/?p=502</a><ul>
+<li><a href="https://blog.goedly.com/?p=502">https://blog.goediy.com/?p=502</a><ul>
 <li>前項「ReadTheDocs」の導入手順も同じページ参照</li>
 </ul>
 </li>
@@ -280,30 +228,14 @@
 <ul>
 <li><a href="https://squidfunk.github.io/mkdocs-material/">https://squidfunk.github.io/mkdocs-material/</a></li>
 </ul>
-<hr />
 <h2 id="_16">その他<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
 <ul>
 <li>最近は数多くのジェネレータが台頭してきていて、「Jekyll」「Hugo」「Next.js」などがわりと人気みたいです。</li>
 </ul>
 <p><br></p>
-<style>
-font-family: 'Note Sans JP','Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3, Meiryo', メイリオ, Arial, sans-serif;
-table {border-left:1px solid #333;}
-th {background:#eee;color:#000 !important;border-top:1px solid #333;}
-td {background:#fff;color:#333;border-bottom:1px solid #333;}
-th,td {border-left:dotted 1px #333;}
-th:first-of-type {border-left:1px solid #333;}
-td:first-of-type {border-left:1px solid #333;}
-th:last-of-type {border-right:1px solid #333;}
-td:last-of-type {border-right:1px solid #333;}
-hr {border-bottom:1px dashed #999;}
-</style>
               
             </div>
           </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../voicebox/" class="btn btn-neutral float-left" title="VOICEBOX導入"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-    </div>
 
   <hr/>
 
@@ -325,8 +257,6 @@ hr {border-bottom:1px dashed #999;}
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
     
-    
-      <span><a href="../voicebox/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>
