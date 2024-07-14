@@ -116,5 +116,5 @@ div.admonition {
 
 div.admonition {
     background-color: #eee !important;
-    border: solid #ccf 1px;
+    border: 1px solid #ccf !important;
 }
