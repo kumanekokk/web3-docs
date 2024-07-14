@@ -91,7 +91,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_3">【デメリット】</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#vitepress-from-vuejs">VitePress (from Vue.js)</a>
+    <li class="toctree-l2"><a class="reference internal" href="#powercms-from-movabletype">PowerCMS (from MovableType)</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#_4">概要</a>
     </li>
@@ -101,7 +101,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#readthedocs-from-mkdocssphinx">ReadTheDocs (from MkDocs/Sphinx)</a>
+    <li class="toctree-l2"><a class="reference internal" href="#vitepress-from-vuejs">VitePress (from Vue.js)</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#_7">概要</a>
     </li>
@@ -111,7 +111,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#material-from-mkdocs">Material (from MkDocs)</a>
+    <li class="toctree-l2"><a class="reference internal" href="#readthedocs-from-mkdocssphinx">ReadTheDocs (from MkDocs/Sphinx)</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#_10">概要</a>
     </li>
@@ -120,6 +120,18 @@
     <li class="toctree-l3"><a class="reference internal" href="#_12">表示サンプル</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#material-from-mkdocs">Material (from MkDocs)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#_13">概要</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_14">導入手順</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_15">表示サンプル</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_16">その他</a>
     </li>
     </ul>
                   </li>
@@ -162,7 +174,7 @@
 <li>ファイル容量も「Markdown + SVG (+Yaml)」という構成により、エクセルファイルに比べてかなり軽量です。 </li>
 </ul>
 </li>
-<li>図形描画に 「draw.io」 を利用することにより、高品質なベクター画像をSVG形式で手軽に作成・編集できます。<ul>
+<li>図形描画に「draw.io」 を利用することにより、高品質なベクター画像をSVG形式で手軽に作成・編集できます。<ul>
 <li>SVG ファイルの図形に説明文などを挿入している場合、それらの文字列もブラウザからの検索対象になります。</li>
 </ul>
 </li>
@@ -186,65 +198,87 @@
 </ul>
 </li>
 </ul>
-<h2 id="vitepress-from-vuejs">VitePress (from Vue.js)<a class="headerlink" href="#vitepress-from-vuejs" title="Permanent link">&para;</a></h2>
+<h2 id="powercms-from-movabletype">PowerCMS (from MovableType)<a class="headerlink" href="#powercms-from-movabletype" title="Permanent link">&para;</a></h2>
 <h3 id="_4">概要<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <ul>
-<li>今フロントエンド開発のトレンドでデファクトスタンダードなビルドツールになりつつある「Vite(ヴィート)」を利用しています。<ul>
-<li>この3年で現場のドキュメント作成も「Sphinx」⇒「MkDocs」⇒「VitePress」という変遷をたどっています。</li>
-<li>これまでの静的サイトジェネレータのメリット「Markdownで迅速にドキュメント作成が可能」を継承しつつ、Vue.jsで「高度なSPAアプリケーション開発もできる」という、いいとこどりで無限の可能性を感じる静的サイトジェネレータです。</li>
+<li>「MovableType」は20年以上の歴史と実績を持つ静的サイトジェネレータで、Perlで作られているためセキュリティ的に信頼性が高く、今尚国内外の大学や官公庁のサイト構築で絶大な支持を受けています。<ul>
+<li>「PowerCMS」は「MovableType」で機能的に不足している部分を補う形で誕生したパッケージですが、現在は一部機能が「MovableType」のコアパッケージにも取り込まれています。</li>
+<li>国内C向けのCMSとしては圧倒的なシェアを持つ「WordPress」や、最近台頭してきた「ConcreteCMS」など数多くのCMSパッケージが存在しますが、PHPで作られている時点でセキュリティ的な懸念が生じてしまうため、大学や官公庁などセキュリティを重視するサイトでは「PowerCMS」に分があります。</li>
 </ul>
 </li>
 </ul>
 <h3 id="_5">導入手順<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <ul>
+<li>かなり高額なパッケージを購入する必要があるため割愛します。</li>
+</ul>
+<h3 id="_6">表示サンプル<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>https://olympics.com/en/olympic-games/tokyo-2020</li>
+<li>https://concrete5-japan.org/partners/showcase/</li>
+</ul>
+<h2 id="vitepress-from-vuejs">VitePress (from Vue.js)<a class="headerlink" href="#vitepress-from-vuejs" title="Permanent link">&para;</a></h2>
+<h3 id="_7">概要<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>今フロントエンド開発のトレンドでデファクトスタンダードなビルドツールになりつつある「Vite(ヴィート)」を利用したオンラインドキュメント作成ツールになります。<ul>
+<li>この3年で現場のドキュメント作成も「Sphinx」⇒「MkDocs」⇒「VitePress」という変遷をたどっています。</li>
+<li>これまでの静的サイトジェネレータのメリット「Markdownで迅速にドキュメント作成が可能」を継承しつつ、Vue.jsで「高度なSPAアプリケーション開発もできる」という、いいとこどりで無限の可能性を感じる静的サイトジェネレータです。</li>
+</ul>
+</li>
+</ul>
+<h3 id="_8">導入手順<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
 <li><a href="https://qiita.com/99no_exit/items/a54708c8a3586167f894">https://qiita.com/99no_exit/items/a54708c8a3586167f894</a></li>
 <li><a href="https://ma-vericks.com/blog/vitepress/">https://ma-vericks.com/blog/vitepress/</a></li>
 <li><a href="https://zenn.dev/rlab/articles/77a702dd61a08a">https://zenn.dev/rlab/articles/77a702dd61a08a</a></li>
 </ul>
-<h3 id="_6">表示サンプル<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<h3 id="_9">表示サンプル<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://pinia.vuejs.org/">https://pinia.vuejs.org/</a></li>
 <li><a href="https://unocss.dev/">https://unocss.dev/</a></li>
 <li><a href="https://vueuse.org/">https://vueuse.org/</a></li>
 </ul>
 <h2 id="readthedocs-from-mkdocssphinx">ReadTheDocs (from MkDocs/Sphinx)<a class="headerlink" href="#readthedocs-from-mkdocssphinx" title="Permanent link">&para;</a></h2>
-<h3 id="_7">概要<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
-<ul>
-<li>「MkDocs/Sphinx」 両対応という事もあって、B2B ドキュメントでよく使われています。<ul>
-<li>「MkDocs」は「Markdown」形式の静的サイトジェネレータです。</li>
-<li>「Sphinx」は「reStructuredText」形式の静的サイトジェネレータです。</li>
-</ul>
-</li>
-</ul>
-<h3 id="_8">導入手順<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://blog.goedly.com/?p=502">https://blog.goediy.com/?p=502</a><ul>
-<li>次項「Material」の導入手順も同じページ参照</li>
-</ul>
-</li>
-</ul>
-<h3 id="_9">表示サンプル<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://docs.readthedocs.io/en/stable/">https://docs.readthedocs.io/en/stable/</a></li>
-</ul>
-<h2 id="material-from-mkdocs">Material (from MkDocs)<a class="headerlink" href="#material-from-mkdocs" title="Permanent link">&para;</a></h2>
 <h3 id="_10">概要<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
 <ul>
-<li>「ReadTheDocs」がどちらかというとドキュメント作成を意識しているのに対し「Material」は静的サイト作成を意識している印象です。<ul>
-<li>デザイン的に洗練されていて拡張性もわりと高いので、個人的には「ReadTheDocs」より「Material」の方が好きです。</li>
+<li>「ReadTheDocs」はジェネレータ本体ではなくテーマという位置づけですが、「MkDocs/Sphinx」両対応という事もあってB2Bドキュメントでよく使われています。<ul>
+<li>「MkDocs」は「Markdown」形式の静的サイトジェネレータです。</li>
+<li>「Sphinx」は「reStructuredText」形式の静的サイトジェネレータです。</li>
 </ul>
 </li>
 </ul>
 <h3 id="_11">導入手順<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://blog.goedly.com/?p=502">https://blog.goediy.com/?p=502</a><ul>
-<li>前項「ReadTheDocs」の導入手順も同じページ参照</li>
+<li>次項「Material」の導入手順も同じページ参照</li>
 </ul>
 </li>
 </ul>
 <h3 id="_12">表示サンプル<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
 <ul>
+<li><a href="https://docs.readthedocs.io/en/stable/">https://docs.readthedocs.io/en/stable/</a></li>
+</ul>
+<h2 id="material-from-mkdocs">Material (from MkDocs)<a class="headerlink" href="#material-from-mkdocs" title="Permanent link">&para;</a></h2>
+<h3 id="_13">概要<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<ul>
+<li>「Material」も「ReadTheDocs」同様テーマという位置づけですが、「ReadTheDocs」がどちらかというとドキュメント作成を意識しているのに対し「Material」は静的サイト作成を意識している印象です。<ul>
+<li>デザイン的に洗練されていて拡張性もわりと高いので、個人的には「ReadTheDocs」より「Material」の方が好きです。</li>
+</ul>
+</li>
+</ul>
+<h3 id="_14">導入手順<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://blog.goedly.com/?p=502">https://blog.goediy.com/?p=502</a><ul>
+<li>前項「ReadTheDocs」の導入手順も同じページ参照</li>
+</ul>
+</li>
+</ul>
+<h3 id="_15">表示サンプル<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<ul>
 <li><a href="https://squidfunk.github.io/mkdocs-material/">https://squidfunk.github.io/mkdocs-material/</a></li>
+</ul>
+<h2 id="_16">その他<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
+<ul>
+<li>最近は数多くのジェネレータが台頭してきていて、「Jekyll」「Hugo」「Next.js」などがわりと人気みたいです。</li>
 </ul>
 <p><br></p>
               
