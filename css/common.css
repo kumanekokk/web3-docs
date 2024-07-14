@@ -1,8 +1,8 @@
 [data-md-color-scheme="kumanekokk"] {
     --md-primary-fg-color:        #404020;
     --md-primary-fg-color--light: #F0F0E0;
-    --md-primary-fg-color--dark:  #009;
-    --md-default-bg-color:        #ccf;
+    --md-primary-fg-color--dark:  #009 !important;
+    --md-default-bg-color:        #ccf !important;
 }
 
 [data-md-color-scheme="youtube"] {
@@ -103,8 +103,8 @@ div.admonition {
 .rst-content .admonition-title, .wy-alert-title {
     font-weight: 700;
     display: block;
-    color: #009;
-    background: #ccf;
+    color: #009 !important;
+    background: #ccf !important;
     padding: 12px;
     margin: -12px -12px 12px;
 }
