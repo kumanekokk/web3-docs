@@ -1,8 +1,8 @@
 [data-md-color-scheme="kumanekokk"] {
     --md-primary-fg-color:        #404020;
     --md-primary-fg-color--light: #F0F0E0;
-    --md-primary-fg-color--dark:  #009 !important;
-    --md-default-bg-color:        #ccf !important;
+    --md-primary-fg-color--dark:  #606040;
+    --md-default-bg-color:        #E0E0C0;
 }
 
 [data-md-color-scheme="youtube"] {
@@ -76,7 +76,8 @@ body {
 } */
 
 table th {
-    background-color: #C0C0A0;
+    color: #009 !important;
+    background-color: #ccf !important;
 }
 
 table td {
