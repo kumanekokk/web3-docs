@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Phi-3-mini導入 - Kumanekokk Lab</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../css/common.css" rel="stylesheet" />
+        <link href="//use.fontawesome.com/releases/v6.2.0/css/all.css" rel="stylesheet" />
+        <link href="//fonts.googleapis.com/earlyaccess/notosansjp.css" rel="stylesheet" />
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Phi-3-mini\u5c0e\u5165";
+        var mkdocs_page_input_path = "phi-3-mini.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Kumanekokk Lab
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Version History</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">生成AI</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="#">共通設定</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../python-dev/">Python導入</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">大規模言語モデル</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Phi-3-mini導入</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#_1">概要</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_2">ローカル環境導入</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#webui">大規模言語モデルとを利用するためのWebUI導入</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#phi-3-mini">Phi-3-miniのダウンロードと反映</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#_3">動作確認</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#_4">参考サイト</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../llama-3/">Llama-3-ELYZA-JP導入</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../claude-3/">Claude-3-Sonnet導入</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../gpt-4/">GPT-4導入</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">画像生成モデル</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../stable-diffusion/">Stable-Diffusion導入</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../comfy-ui/">ComfyUI導入</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">音声合成モデル</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../vall-e-x/">VALL-E-X導入</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../voicebox/">VOICEBOX導入</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">その他</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../static-gen/">静的サイトジェネレータ</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Kumanekokk Lab</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>生成AI &raquo;</li>
+          <li>大規模言語モデル &raquo;</li><li>Phi-3-mini導入</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="phi-3-mini-20240716">Phi-3-mini導入 (2024/07/16)<a class="headerlink" href="#phi-3-mini-20240716" title="Permanent link">&para;</a></h1>
+<h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Microsoftから2024年4月23日にリリースされた小規模LLM。<ul>
+<li>通常モデルだと時間はかかるが、GPT-3.5よりも高精度という噂。<ul>
+<li>レスポンスを重視し、普段使いは4bit量子化モデルを想定。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="_2">ローカル環境導入<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="webui">大規模言語モデルとを利用するためのWebUI導入<a class="headerlink" href="#webui" title="Permanent link">&para;</a></h3>
+<h4 id="1">① 任意の場所からターミナルを開き、下記のコマンドを実行。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h4>
+<pre><code class="language-shell">git clone https://github.com/oobabooga/text-generation-webui.git
+cd text-generation-webui
+./start_windows.bat
+</code></pre>
+<ul>
+<li>Gitクライアントはあらかじめインストールしておく。</li>
+</ul>
+<h4 id="2-gpu">② インストール途中でGPU選択が表示されるので、利用する環境を選択。<a class="headerlink" href="#2-gpu" title="Permanent link">&para;</a></h4>
+<pre><code class="language-shell">A) NVIDIA
+B) AMD (Linux/MacOS only. Requires ROCm SDK 5.6 on Linux)
+C) Apple M Series
+D) Intel Arc (IPEX)
+N) None (I want to run models in CPU mode)
+</code></pre>
+<ul>
+<li>できれば上のほうを利用できると高速です。(検証環境は「RTX2060」のため「A」を入力)</li>
+</ul>
+<h4 id="3-webhttp1270017860">③ インストールが正常に完了したら、Webブラウザで「http://127.0.0.1:7860」を開く。<a class="headerlink" href="#3-webhttp1270017860" title="Permanent link">&para;</a></h4>
+<ul>
+<li>他のソフトがポートを占有している場合、画面に表示されているURLを開く。</li>
+</ul>
+<h3 id="phi-3-mini">Phi-3-miniのダウンロードと反映<a class="headerlink" href="#phi-3-mini" title="Permanent link">&para;</a></h3>
+<h4 id="1-modeldownload-model-or-loramicrosoftphi-3-mini-4k-instruct-ggufget-file-list">① 「Model」タブを開いて「Download model or LoRA」に「microsoft/Phi-3-mini-4k-instruct-gguf」と入力し「Get file list」ボタンを押下。<a class="headerlink" href="#1-modeldownload-model-or-loramicrosoftphi-3-mini-4k-instruct-ggufget-file-list" title="Permanent link">&para;</a></h4>
+<ul>
+<li>成功したら「Hugging Face」に登録されているファイルリストが表示されるする。</li>
+</ul>
+<h4 id="2-file-name-for-gguf-modelsphi-3-mini-4k-instruct-q4ggufphi-3-mini-4k-instruct-fp16ggufdownload">② 「File name (for GGUF models)」と書かれたテキストボックスに「Phi-3-mini-4k-instruct-q4.gguf」または「Phi-3-mini-4k-instruct-fp16.gguf」と入力し「Download」ボタンを押下する。<a class="headerlink" href="#2-file-name-for-gguf-modelsphi-3-mini-4k-instruct-q4ggufphi-3-mini-4k-instruct-fp16ggufdownload" title="Permanent link">&para;</a></h4>
+<ul>
+<li>ダウンロードできない場合は手順①で表示されたリストからコピペする。</li>
+</ul>
+<h4 id="3-model-phi-3-mini-4k-instruct-q4ggufloadsave-settings">③ 画面左上の「Model」選択プルダウン右の更新(ぐるぐる矢印)ボタンを押下し、 プルダウンから「Phi-3-mini-4k-instruct-q4.gguf」を選択した状態で「Load」ボタンと「Save settings」ボタンを押下する。<a class="headerlink" href="#3-model-phi-3-mini-4k-instruct-q4ggufloadsave-settings" title="Permanent link">&para;</a></h4>
+<ul>
+<li>プルダウンに「Phi-3-mini-4k-instruct-q4.gguf」が表示されない場合、WebUIを一度再起動する。</li>
+</ul>
+<h3 id="_3">動作確認<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h4 id="chatsend-a-messagegenerate">「Chat」タブを開き、画面下の「Send a message」と書かれたテキストボックスに質問などを入力し「Generate」ボタンを押下する。<a class="headerlink" href="#chatsend-a-messagegenerate" title="Permanent link">&para;</a></h4>
+<h4 id="140">通常モデル（レスポンス：1分40秒）<a class="headerlink" href="#140" title="Permanent link">&para;</a></h4>
+<ul>
+<li>「大谷翔平」について、日本語で教えてください。<ul>
+<li>訳のわからない英語が返ってきました。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4bit1">4bit量子化モデル（レスポンス：1秒）<a class="headerlink" href="#4bit1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>「大谷翔平」について、日本語で教えてください。<ul>
+<li>大谷翔平は、1962年生まれの日本人サウジアナタリスト、ホラー映画監督、音楽制作監督、ビデオゲーム開発者です。彼は早くらいの若さで、確固たる人物として現れました。彼は「ゴッホ」シリーズや「ファイアフォース」シリーズなどの映画を手がけ、質の高い作品を多数制作してきました。彼の映画は、日本だけでなく、世界的に評価を受けています。</li>
+<li>また、大谷翔平は独特なアーティスティックスタイルを持っています。彼は映画準備中のビデオサイズでの撮影に積極的で、それが彼の映画作品に独特な視覚的魅力をもたらしました。また、彼は映画音楽の分野でも活躍しており、多くの映画にその楽曲を作成しています。例えば、「ファイアフォース2」や「ファイアフォース3」の映画では、彼自身が作曲した音楽が登場します。</li>
+</ul>
+</li>
+</ul>
+<h3 id="_4">参考サイト<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://zenn.dev/headwaters/articles/3c2a9310004a94">https://zenn.dev/headwaters/articles/3c2a9310004a94</a></li>
+</ul>
+<p><br></p>
+<style>
+font-family: 'Note Sans JP','Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3, Meiryo', メイリオ, Arial, sans-serif;
+table {border-left:1px solid #333;}
+th {background:#eee;color:#000 !important;border-top:1px solid #333;}
+td {background:#fff;color:#333;border-bottom:1px solid #333;}
+th,td {border-left:dotted 1px #333;}
+th:first-of-type {border-left:1px solid #333;}
+td:first-of-type {border-left:1px solid #333;}
+th:last-of-type {border-right:1px solid #333;}
+td:last-of-type {border-right:1px solid #333;}
+hr {border-bottom:1px dashed #999;}
+</style>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../python-dev/" class="btn btn-neutral float-left" title="Python導入"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../llama-3/" class="btn btn-neutral float-right" title="Llama-3-ELYZA-JP導入">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright © 2023-2024 kumanekokk.com</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../python-dev/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../llama-3/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../js/common.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
