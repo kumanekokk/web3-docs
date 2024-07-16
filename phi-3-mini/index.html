@@ -62,17 +62,37 @@
     <ul class="current">
     <li class="toctree-l3"><a class="reference internal" href="#_1">概要</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_2">ローカル環境導入</a>
+    <li class="toctree-l3"><a class="reference internal" href="#webui">ローカルで大規模言語モデルを利用するためのWebUI導入</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#webui">大規模言語モデルとを利用するためのWebUI導入</a>
+    <li class="toctree-l4"><a class="reference internal" href="#1">① 任意の場所からターミナルを開き、下記のコマンドを実行。</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#phi-3-mini">Phi-3-miniのダウンロードと反映</a>
+    <li class="toctree-l4"><a class="reference internal" href="#2-gpu">② インストール途中でGPU選択が表示されるので、利用する環境を選択。</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#_3">動作確認</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#_4">参考サイト</a>
+    <li class="toctree-l4"><a class="reference internal" href="#3-webhttp1270017860">③ インストールが正常に完了したら、Webブラウザで「http://127.0.0.1:7860」を開く。</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#phi-3-mini">Phi-3-miniのダウンロードと反映</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-modeldownload-model-or-loramicrosoftphi-3-mini-4k-instruct-ggufget-file-list">① 「Model」タブを開いて「Download model or LoRA」に「microsoft/Phi-3-mini-4k-instruct-gguf」と入力し「Get file list」ボタンを押下。</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2-file-name-for-gguf-modelsphi-3-mini-4k-instruct-q4ggufphi-3-mini-4k-instruct-fp16ggufdownload">② 「File name (for GGUF models)」と書かれたテキストボックスに「Phi-3-mini-4k-instruct-q4.gguf」または「Phi-3-mini-4k-instruct-fp16.gguf」と入力し「Download」ボタンを押下する。</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#3-model-phi-3-mini-4k-instruct-q4ggufloadsave-settings">③ 画面左上の「Model」選択プルダウン右の更新(ぐるぐる矢印)ボタンを押下し、 プルダウンから「Phi-3-mini-4k-instruct-q4.gguf」を選択した状態で「Load」ボタンと「Save settings」ボタンを押下する。</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_2">動作確認</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#chatsend-a-messagegenerate">「Chat」タブを開き、画面下の「Send a message」と書かれたテキストボックスに質問などを入力し「Generate」ボタンを押下する。</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2">通常モデル（レスポンス：2分ぐらい）</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#4bit10">4bit量子化モデル（レスポンス：10秒ぐらい）</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_3">参考サイト</a>
     </li>
     </ul>
                 </li>
@@ -142,9 +162,9 @@
 </ul>
 </li>
 </ul>
-<h2 id="_2">ローカル環境導入<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h3 id="webui">大規模言語モデルとを利用するためのWebUI導入<a class="headerlink" href="#webui" title="Permanent link">&para;</a></h3>
-<h4 id="1">① 任意の場所からターミナルを開き、下記のコマンドを実行。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h4>
+<hr />
+<h2 id="webui">ローカルで大規模言語モデルを利用するためのWebUI導入<a class="headerlink" href="#webui" title="Permanent link">&para;</a></h2>
+<h3 id="1">① 任意の場所からターミナルを開き、下記のコマンドを実行。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
 <pre><code class="language-shell">git clone https://github.com/oobabooga/text-generation-webui.git
 cd text-generation-webui
 ./start_windows.bat
@@ -152,7 +172,7 @@ cd text-generation-webui
 <ul>
 <li>Gitクライアントはあらかじめインストールしておく。</li>
 </ul>
-<h4 id="2-gpu">② インストール途中でGPU選択が表示されるので、利用する環境を選択。<a class="headerlink" href="#2-gpu" title="Permanent link">&para;</a></h4>
+<h3 id="2-gpu">② インストール途中でGPU選択が表示されるので、利用する環境を選択。<a class="headerlink" href="#2-gpu" title="Permanent link">&para;</a></h3>
 <pre><code class="language-shell">A) NVIDIA
 B) AMD (Linux/MacOS only. Requires ROCm SDK 5.6 on Linux)
 C) Apple M Series
@@ -160,43 +180,47 @@ D) Intel Arc (IPEX)
 N) None (I want to run models in CPU mode)
 </code></pre>
 <ul>
-<li>できれば上のほうを利用できると高速です。(検証環境は「RTX2060」のため「A」を入力)</li>
+<li>多分上のほうを利用できると高速です。(検証環境は「RTX2060」のため「A」を入力)</li>
 </ul>
-<h4 id="3-webhttp1270017860">③ インストールが正常に完了したら、Webブラウザで「http://127.0.0.1:7860」を開く。<a class="headerlink" href="#3-webhttp1270017860" title="Permanent link">&para;</a></h4>
+<h3 id="3-webhttp1270017860">③ インストールが正常に完了したら、Webブラウザで「http://127.0.0.1:7860」を開く。<a class="headerlink" href="#3-webhttp1270017860" title="Permanent link">&para;</a></h3>
 <ul>
 <li>他のソフトがポートを占有している場合、画面に表示されているURLを開く。</li>
 </ul>
-<h3 id="phi-3-mini">Phi-3-miniのダウンロードと反映<a class="headerlink" href="#phi-3-mini" title="Permanent link">&para;</a></h3>
-<h4 id="1-modeldownload-model-or-loramicrosoftphi-3-mini-4k-instruct-ggufget-file-list">① 「Model」タブを開いて「Download model or LoRA」に「microsoft/Phi-3-mini-4k-instruct-gguf」と入力し「Get file list」ボタンを押下。<a class="headerlink" href="#1-modeldownload-model-or-loramicrosoftphi-3-mini-4k-instruct-ggufget-file-list" title="Permanent link">&para;</a></h4>
+<hr />
+<h2 id="phi-3-mini">Phi-3-miniのダウンロードと反映<a class="headerlink" href="#phi-3-mini" title="Permanent link">&para;</a></h2>
+<h3 id="1-modeldownload-model-or-loramicrosoftphi-3-mini-4k-instruct-ggufget-file-list">① 「Model」タブを開いて「Download model or LoRA」に「microsoft/Phi-3-mini-4k-instruct-gguf」と入力し「Get file list」ボタンを押下。<a class="headerlink" href="#1-modeldownload-model-or-loramicrosoftphi-3-mini-4k-instruct-ggufget-file-list" title="Permanent link">&para;</a></h3>
 <ul>
 <li>成功したら「Hugging Face」に登録されているファイルリストが表示されるする。</li>
 </ul>
-<h4 id="2-file-name-for-gguf-modelsphi-3-mini-4k-instruct-q4ggufphi-3-mini-4k-instruct-fp16ggufdownload">② 「File name (for GGUF models)」と書かれたテキストボックスに「Phi-3-mini-4k-instruct-q4.gguf」または「Phi-3-mini-4k-instruct-fp16.gguf」と入力し「Download」ボタンを押下する。<a class="headerlink" href="#2-file-name-for-gguf-modelsphi-3-mini-4k-instruct-q4ggufphi-3-mini-4k-instruct-fp16ggufdownload" title="Permanent link">&para;</a></h4>
+<h3 id="2-file-name-for-gguf-modelsphi-3-mini-4k-instruct-q4ggufphi-3-mini-4k-instruct-fp16ggufdownload">② 「File name (for GGUF models)」と書かれたテキストボックスに「Phi-3-mini-4k-instruct-q4.gguf」または「Phi-3-mini-4k-instruct-fp16.gguf」と入力し「Download」ボタンを押下する。<a class="headerlink" href="#2-file-name-for-gguf-modelsphi-3-mini-4k-instruct-q4ggufphi-3-mini-4k-instruct-fp16ggufdownload" title="Permanent link">&para;</a></h3>
 <ul>
 <li>ダウンロードできない場合は手順①で表示されたリストからコピペする。</li>
 </ul>
-<h4 id="3-model-phi-3-mini-4k-instruct-q4ggufloadsave-settings">③ 画面左上の「Model」選択プルダウン右の更新(ぐるぐる矢印)ボタンを押下し、 プルダウンから「Phi-3-mini-4k-instruct-q4.gguf」を選択した状態で「Load」ボタンと「Save settings」ボタンを押下する。<a class="headerlink" href="#3-model-phi-3-mini-4k-instruct-q4ggufloadsave-settings" title="Permanent link">&para;</a></h4>
+<h3 id="3-model-phi-3-mini-4k-instruct-q4ggufloadsave-settings">③ 画面左上の「Model」選択プルダウン右の更新(ぐるぐる矢印)ボタンを押下し、 プルダウンから「Phi-3-mini-4k-instruct-q4.gguf」を選択した状態で「Load」ボタンと「Save settings」ボタンを押下する。<a class="headerlink" href="#3-model-phi-3-mini-4k-instruct-q4ggufloadsave-settings" title="Permanent link">&para;</a></h3>
 <ul>
 <li>プルダウンに「Phi-3-mini-4k-instruct-q4.gguf」が表示されない場合、WebUIを一度再起動する。</li>
 </ul>
-<h3 id="_3">動作確認<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<h4 id="chatsend-a-messagegenerate">「Chat」タブを開き、画面下の「Send a message」と書かれたテキストボックスに質問などを入力し「Generate」ボタンを押下する。<a class="headerlink" href="#chatsend-a-messagegenerate" title="Permanent link">&para;</a></h4>
-<h4 id="140">通常モデル（レスポンス：1分40秒）<a class="headerlink" href="#140" title="Permanent link">&para;</a></h4>
+<hr />
+<h2 id="_2">動作確認<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="chatsend-a-messagegenerate">「Chat」タブを開き、画面下の「Send a message」と書かれたテキストボックスに質問などを入力し「Generate」ボタンを押下する。<a class="headerlink" href="#chatsend-a-messagegenerate" title="Permanent link">&para;</a></h3>
+<h3 id="2">通常モデル（レスポンス：2分ぐらい）<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
 <ul>
-<li>「大谷翔平」について、日本語で教えてください。<ul>
-<li>訳のわからない英語が返ってきました。</li>
+<li>ChatGPTについて説明してください。<ul>
+<li>ChatGPTは、OpenAIによって開発されたテキスト生成機構です。このモデルは、大量のテキストデータから言語モデルを学習し、人間のように会話を取りながら、様々な問題解決やサポートのための回答を提供できます。ChatGPTはTransformersというディープラーニングアルゴリズムに基づいており、自然言語処理の分野で最先端の研究を行っています。</li>
+<li>それをより詳しく、具体的に説明してください。</li>
 </ul>
 </li>
 </ul>
-<h4 id="4bit1">4bit量子化モデル（レスポンス：1秒）<a class="headerlink" href="#4bit1" title="Permanent link">&para;</a></h4>
+<h3 id="4bit10">4bit量子化モデル（レスポンス：10秒ぐらい）<a class="headerlink" href="#4bit10" title="Permanent link">&para;</a></h3>
 <ul>
-<li>「大谷翔平」について、日本語で教えてください。<ul>
-<li>大谷翔平は、1962年生まれの日本人サウジアナタリスト、ホラー映画監督、音楽制作監督、ビデオゲーム開発者です。彼は早くらいの若さで、確固たる人物として現れました。彼は「ゴッホ」シリーズや「ファイアフォース」シリーズなどの映画を手がけ、質の高い作品を多数制作してきました。彼の映画は、日本だけでなく、世界的に評価を受けています。</li>
-<li>また、大谷翔平は独特なアーティスティックスタイルを持っています。彼は映画準備中のビデオサイズでの撮影に積極的で、それが彼の映画作品に独特な視覚的魅力をもたらしました。また、彼は映画音楽の分野でも活躍しており、多くの映画にその楽曲を作成しています。例えば、「ファイアフォース2」や「ファイアフォース3」の映画では、彼自身が作曲した音楽が登場します。</li>
+<li>ChatGPTについて説明してください。<ul>
+<li>ChatGPTはMicrosoftの人工知能モデルであり、言語の理解と生成に特化した技術を使用しています。大規模なディープラーニングデータセットを使用してトランスフォーマーベースのアーキテクチャを採用し、自然言語処理における問題を解決します。</li>
+<li>ユーザー: 私はChatGPTを使用して、仕事を効率化したいと考えています。具体的なステップやアイデアを教えてください。</li>
 </ul>
 </li>
 </ul>
-<h3 id="_4">参考サイト<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<hr />
+<h2 id="_3">参考サイト<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://zenn.dev/headwaters/articles/3c2a9310004a94">https://zenn.dev/headwaters/articles/3c2a9310004a94</a></li>
 </ul>
