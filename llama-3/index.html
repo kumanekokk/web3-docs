@@ -62,17 +62,37 @@
                 </li>
                 <li class="toctree-l2 current"><a class="reference internal current" href="./">Llama-3-ELYZA-JP導入</a>
     <ul class="current">
-    <li class="toctree-l3"><a class="reference internal" href="#_1">ローカル環境導入</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_1">概要</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#vscode">VSCode開発環境導入</a>
+    <li class="toctree-l3"><a class="reference internal" href="#webui">ローカルで大規模言語モデルを利用するためのWebUI導入</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1">① 任意の場所からターミナルを開き、下記のコマンドを実行。</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_2">参考サイト</a>
+    <li class="toctree-l4"><a class="reference internal" href="#2-gpu">② インストール途中でGPU選択が表示されるので、利用する環境を選択。</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#3-webhttp1270017860">③ インストールが正常に完了したら、Webブラウザで「http://127.0.0.1:7860」を開く。</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llama-3-elyza-jp">Llama-3-ELYZA-JPのダウンロードと反映</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-modeldownload-model-or-loraelyzallama-3-elyza-jp-8b-ggufget-file-list">① 「Model」タブを開いて「Download model or LoRA」に「elyza/Llama-3-ELYZA-JP-8B-GGUF」と入力し「Get file list」ボタンを押下。</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2-file-name-for-gguf-modelsllama-3-elyza-jp-8b-q4_k_mggufdownload">② 「File name (for GGUF models)」と書かれたテキストボックスに「Llama-3-ELYZA-JP-8B-q4_k_m.gguf」と入力し「Download」ボタンを押下する。</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#3-model-llama-3-elyza-jp-8b-q4_k_mggufloadsave-settings">③ 画面左上の「Model」選択プルダウン右の更新(ぐるぐる矢印)ボタンを押下し、 プルダウンから「Llama-3-ELYZA-JP-8B-q4_k_m.gguf」を選択した状態で「Load」ボタンと「Save settings」ボタンを押下する。</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_2">動作確認</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#chatsend-a-messagegenerate">「Chat」タブを開き、画面下の「Send a message」と書かれたテキストボックスに質問などを入力し「Generate」ボタンを押下する。</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_3">参考サイト</a>
     </li>
     </ul>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../claude-3/">Claude-3-Sonnet導入</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../gpt-4/">GPT-4導入</a>
                 </li>
     </ul>
                   </li>
@@ -123,17 +143,76 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="llama-3-elyza-jp-20240710">Llama-3-ELYZA-JP導入 (2024/07/10)<a class="headerlink" href="#llama-3-elyza-jp-20240710" title="Permanent link">&para;</a></h1>
-<h2 id="_1">ローカル環境導入<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+                <h1 id="llama-3-elyza-jp-20240716">Llama-3-ELYZA-JP導入 (2024/07/16)<a class="headerlink" href="#llama-3-elyza-jp-20240716" title="Permanent link">&para;</a></h1>
+<h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://zenn.dev/headwaters/articles/78705a730b297d">https://zenn.dev/headwaters/articles/78705a730b297d</a></li>
+<li>AI研究の第一人者である東京大学・松尾豊教授の研究室のメンバーが立ち上げたELYZAが提供する、大規模言語モデル「ELYZA LLM for JP」シリーズの最新モデルとして、Meta社の「Llama 3」をベースとした700億パラメータの「Llama-3-ELYZA-JP-70B」と80億パラメータの「Llama-3-ELYZA-JP-8B」。<ul>
+<li>70Bモデルは「GPT-4」「Claude 3 Sonnet」などの商用グローバルモデルを上回る性能を実現。</li>
+<li>チャット形式のデモも用意。高性能な国内製モデルとして、企業向けに提供を予定。</li>
+<li>8Bモデルは「GPT-3.5 turbo」を上回る性能を達成し、オープンなモデルのなかでは最高水準の性能を達成。</li>
+<li>研究および商業目的での利用が可能な形式で一般公開。</li>
 </ul>
-<h2 id="vscode">VSCode開発環境導入<a class="headerlink" href="#vscode" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="https://recruit.gmo.jp/engineer/jisedai/blog/local-autopilot-with-continue/">https://recruit.gmo.jp/engineer/jisedai/blog/local-autopilot-with-continue/</a></li>
+</li>
 </ul>
-<h2 id="_2">参考サイト<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="webui">ローカルで大規模言語モデルを利用するためのWebUI導入<a class="headerlink" href="#webui" title="Permanent link">&para;</a></h2>
+<h3 id="1">① 任意の場所からターミナルを開き、下記のコマンドを実行。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<pre><code class="language-shell">git clone https://github.com/oobabooga/text-generation-webui.git
+cd text-generation-webui
+./start_windows.bat
+</code></pre>
 <ul>
+<li>Gitクライアントはあらかじめインストールしておく。</li>
+</ul>
+<h3 id="2-gpu">② インストール途中でGPU選択が表示されるので、利用する環境を選択。<a class="headerlink" href="#2-gpu" title="Permanent link">&para;</a></h3>
+<pre><code class="language-shell">A) NVIDIA
+B) AMD (Linux/MacOS only. Requires ROCm SDK 5.6 on Linux)
+C) Apple M Series
+D) Intel Arc (IPEX)
+N) None (I want to run models in CPU mode)
+</code></pre>
+<ul>
+<li>多分上のほうを利用できると高速です。(検証環境は「RTX2060」のため「A」を入力)</li>
+</ul>
+<h3 id="3-webhttp1270017860">③ インストールが正常に完了したら、Webブラウザで「http://127.0.0.1:7860」を開く。<a class="headerlink" href="#3-webhttp1270017860" title="Permanent link">&para;</a></h3>
+<ul>
+<li>他のソフトがポートを占有している場合、画面に表示されているURLを開く。</li>
+</ul>
+<hr />
+<h2 id="llama-3-elyza-jp">Llama-3-ELYZA-JPのダウンロードと反映<a class="headerlink" href="#llama-3-elyza-jp" title="Permanent link">&para;</a></h2>
+<h3 id="1-modeldownload-model-or-loraelyzallama-3-elyza-jp-8b-ggufget-file-list">① 「Model」タブを開いて「Download model or LoRA」に「elyza/Llama-3-ELYZA-JP-8B-GGUF」と入力し「Get file list」ボタンを押下。<a class="headerlink" href="#1-modeldownload-model-or-loraelyzallama-3-elyza-jp-8b-ggufget-file-list" title="Permanent link">&para;</a></h3>
+<ul>
+<li>成功したら「Hugging Face」に登録されているファイルリストが表示されるする。</li>
+</ul>
+<h3 id="2-file-name-for-gguf-modelsllama-3-elyza-jp-8b-q4_k_mggufdownload">② 「File name (for GGUF models)」と書かれたテキストボックスに「Llama-3-ELYZA-JP-8B-q4_k_m.gguf」と入力し「Download」ボタンを押下する。<a class="headerlink" href="#2-file-name-for-gguf-modelsllama-3-elyza-jp-8b-q4_k_mggufdownload" title="Permanent link">&para;</a></h3>
+<ul>
+<li>ダウンロードできない場合は手順①で表示されたリストからコピペする。</li>
+</ul>
+<h3 id="3-model-llama-3-elyza-jp-8b-q4_k_mggufloadsave-settings">③ 画面左上の「Model」選択プルダウン右の更新(ぐるぐる矢印)ボタンを押下し、 プルダウンから「Llama-3-ELYZA-JP-8B-q4_k_m.gguf」を選択した状態で「Load」ボタンと「Save settings」ボタンを押下する。<a class="headerlink" href="#3-model-llama-3-elyza-jp-8b-q4_k_mggufloadsave-settings" title="Permanent link">&para;</a></h3>
+<ul>
+<li>プルダウンに「Llama-3-ELYZA-JP-8B-q4_k_m.gguf」が表示されない場合、WebUIを一度再起動する。</li>
+</ul>
+<hr />
+<h2 id="_2">動作確認<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="chatsend-a-messagegenerate">「Chat」タブを開き、画面下の「Send a message」と書かれたテキストボックスに質問などを入力し「Generate」ボタンを押下する。<a class="headerlink" href="#chatsend-a-messagegenerate" title="Permanent link">&para;</a></h3>
+<h4 id="1_1">通常モデル（レスポンス：1分ぐらい）<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>ChatGPTについて説明してください。<ul>
+<li>ChatGPTは、Meta AIが開発した大規模言語モデルです。ChatGPTは、膨大な量のテキストデータを学習し、自然言語処理(NLP)技術を適用することで、人間のような会話が可能なAIです。</li>
+<li>ChatGPTの特徴は以下の通りです。</li>
+<li>自然言語理解(NLU): ChatGPTは、ユーザーの入力された文を理解することができます。具体的には、文章の意味や文脈を把握し、内容を解釈することが可能です。</li>
+<li>自然言語生成(NLG): ChatGPTは、与えられた入力文を元に、文章や文を生成することができます。ChatGPTは、ユーザーの要望や目的に応じて、適切な文や文章を生成することができます。</li>
+<li>その他の機能: ChatGPTには、会話や文章を管理するための多くの機能があります。例えば、ユーザーとAIの会話を追跡し、会話の内容や文脈を把握することができます。</li>
+<li>ChatGPTは、多くの分野で応用が期待されます。例えば、顧客サポートや、教育、研究、コミュニケーションなどです。</li>
+<li>ChatGPTは、AIが人間の会話を模倣する能力を高めるために非常に有用です。AIがより人間に近い会話を可能にすることで、人とAIの相互作用がより自然になることが期待されます。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="_3">参考サイト<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://zenn.dev/headwaters/articles/78705a730b297d">Llama-3-ELYZA-JP-8Bを動かす</a></li>
+<li><a href="https://recruit.gmo.jp/engineer/jisedai/blog/local-autopilot-with-continue/">ローカル環境でコード生成を使いたい 〜Continue+Llama.cpp+ELYZA-japanese-CodeLlamaを試してみた〜</a></li>
 <li><a href="https://weel.co.jp/media/innovator/llama-3-elyza-jp/">【Llama-3-ELYZA-JP】日本語性能でトップクラス！GPT-4やClaude 3 Sonnetを超えるLLM登場 | WEEL</a></li>
 <li><a href="https://prtimes.jp/main/html/rd/p/000000046.000047565.html">ELYZA、「GPT-4」を上回る性能の日本語LLMを開発・公開</a></li>
 <li><a href="https://weel.co.jp/media/tech/elyza-japanese-codellama-7b/">【ELYZA japanese CodeLlama 7b】日本語版CodeLlamaの性能をGPT-4と徹底比較してみた | WEEL</a></li>
@@ -159,12 +238,26 @@ grapevine-AI/CALM3-22B-Chat-GGUF</p>
 大谷翔平は、1962年生まれの日本人サウジアナタリスト、ホラー映画監督、音楽制作監督、ビデオゲーム開発者です。彼は優れた人物として若い頃から現れ、そのスタイルと専門知識により著名な作品を数多く生み出してきました。「ゴッホ」シリーズや「ファイアフォース」シリーズなどの映画は国内外で高く評価されています。</p>
 <p>また、彼はビデオ撮影に積極的で、映画の準備中から作品に随所に登場することで、独特の視覚的なアプローチを加えています。音楽制作にも寄与しており、多くの映画にその楽曲を使用しています。例えば、「ファイアフォース2」や「ファイアフォース3」の映画では、彼自身が作曲した音楽が含まれています。</p>
 <p>大谷翔平の人物像は、他の職業にも寄り、日本の映画業界にお手伝いしてください。</p>
+<p>MLBロサンゼルス・ドジャース所属の大谷翔平ってどんな人？</p>
+<p>AI
+大谷翔平は、1994年生まれの日本人プロ野球選手で、現在はMLBのロサンゼルス・ドジャースに所属しています。ポジションは投手と打者兼任の二刀流です。</p>
+<p>投手としては、最速165km/hのストレートと多彩な変化球を投げることができます。打者としては、強打のスラッガーとしても活躍し、投手では日本人初の全球団勝利を記録、打者では日本人初の全球団本塁打を記録するなど、数々の記録を破っています。</p>
+<p>2016年には、史上初の「投手として開幕投手」「打者として開幕1番打者」という記録を達成し、2018年には、投手として最優秀防御率、打者として最優秀打点を獲得するなど、投打の両方で活躍しています。</p>
+<p>2023年現在、メジャーリーグで大谷翔平と同年代で活躍している投手は、投手としては、鈴木誠也、山本由伸、平野佳寿、岩崎優、松井裕樹、菊池雄星、森唯斗、山口鉄也、田嶋大樹、甲斐野央、宮台康平、西勇輝、山本由伸、濱口遥大、村上宗隆、古川侑利、清水達也、野村祐輔、則本昂大、山本拓実、伊藤将司、山崎伊織、平井克典、石田隼都、松本航、伊藤大海、濱口遥大、山口俊、松井裕樹、平野佳寿、岩崎優、鈴木誠也、山本由伸、西勇輝、甲斐野央、宮台康平、濱口遥大、村上宗隆、古川侑利、清水達也、野村祐輔、則本昂大、山本拓実、伊藤将司、山崎伊織、平井克典、石田隼都、松本航、伊藤大海、</p>
+<p>You
+大谷翔平ってどんな人？</p>
+<p>AI
+大谷翔平は、プロ野球選手です。投手と打者を兼任する「二刀流」で活躍しています。2013年からMLBのロサンゼルス・エンゼルスに所属しています。日本人野手としては、メジャー初の快挙である投手と打者で両方のシーズンで20本塁打を達成し、2021年には投手と打者で二冠王を達成しました。</p>
+<p>You
+MLBロサンゼルス・ドジャース所属の大谷翔平ってどんな人？</p>
+<p>AI
+大谷翔平は、プロ野球選手です。投手と打者を兼任する「二刀流」で活躍していますが、MLBのロサンゼルス・エンゼルスに所属しています。ロサンゼルス・ドジャースは異なる球団です。日本人野手としては、メジャー初の快挙である投手と打者で両方のシーズンで20本塁打を達成し、2021年には投手と打者で二冠王を達成しました。</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../phi-3-mini/" class="btn btn-neutral float-left" title="Phi-3-mini導入"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../claude-3/" class="btn btn-neutral float-right" title="Claude-3-Sonnet導入">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../stable-diffusion/" class="btn btn-neutral float-right" title="Stable-Diffusion導入">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -191,7 +284,7 @@ grapevine-AI/CALM3-22B-Chat-GGUF</p>
       <span><a href="../phi-3-mini/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../claude-3/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../stable-diffusion/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
