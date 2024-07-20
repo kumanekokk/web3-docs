@@ -94,6 +94,8 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#3">③ テストコードを実行して動作確認する。</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#4-webui">④ WebUIの起動</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#_2">参考サイト</a>
@@ -200,9 +202,7 @@ Microsoftのものは論文は公開されていますが、ソースコード�
 <hr />
 <h2 id="webui">仮想環境に日本語版WebUI導入<a class="headerlink" href="#webui" title="Permanent link">&para;</a></h2>
 <h3 id="1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Python仮想環境導入</li>
-</ol>
+<h4 id="1-python">1. Python仮想環境導入<a class="headerlink" href="#1-python" title="Permanent link">&para;</a></h4>
 <pre><code class="language-powershell">$ cd ~/
 $ rmdir /s /q VALL-E-X-JP
 $ git clone --recursive https://github.com/kuwacom/VALL-E-X-JP.git
@@ -210,18 +210,14 @@ $ cd VALL-E-X-JP
 $ py -3.10 -m venv venv
 $ .\venv\Scripts\activate
 </code></pre>
-<ol>
-<li>PyTorchなどのモジュールインストール</li>
-</ol>
+<h4 id="2-pytorch">2. PyTorchなどのモジュールインストール<a class="headerlink" href="#2-pytorch" title="Permanent link">&para;</a></h4>
 <pre><code class="language-powershell">(venv)$ python.exe -m pip install --upgrade pip
 (venv)$ pip install -r req-cuda-12.1.txt
 (venv)$ pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 (venv)$ pip install -r req.txt
 </code></pre>
 <p>※ CUDAなどがインストールエラーになる場合、すでにインストール済の可能性があるため、とりあえずスキップして進めてみる。</p>
-<ol>
-<li>WebUI起動</li>
-</ol>
+<h4 id="3-webui">3. WebUI起動<a class="headerlink" href="#3-webui" title="Permanent link">&para;</a></h4>
 <pre><code class="language-powershell">(venv)$ start-webgui-windows.bat
 </code></pre>
 <p>※ 不明点や動作確認方法などは、下記本家WebUI環境導入もあわせて参照。</p>
@@ -239,15 +235,13 @@ mkdir checkpoints
 <li>Gitクライアントはあらかじめインストールしておいてください。</li>
 </ul>
 <h3 id="2">② 音声合成用の機械学習データをダウンロードして配置する。<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
-<ol>
+<h4 id="1-urlvallex-checkpointpt">1. 下記URLにアクセスして「vallex-checkpoint.pt」をダウンロードする。<a class="headerlink" href="#1-urlvallex-checkpointpt" title="Permanent link">&para;</a></h4>
+<ul>
 <li><a href="https://drive.google.com/uc?id=10gdQWvP-K_e1undkvv0p2b7SU6I4Egy">https://drive.google.com/uc?id=10gdQWvP-K_e1undkvv0p2b7SU6I4Egy</a></li>
-<li>上記URLにアクセスして「vallex-checkpoint.pt」をダウンロードする。</li>
-<li>ダウンロードしたファイルを「checkpoints」フォルダ直下に配置する。</li>
-</ol>
+</ul>
+<h4 id="2-checkpoints">2. ダウンロードしたファイルを「checkpoints」フォルダ直下に配置する。<a class="headerlink" href="#2-checkpoints" title="Permanent link">&para;</a></h4>
 <h3 id="3">③ テストコードを実行して動作確認する。<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
-<ol>
-<li>「VALL-E-X」フォルダ直下に「tts.py」を作成し、下記のコードを記述する。</li>
-</ol>
+<h4 id="1-vall-e-xttspy">1. 「VALL-E-X」フォルダ直下に「tts.py」を作成し、下記のコードを記述する。<a class="headerlink" href="#1-vall-e-xttspy" title="Permanent link">&para;</a></h4>
 <pre><code class="language-python">from utils.generation import SAMPLE_RATE, generate_audio, preload_models
 from scipy.io.wavfile import write as write_wav
 preload_models()
@@ -258,9 +252,7 @@ text_prompt = &quot;&quot;&quot;
 audio_array = generate_audio(text_prompt)
 write_wav(&quot;chapter1-1.wav&quot;, SAMPLE_RATE, audio_array)
 </code></pre>
-<ol>
-<li>下記のコマンドを実行する。</li>
-</ol>
+<h4 id="2_1">2. 下記のコマンドを実行する。<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h4>
 <pre><code class="language-python">py tts.py
 </code></pre>
 <ul>
@@ -270,20 +262,14 @@ write_wav(&quot;chapter1-1.wav&quot;, SAMPLE_RATE, audio_array)
 </ul>
 </li>
 </ul>
-<h4 id="4-webui">④ WebUIの起動<a class="headerlink" href="#4-webui" title="Permanent link">&para;</a></h4>
-<ol>
-<li>下記のコマンドを実行する。</li>
-</ol>
+<h3 id="4-webui">④ WebUIの起動<a class="headerlink" href="#4-webui" title="Permanent link">&para;</a></h3>
+<h4 id="1_2">1. 下記のコマンドを実行する。<a class="headerlink" href="#1_2" title="Permanent link">&para;</a></h4>
 <pre><code class="language-python">py launch-ui.py
 </code></pre>
-<ol>
-<li>
-<p>Webブラウザで「http://127.0.0.1:7860」を開く。</p>
-</li>
-<li>
-<p>他のソフトがポートを占有している場合、画面に表示されているURLを開く。</p>
-</li>
-</ol>
+<h4 id="2-webhttp1270017860">2. Webブラウザで「http://127.0.0.1:7860」を開く。<a class="headerlink" href="#2-webhttp1270017860" title="Permanent link">&para;</a></h4>
+<ul>
+<li>他のソフトがポートを占有している場合、画面に表示されているURLを開く。</li>
+</ul>
 <hr />
 <h2 id="_2">参考サイト<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
