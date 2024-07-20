@@ -80,17 +80,21 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#python">Python動作環境導入</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cuiai">CUIの生成AI環境導入</a>
+    <li class="toctree-l3"><a class="reference internal" href="#webui">仮想環境に日本語版WebUI導入</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#windowswebui">Windowsに直接本家WebUI導入（非推奨）</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1_1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#2">② 音声合成用の機械学習データをダウンロードして配置する。</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#3">③ テストコードを実行して動作確認する。</a>
     </li>
         </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#webuigui">WebUIを使用したGUIツール導入</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#_2">参考サイト</a>
     </li>
@@ -131,7 +135,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="vall-e-x-20240628">VALL-E-X導入 (2024/06/28)<a class="headerlink" href="#vall-e-x-20240628" title="Permanent link">&para;</a></h1>
+                <h1 id="vall-e-x-20240720">VALL-E-X導入 (2024/07/20)<a class="headerlink" href="#vall-e-x-20240720" title="Permanent link">&para;</a></h1>
 <h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -194,13 +198,41 @@ Microsoftのものは論文は公開されていますが、ソースコード�
 <li>Python動作環境導入の詳細は「Python仮想環境導入.pdf」をご参照ください。</li>
 </ul>
 <hr />
-<h2 id="cuiai">CUIの生成AI環境導入<a class="headerlink" href="#cuiai" title="Permanent link">&para;</a></h2>
+<h2 id="webui">仮想環境に日本語版WebUI導入<a class="headerlink" href="#webui" title="Permanent link">&para;</a></h2>
 <h3 id="1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Python仮想環境導入</li>
+</ol>
+<pre><code class="language-powershell">$ cd ~/
+$ rmdir /s /q VALL-E-X-JP
+$ git clone --recursive https://github.com/kuwacom/VALL-E-X-JP.git
+$ cd VALL-E-X-JP
+$ py -3.10 -m venv venv
+$ .\venv\Scripts\activate
+</code></pre>
+<ol>
+<li>PyTorchなどのモジュールインストール</li>
+</ol>
+<pre><code class="language-powershell">(venv)$ python.exe -m pip install --upgrade pip
+(venv)$ pip install -r req-cuda-12.1.txt
+(venv)$ pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+(venv)$ pip install -r req.txt
+</code></pre>
+<p>※ CUDAなどがインストールエラーになる場合、すでにインストール済の可能性があるため、とりあえずスキップして進めてみる。</p>
+<ol>
+<li>WebUI起動</li>
+</ol>
+<pre><code class="language-powershell">(venv)$ start-webgui-windows.bat
+</code></pre>
+<p>※ 不明点や動作確認方法などは、下記本家WebUI環境導入もあわせて参照。</p>
+<hr />
+<h2 id="windowswebui">Windowsに直接本家WebUI導入（非推奨）<a class="headerlink" href="#windowswebui" title="Permanent link">&para;</a></h2>
+<h3 id="1_1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
 <pre><code class="language-powershell">cd ~/
 rmdir /s /q VALL-E-X
 git clone --recursive https://github.com/Plachtaa/VALL-E-X
 cd VALL-E-X
-python -m pip install -r requirements.txt
+py -m pip install -r requirements.txt
 mkdir checkpoints
 </code></pre>
 <ul>
@@ -220,9 +252,8 @@ mkdir checkpoints
 from scipy.io.wavfile import write as write_wav
 preload_models()
 text_prompt = &quot;&quot;&quot;
-最先端技術とデジタル人材で、お客様に感動を与えられるサービスを生み出すと同時に、
-社会との信頼を大事にするという意志が込めて、名付けました。
-毎日「すごい」で満たせる感動を、お客様と一緒に進めて参ります。
+私たちは、日々新しい技術やサービスを生み出しております。
+新しい技術を学び、サービスを改善することで、世界中のユーザーに便利さや快適さを提供することが、私たちの使命です。
 &quot;&quot;&quot;
 audio_array = generate_audio(text_prompt)
 write_wav(&quot;chapter1-1.wav&quot;, SAMPLE_RATE, audio_array)
@@ -239,11 +270,20 @@ write_wav(&quot;chapter1-1.wav&quot;, SAMPLE_RATE, audio_array)
 </ul>
 </li>
 </ul>
-<hr />
-<h2 id="webuigui">WebUIを使用したGUIツール導入<a class="headerlink" href="#webuigui" title="Permanent link">&para;</a></h2>
-<ul>
-<li>準備中・・・</li>
-</ul>
+<h4 id="4-webui">④ WebUIの起動<a class="headerlink" href="#4-webui" title="Permanent link">&para;</a></h4>
+<ol>
+<li>下記のコマンドを実行する。</li>
+</ol>
+<pre><code class="language-python">py launch-ui.py
+</code></pre>
+<ol>
+<li>
+<p>Webブラウザで「http://127.0.0.1:7860」を開く。</p>
+</li>
+<li>
+<p>他のソフトがポートを占有している場合、画面に表示されているURLを開く。</p>
+</li>
+</ol>
 <hr />
 <h2 id="_2">参考サイト<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
