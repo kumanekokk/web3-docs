@@ -80,19 +80,23 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#python">Python動作環境導入</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#webui">仮想環境に日本語版WebUI導入</a>
+    <li class="toctree-l3"><a class="reference internal" href="#windowswebui">Windows仮想環境に日本語版WebUI導入</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。</a>
+    <li class="toctree-l4"><a class="reference internal" href="#1-windowsffmpge">① 下記サイトからWindows版の「FFmpge」をダウンロードしてパスを通す。</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#1-windowscuda-toolkit-12">① 下記サイトからWindows版の「CUDA Toolkit 12」をダウンロードしてインストール。</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#3_1">③ 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#windowswebui">Windowsに直接本家WebUI導入（非推奨）</a>
+    <li class="toctree-l3"><a class="reference internal" href="#windowswebui_1">Windowsに直接本家WebUI導入（非推奨）</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#1_1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。</a>
+    <li class="toctree-l4"><a class="reference internal" href="#1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#2">② 音声合成用の機械学習データをダウンロードして配置する。</a>
+    <li class="toctree-l4"><a class="reference internal" href="#2_1">② 音声合成用の機械学習データをダウンロードして配置する。</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#3">③ テストコードを実行して動作確認する。</a>
+    <li class="toctree-l4"><a class="reference internal" href="#3_2">③ テストコードを実行して動作確認する。</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#4-webui">④ WebUIの起動</a>
     </li>
@@ -200,8 +204,30 @@ Microsoftのものは論文は公開されていますが、ソースコード�
 <li>Python動作環境導入の詳細は「Python仮想環境導入.pdf」をご参照ください。</li>
 </ul>
 <hr />
-<h2 id="webui">仮想環境に日本語版WebUI導入<a class="headerlink" href="#webui" title="Permanent link">&para;</a></h2>
-<h3 id="1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<h2 id="windowswebui">Windows仮想環境に日本語版WebUI導入<a class="headerlink" href="#windowswebui" title="Permanent link">&para;</a></h2>
+<h3 id="1-windowsffmpge">① 下記サイトからWindows版の「FFmpge」をダウンロードしてパスを通す。<a class="headerlink" href="#1-windowsffmpge" title="Permanent link">&para;</a></h3>
+<ul>
+<li>https://ffmpeg.org/download.html</li>
+</ul>
+<h4 id="1-windowswindows-builds-by-btbn">1. Windowsを選択し「Windows builds by Btbn」ボタンを押下。<a class="headerlink" href="#1-windowswindows-builds-by-btbn" title="Permanent link">&para;</a></h4>
+<h4 id="2ffmpeg-master-latest-win64-gplzip">2.「ffmpeg-master-latest-win64-gpl.zip」リンクを押下してダウンロード。<a class="headerlink" href="#2ffmpeg-master-latest-win64-gplzip" title="Permanent link">&para;</a></h4>
+<h4 id="3">3. ダウンロードしたファイルを任意の場所に解凍する。<a class="headerlink" href="#3" title="Permanent link">&para;</a></h4>
+<h4 id="4">4. スタートメニューから「環境変数」で検索し「システムの環境変数の編集」を開く。<a class="headerlink" href="#4" title="Permanent link">&para;</a></h4>
+<h4 id="5-path">5. ウインドウ下部の「環境変数」ボタンを押下し「Path」を選択して「編集」ボタンを押下。<a class="headerlink" href="#5-path" title="Permanent link">&para;</a></h4>
+<h4 id="6ffmpgebinok">6.「新規」ボタンを押下し「FFmpge」binフォルダのフルパスを追加し「OK」ボタンを押下。<a class="headerlink" href="#6ffmpgebinok" title="Permanent link">&para;</a></h4>
+<h4 id="7">7. 下記のコマンドを入力してパスが通っていることを確認する。<a class="headerlink" href="#7" title="Permanent link">&para;</a></h4>
+<pre><code class="language-powershell">$ ffmpeg -version
+</code></pre>
+<ul>
+<li>実行できない場合はコマンドプロンプトやWindowsを再起動する。</li>
+</ul>
+<h3 id="1-windowscuda-toolkit-12">① 下記サイトからWindows版の「CUDA Toolkit 12」をダウンロードしてインストール。<a class="headerlink" href="#1-windowscuda-toolkit-12" title="Permanent link">&para;</a></h3>
+<ul>
+<li>https://developer.nvidia.com/cuda-12-0-0-download-archive</li>
+</ul>
+<h4 id="1windowsx86_6411exe-localdownload34gb">1.「Windows」→「x86_64」→「11」→「exe (local)」→「Download(3.4GB)」の順に押下しインストーラーをダウンロード。<a class="headerlink" href="#1windowsx86_6411exe-localdownload34gb" title="Permanent link">&para;</a></h4>
+<h4 id="2">2. ダウンロードしたファイルを実行しインストールする。<a class="headerlink" href="#2" title="Permanent link">&para;</a></h4>
+<h3 id="3_1">③ 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
 <h4 id="1-python">1. Python仮想環境導入<a class="headerlink" href="#1-python" title="Permanent link">&para;</a></h4>
 <pre><code class="language-powershell">$ cd ~/
 $ rmdir /s /q VALL-E-X-JP
@@ -222,8 +248,8 @@ $ .\venv\Scripts\activate
 </code></pre>
 <p>※ 不明点や動作確認方法などは、下記本家WebUI環境導入もあわせて参照。</p>
 <hr />
-<h2 id="windowswebui">Windowsに直接本家WebUI導入（非推奨）<a class="headerlink" href="#windowswebui" title="Permanent link">&para;</a></h2>
-<h3 id="1_1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
+<h2 id="windowswebui_1">Windowsに直接本家WebUI導入（非推奨）<a class="headerlink" href="#windowswebui_1" title="Permanent link">&para;</a></h2>
+<h3 id="1">① 管理者権限でコマンドプロンプトを開き、下記のコマンドを実行する。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
 <pre><code class="language-powershell">cd ~/
 rmdir /s /q VALL-E-X
 git clone --recursive https://github.com/Plachtaa/VALL-E-X
@@ -234,13 +260,13 @@ mkdir checkpoints
 <ul>
 <li>Gitクライアントはあらかじめインストールしておいてください。</li>
 </ul>
-<h3 id="2">② 音声合成用の機械学習データをダウンロードして配置する。<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<h3 id="2_1">② 音声合成用の機械学習データをダウンロードして配置する。<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h3>
 <h4 id="1-urlvallex-checkpointpt">1. 下記URLにアクセスして「vallex-checkpoint.pt」をダウンロードする。<a class="headerlink" href="#1-urlvallex-checkpointpt" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://drive.google.com/uc?id=10gdQWvP-K_e1undkvv0p2b7SU6I4Egy">https://drive.google.com/uc?id=10gdQWvP-K_e1undkvv0p2b7SU6I4Egy</a></li>
 </ul>
 <h4 id="2-checkpoints">2. ダウンロードしたファイルを「checkpoints」フォルダ直下に配置する。<a class="headerlink" href="#2-checkpoints" title="Permanent link">&para;</a></h4>
-<h3 id="3">③ テストコードを実行して動作確認する。<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<h3 id="3_2">③ テストコードを実行して動作確認する。<a class="headerlink" href="#3_2" title="Permanent link">&para;</a></h3>
 <h4 id="1-vall-e-xttspy">1. 「VALL-E-X」フォルダ直下に「tts.py」を作成し、下記のコードを記述する。<a class="headerlink" href="#1-vall-e-xttspy" title="Permanent link">&para;</a></h4>
 <pre><code class="language-python">from utils.generation import SAMPLE_RATE, generate_audio, preload_models
 from scipy.io.wavfile import write as write_wav
@@ -252,7 +278,7 @@ text_prompt = &quot;&quot;&quot;
 audio_array = generate_audio(text_prompt)
 write_wav(&quot;chapter1-1.wav&quot;, SAMPLE_RATE, audio_array)
 </code></pre>
-<h4 id="2_1">2. 下記のコマンドを実行する。<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h4>
+<h4 id="2_2">2. 下記のコマンドを実行する。<a class="headerlink" href="#2_2" title="Permanent link">&para;</a></h4>
 <pre><code class="language-python">py tts.py
 </code></pre>
 <ul>
@@ -263,7 +289,7 @@ write_wav(&quot;chapter1-1.wav&quot;, SAMPLE_RATE, audio_array)
 </li>
 </ul>
 <h3 id="4-webui">④ WebUIの起動<a class="headerlink" href="#4-webui" title="Permanent link">&para;</a></h3>
-<h4 id="1_2">1. 下記のコマンドを実行する。<a class="headerlink" href="#1_2" title="Permanent link">&para;</a></h4>
+<h4 id="1_1">1. 下記のコマンドを実行する。<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h4>
 <pre><code class="language-python">py launch-ui.py
 </code></pre>
 <h4 id="2-webhttp1270017860">2. Webブラウザで「http://127.0.0.1:7860」を開く。<a class="headerlink" href="#2-webhttp1270017860" title="Permanent link">&para;</a></h4>
