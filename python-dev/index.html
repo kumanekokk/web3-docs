@@ -58,6 +58,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#python">利用するPythonバージョン</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_2">ドキュメント作成時のハードウェア構成</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#windowspython">WindowsのPython仮想環境導入</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#1-python-310">① Pythonをインストールする。 (以下は3.10系を想定)</a>
@@ -72,7 +74,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_2">参考サイト</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_3">参考サイト</a>
     </li>
     </ul>
                 </li>
@@ -133,7 +135,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="python-20240626">Python仮想環境導入 (2024/06/26)<a class="headerlink" href="#python-20240626" title="Permanent link">&para;</a></h1>
+                <h1 id="python-20240720">Python仮想環境導入 (2024/07/20)<a class="headerlink" href="#python-20240720" title="Permanent link">&para;</a></h1>
 <h2 id="_1">概要<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>venv (ブイエンブ)を利用して、プロジェクト毎に必要なPythonモジュールをインストールした仮想環境を導入する。<ul>
@@ -152,6 +154,38 @@
 </li>
 <li>Pythonのバージョン指定があるアプリケーションの場合、基本的には指定されたバージョンで仮想環境を利用する。<br>
 (最新版のPythonを利用することによるメリットが大きい場合、正常に動作しない可能性をじゅうぶんに考慮した上で、最新版のPythonで仮想環境の導入を検討する。)</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="_2">ドキュメント作成時のハードウェア構成<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center">OS</th>
+<th align="center">MEMORY</th>
+<th align="center">CPU</th>
+<th align="center">GPU</th>
+<th align="center">STRAGE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Windows11 Pro</td>
+<td align="center">DDR3 16GB</td>
+<td align="center">i7 4770</td>
+<td align="center">GeForce RTX2060 6GB</td>
+<td align="center">Intel SSD128GB + SSD256GB</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>このドキュメントの内容は、上記ハードウェア構成のパソコンで動作確認しています。<ul>
+<li>生成AIで必須のPyTorchモジュールを動作させる構成としては、ギリギリアウトな感じです。<br><ul>
+<li>「GeForce RTX 3080 10GB」以上のGPU推奨。(2024年7月現在、中古なら5万円前後なので欲しい・・・)</li>
+<li>「Intel第8世代Core」以降のCPU推奨。(上記CPUはWindows11非サポート)</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -182,7 +216,7 @@ Python 3.10.11
 <pre><code class="language-powershell">([仮想環境名])$ deactivate
 </code></pre>
 <hr />
-<h2 id="_2">参考サイト<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_3">参考サイト<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://qiita.com/fiftystorm36/items/b2fd47cf32c7694adc2e">https://qiita.com/fiftystorm36/items/b2fd47cf32c7694adc2e</a></li>
 <li><a href="https://gammasoft.jp/blog/find-out-python-launcher">https://gammasoft.jp/blog/find-out-python-launcher</a></li>
