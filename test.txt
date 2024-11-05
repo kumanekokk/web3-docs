@@ -27,3 +27,64 @@ onMounted(() => {
   setAdminSettingFormValues(adminSettings, "userPermissions");
 });
 
+
+onMounted(() => {
+  // 設定値は `string`、`number`、または `boolean` のいずれか
+  type SettingValue = string | number | boolean;
+  type DataType = Record<string, Record<string, SettingValue>>;
+
+  function setAdminSettingFormValues(data: DataType, key: string) {
+    const settingData = data[key];
+    for (const settingName in settingData) {
+      const settingValue = settingData[settingName];
+      console.log(`設定 ${settingName} の値は ${settingValue} です`);
+      // ここで各設定値に対して適切な処理を実行
+    }
+  }
+
+  // 使用例
+  const adminSettings: DataType = {
+    userPermissions: {
+      canEdit: true,
+      canDelete: false,
+    },
+    displaySettings: {
+      theme: "dark",
+      fontSize: 14,
+    },
+  };
+
+  // 特定のキーを使って関数を呼び出す
+  setAdminSettingFormValues(adminSettings, "userPermissions");
+});
+
+
+onMounted(() => {
+  // 設定値がオブジェクトを含む場合の型定義
+  type SettingValue = string | number | boolean | { [key: string]: string | number | boolean };
+  type DataType = Record<string, Record<string, SettingValue>>;
+
+  function setAdminSettingFormValues(data: DataType, key: string) {
+    const settingData = data[key];
+    for (const settingName in settingData) {
+      const settingValue = settingData[settingName];
+      console.log(`設定 ${settingName} の値は ${settingValue} です`);
+    }
+  }
+
+  // 使用例
+  const adminSettings: DataType = {
+    userPermissions: {
+      canEdit: true,
+      canDelete: false,
+      additionalInfo: { maxAttempts: 5, isAdmin: true },
+    },
+    displaySettings: {
+      theme: "dark",
+      fontSize: 14,
+    },
+  };
+
+  setAdminSettingFormValues(adminSettings, "userPermissions");
+});
+
