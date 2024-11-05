@@ -380,3 +380,48 @@ function setAdminSettingFormValues(data: DataType, key: string) {
     }
   }
 }
+
+
+import { ref } from 'vue'; // Vueのrefをインポートする
+
+// defaultValuesを適切に定義
+const defaultValues = {
+  value: {
+    level: 0 // 適切な初期値を設定してください
+  }
+};
+
+type SettingValue = string | number | boolean | { [key: string]: string | number | boolean };
+type DataType = Record<string, Record<string, SettingValue>>;
+
+// loggerLevelsのサンプル定義
+const loggerLevels: { text: string; value: number }[] = [
+  { text: "papigw.admin.application_settings.OFF", value: 0 },
+  { text: "papigw.admin.application_settings.FATAL", value: 1 }
+];
+
+// loggerLevelValueをrefで初期化
+const loggerLevelValue = ref(defaultValues.value.level);
+
+// loggerLevelChange関数を定義
+const loggerLevelChange = () => {
+  console.log(loggerLevelValue.value); // loggerLevelValueの現在の値をログに出力
+};
+
+function setAdminSettingFormValues(data: DataType, key: string) {
+  let setting_data = data[key];
+
+  if (setting_data) { // keyが存在する場合のみ処理
+    for (let setting_name in setting_data) {
+      let setting_value = setting_data[setting_name];
+
+      // `loggerLevels` の中から `setting_value` に一致するものを検索
+      const loggerLevel = loggerLevels.find(level => level.value === setting_value);
+      if (loggerLevel) {
+        loggerLevelValue.value = loggerLevel.value; // loggerLevelValueに適切な値を設定
+      }
+    }
+  } else {
+    console.warn(`キー "${key}" が見つかりません。`);
+  }
+}
