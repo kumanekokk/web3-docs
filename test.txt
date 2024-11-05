@@ -334,3 +334,49 @@ function setCloudSetting(
     }
   }
 }
+
+
+interface LoggerLevel {
+  text: string;
+  value: string | number;
+}
+
+const loggerLevels: LoggerLevel[] = [
+  { text: "papigw.admin.application_settings.OFF", value: 0 },
+  { text: "papigw.admin.application_settings.FATAL", value: 1 }
+];
+
+type SettingValue = string | number | boolean | { [key: string]: string | number | boolean };
+type DataType = Record<string, Record<string, SettingValue>>;
+
+function setAdminSettingFormValues(data: DataType, key: string) {
+  let setting_data = data[key];
+  for (let setting_name in setting_data) {
+    let setting_value = setting_data[setting_name];
+    const loggerLevel = loggerLevels.find(level => level.value === setting_value);
+    if (loggerLevel) {
+      // 必要に応じて loggerLevel.text または loggerLevel.value を使用
+      console.log(`設定: ${setting_name}, 値: ${loggerLevel.text}`);
+    }
+  }
+}
+
+onMounted(() => {
+  // 初期化または設定用コードをここに記述
+});
+
+type SettingValue = string | number | boolean | { [key: string]: string | number | boolean };
+type DataType = Record<string, Record<string, SettingValue>>;
+
+function setAdminSettingFormValues(data: DataType, key: string) {
+  let setting_data = data[key];
+  for (let setting_name in setting_data) {
+    let setting_value = setting_data[setting_name];
+    
+    // `loggerLevels` の中から `setting_value` に一致するものを検索
+    const loggerLevel = loggerLevels.find(level => level.value === setting_value);
+    if (loggerLevel) {
+      loggerLevelValue.value = loggerLevel.value; // loggerLevelValueに適切な値を設定
+    }
+  }
+}
