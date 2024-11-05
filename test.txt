@@ -1,0 +1,29 @@
+onMounted(() => {
+  type DataType = Record<string, Record<string, any>>;
+
+  function setAdminSettingFormValues(data: DataType, key: string) {
+    const settingData = data[key];
+    for (const settingName in settingData) {
+      const settingValue = settingData[settingName];
+      // 各設定名と設定値を使って処理を行う
+      console.log(`設定 ${settingName} の値は ${settingValue} です`);
+      // 例: フォームのフィールドを更新する、リアクティブ変数に格納するなど
+    }
+  }
+
+  // 使用例
+  const adminSettings: DataType = {
+    userPermissions: {
+      canEdit: true,
+      canDelete: false,
+    },
+    displaySettings: {
+      theme: "dark",
+      fontSize: "medium",
+    },
+  };
+
+  // 特定のキーを使用して関数を呼び出す
+  setAdminSettingFormValues(adminSettings, "userPermissions");
+});
+
