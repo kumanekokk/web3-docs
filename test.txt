@@ -88,3 +88,117 @@ onMounted(() => {
   setAdminSettingFormValues(adminSettings, "userPermissions");
 });
 
+
+// 型を定義
+type SettingValue = string | number | boolean;
+type DefaultValues = Record<string, Record<string, SettingValue>>;
+
+// デフォルトの設定オブジェクトを定義
+const defaultValues: DefaultValues = {
+  connection: {
+    method: 'None',
+  },
+  WebSocket: {
+    authMethod: 1,
+    endpoint_port: 443,
+  },
+  cloudapi: {
+    cloud_login_sslCertCheck: false,
+  }
+};
+
+// WebSocket の認証方法を取得および変更する関数
+let websocketAuthMethodValue = defaultValues.WebSocket.authMethod;
+
+const websocketAuthMethodChange = (value: string | number) => {
+  // 新しい値の型が一致するか確認してから変更
+  websocketAuthMethodValue = value;
+};
+
+// 管理設定フォームの値を設定する関数
+function setAdminSettingFormValues(data: DefaultValues, key: string) {
+  let settingData = data[key];
+  if (!settingData) return;  // 設定が見つからなければ終了
+
+  for (let settingName in settingData) {
+    let settingValue = settingData[settingName];
+
+    if (typeof settingValue === 'object') {
+      for (let objectName in settingValue) {
+        let objectKey = `${settingName}.${objectName}`;
+        let objectValue = settingValue[objectName];
+
+        if (defaultValues[objectKey]) {
+          // SSL証明書のチェック設定を処理
+          if (objectKey.includes('sslCertCheck')) {
+            defaultValues[objectKey] = JSON.parse(String(objectValue));
+          } else {
+            defaultValues[objectKey] = objectValue;
+          }
+        }
+      }
+    } else {
+      // 直接プリミティブ型の値を設定
+      defaultValues[key][settingName] = settingValue;
+    }
+  }
+}
+
+// 使用例
+setAdminSettingFormValues(defaultValues, 'WebSocket');
+
+
+
+import { onMounted } from 'vue';
+
+// 型を定義
+type SettingValue = string | number | boolean;
+type DataType = Record<string, Record<string, SettingValue>>;
+
+// デフォルトの設定オブジェクト
+const defaultValues: DataType = {
+  connection: {
+    method: 'None',
+  },
+  WebSocket: {
+    authMethod: 1,
+    endpoint_port: 443,
+  },
+  cloudapi: {
+    cloud_login_sslCertCheck: false,
+  }
+};
+
+// 管理設定フォームの値を設定する関数
+function setAdminSettingFormValues(data: DataType, key: string) {
+  let settingData = data[key];
+  if (!settingData) return;  // データが存在しない場合は終了
+
+  for (let settingName in settingData) {
+    let settingValue = settingData[settingName];
+
+    if (typeof settingValue === 'object') {
+      for (let objectName in settingValue) {
+        let objectKey = `${settingName}.${objectName}`;
+        let objectValue = settingValue[objectName];
+
+        if (defaultValues[objectKey]) {
+          // SSL証明書のチェック設定を処理
+          if (objectKey.includes('sslCertCheck')) {
+            defaultValues[objectKey] = JSON.parse(String(objectValue));
+          } else {
+            defaultValues[objectKey] = objectValue;
+          }
+        }
+      }
+    } else {
+      // 直接プリミティブ型の値を設定
+      defaultValues[key][settingName] = settingValue;
+    }
+  }
+}
+
+// VueのonMountedで実行する
+onMounted(() => {
+  setAdminSettingFormValues(defaultValues, 'WebSocket');
+});
