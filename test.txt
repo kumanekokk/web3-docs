@@ -202,3 +202,135 @@ function setAdminSettingFormValues(data: DataType, key: string) {
 onMounted(() => {
   setAdminSettingFormValues(defaultValues, 'WebSocket');
 });
+
+
+
+interface Form {
+  label: string;
+  Component: string;
+  type: string;
+  category: string;
+  name: string;
+  min?: string;
+  max?: string;
+  value?: string;
+  placeholder?: string;
+  display: string;
+  validate?: string;
+  required: boolean;
+}
+
+const forms: Form[] = [
+  {
+    label: "接続方法",
+    Component: "BTN_Dropdown",
+    type: "dropdown",
+    category: "WebSocket",
+    name: "connection_method",
+    value: "None",
+    placeholder: "接続方法を選択してください",
+    display: "WebSocket",
+    validate: "",
+    required: false,
+  },
+  {
+    label: "タイトル",
+    Component: "input",
+    type: "text",
+    category: "WebSocket",
+    name: "title",
+    placeholder: "タイトルを入力してください",
+    display: "WebSocket",
+    required: false,
+  },
+  // 他のフォーム要素をここに追加
+];
+
+type AdminSettingValue = string | number | boolean;
+
+type AdminSettingData = Record<string, Record<string, AdminSettingValue>>;
+
+let adminSettingData: AdminSettingData = { cloud_connect: {} };
+
+function setCloudSetting(
+  isError: Ref<boolean>,
+  isDialog: Ref<boolean>,
+  isLoad: Ref<boolean>,
+  errors: Ref<Record<string, any>>,
+  settingValue: AdminSettingValue
+) {
+  for (let formConfig of forms) {
+    if (formConfig.category && formConfig.name) {
+      adminSettingData.cloud_connect[formConfig.category] = {
+        ...adminSettingData.cloud_connect[formConfig.category],
+        [formConfig.name]: settingValue,
+      };
+    }
+  }
+}
+
+
+
+interface Form {
+  label: string;
+  Component: string;
+  type: string;
+  category: string;
+  name: string;
+  min?: string;
+  max?: string;
+  value?: string;
+  placeholder?: string;
+  display: string;
+  validate?: string;
+  required: boolean;
+}
+
+const forms: Form[] = [
+  {
+    label: "接続方法",
+    Component: "BTN_Dropdown",
+    type: "dropdown",
+    category: "WebSocket",
+    name: "connection_method",
+    value: "None",
+    placeholder: "接続方法を選択してください",
+    display: "WebSocket",
+    validate: "",
+    required: false,
+  },
+  {
+    label: "タイトル",
+    Component: "input",
+    type: "text",
+    category: "WebSocket",
+    name: "title",
+    placeholder: "タイトルを入力してください",
+    display: "WebSocket",
+    required: false,
+  },
+  // 他のフォーム要素をここに追加
+];
+
+type AdminSettingValue = string | number | boolean;
+
+type AdminSettingData = Record<string, Record<string, AdminSettingValue>>;
+
+let adminSettingData: AdminSettingData = { cloud_connect: {} };
+
+function setCloudSetting(
+  isError: Ref<boolean>,
+  isDialog: Ref<boolean>,
+  isLoad: Ref<boolean>,
+  errors: Ref<Record<string, string | number | boolean>>,
+  settingValue: AdminSettingValue
+) {
+  for (let formConfig of forms) {
+    if (formConfig.category && formConfig.name) {
+      adminSettingData.cloud_connect[formConfig.category] = {
+        ...adminSettingData.cloud_connect[formConfig.category],
+        [formConfig.name]: settingValue,
+      };
+    }
+  }
+}
