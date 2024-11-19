@@ -425,3 +425,58 @@ function setAdminSettingFormValues(data: DataType, key: string) {
     console.warn(`キー "${key}" が見つかりません。`);
   }
 }
+
+
+このエラーが発生する理由は、TypeScriptが setting_data のプロパティが何であるかを認識しておらず、object 型には具体的なプロパティ情報がないためです。object 型は一般的すぎるため、具体的な型定義が必要です。
+
+以下のようにコードを修正できます。
+	1.	DataType と setting_data に型情報を具体的に指定する。
+	2.	setting_data の型を明確にするため、適切な型定義を行う。
+
+修正版コード:
+
+onMounted(() => {
+  type SettingDataType = {
+    crawler_waiting_num?: number;
+    crawler_time?: number;
+    level?: number;
+  };
+
+  type DataType = Record<string, SettingDataType>;
+
+  function setAdminSettingFormValues(data: DataType, key: string) {
+    const setting_data = data[key]; // 'key' で取得したオブジェクト
+
+    if (!setting_data) {
+      console.error(`No data found for key: ${key}`);
+      return;
+    }
+
+    for (const setting_name in setting_data) {
+      let setting_value;
+      if (setting_name === 'crawler_waiting_num') {
+        setting_value = setting_data.crawler_waiting_num;
+      } else if (setting_name === 'crawler_time') {
+        setting_value = setting_data.crawler_time;
+      } else if (setting_name === 'level') {
+        setting_value = setting_data.level;
+      }
+      console.log(`Setting: ${setting_name}, Value: ${setting_value}`);
+    }
+  }
+});
+
+修正内容
+
+	1.	型定義の追加
+	•	SettingDataType を定義し、各プロパティを明確に指定しました。
+	•	DataType は Record<string, SettingDataType> としてキーが文字列、値が SettingDataType であることを定義しました。
+	2.	型のチェック
+	•	if (!setting_data) を追加して undefined チェックを行っています。
+	3.	ループ内の条件式の修正
+	•	元のコードでは setting_name が同じ値 (crawler_waiting_num) を複数回チェックしていました。
+	•	条件を適切に修正しました。
+
+結果
+
+この修正により、TypeScriptエラーが解消され、setting_data のプロパティを安全にアクセスできるようになります。
