@@ -535,3 +535,85 @@ onMounted(() => {
 });
 
 
+提示されたコードの問題を修正しました。以下は修正版のコードです。
+
+修正版コード
+
+onMounted(() => {
+  type SettingDataType = {
+    crawler_waiting_num?: string;
+    crawler_time?: string;
+    level?: string | Record<string, string | boolean>;
+  };
+
+  type DataType = Record<string, SettingDataType>;
+
+  function setAdminSettingFormValues(data: DataType, key: string) {
+    const setting_data = data[key];
+
+    for (const setting_name in setting_data) {
+      let setting_value: string | Record<string, string | boolean> | undefined;
+
+      if (setting_name === "crawler_waiting_num") {
+        setting_value = setting_data.crawler_waiting_num;
+      } else if (setting_name === "crawler_time") {
+        setting_value = setting_data.crawler_time;
+      } else if (setting_name === "level") {
+        setting_value = setting_data.level;
+      }
+
+      if (typeof setting_value === "object" && setting_value !== null) {
+        for (const object_name in setting_value) {
+          const object_value = setting_value[object_name];
+          const object_id = `input-${key}-${object_name}`;
+
+          let formatted_value: string;
+          if (object_value === true) {
+            formatted_value = "true";
+          } else if (object_value === false) {
+            formatted_value = "false";
+          } else {
+            formatted_value = object_value as string;
+          }
+
+          const element = document.getElementById(object_id);
+          if (element) {
+            defaultValues.value[object_name] = formatted_value;
+          }
+        }
+      } else if (setting_name && setting_value) {
+        const element_id = `input-${key}-${setting_name}`;
+        const element = document.getElementById(element_id);
+        if (element) {
+          defaultValues.value[setting_name] = setting_value as string;
+        }
+      }
+    }
+  }
+});
+
+修正点の詳細
+
+	1.	if 条件の修正:
+	•	= は代入演算子であり、比較には === を使用する必要があります。
+
+if (setting_name === "crawler_waiting_num") {
+
+
+	2.	型エラーの修正:
+	•	typeof setting_value === "object" の使用で、for...in に渡す型が適切になるよう修正しました。
+	•	null チェックを追加 (setting_value !== null)。
+	3.	構文エラーの修正:
+	•	不適切な括弧や構文を修正しました。
+
+const object_id = `input-${key}-${object_name}`;
+
+
+	4.	object_value の型チェック:
+	•	object_value が真偽値であるか、文字列であるかを判定し、適切に処理しました。
+	5.	defaultValues の型適用:
+	•	defaultValues.value に値を設定する際、適切な型変換を行いました。
+	6.	不要な重複条件を削除:
+	•	else if に重複した crawler_waiting_num が3つあったため、正しい条件に整理しました。
+
+これでエラーは解消されるはずです。コードが適切に動作しない場合、具体的な挙動を教えてください。さらに調整が必要であればサポートします！
