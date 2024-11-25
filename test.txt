@@ -1,3 +1,64 @@
+コードの中にいくつかのエラーやタイプミスがあります。それを修正し、コードを改善したバージョンを以下に示します。
+
+修正ポイント
+
+	1.	interface宣言の間違い: interface AdminSettingDataの中にプロパティリストが正しくない（例: 配列として定義されている部分が間違い）。
+	2.	スペルミス: PolingはおそらくPolling、poling cycleはpollingCycle、poling skipTimeはpollingSkipTime。
+	3.	文字列リテラルの不正確な構成: ${setting_name)_$(object_name}でカッコの位置が間違っている。
+	4.	変数名のミス: setting nameはsetting_name、ssl CertCheckはsslCertCheck。
+	5.	未定義エラーの防止: ネストされたオブジェクトを操作する際にエラーが発生しないようにする。
+
+修正後のコード
+
+interface AdminSettingData {
+  crawler_time: number;
+  crawler_waiting_num: number;
+  cloud_connect: {
+    connection_method: string;
+    sslCertCheck: boolean;
+    Polling: {
+      cycle: number;
+      skipTime: number;
+    };
+  };
+}
+
+function setAdminSettingFormValues(data: AdminSettingData, key: string) {
+  const setting_data = data[key];
+
+  for (const setting_name in setting_data) {
+    const setting_value = setting_data[setting_name];
+
+    if (typeof setting_value === 'object' && setting_value !== null) {
+      for (const object_name in setting_value) {
+        const object_key = `${setting_name}_${object_name}`;
+        const object_value = setting_value[object_name];
+
+        if (defaultValues.value[object_key] !== undefined) {
+          if (object_key.indexOf('sslCertCheck') > -1) {
+            defaultValues.value[object_key] = JSON.parse(object_value);
+          } else if (isNaN(object_value)) {
+            defaultValues.value[object_key] = object_value;
+          } else {
+            defaultValues.value[object_key] = String(object_value);
+          }
+        }
+      }
+    }
+  }
+}
+
+修正の詳細
+
+	1.	interface構造: プロパティを明確に定義しました。Pollingオブジェクト内のcycleとskipTimeを明示的にしました。
+	2.	カッコの修正: 文字列テンプレート${}の中の閉じカッコ位置を正しく修正。
+	3.	型チェック: typeof setting_value === 'object' && setting_value !== nullでnullチェックを追加。
+	4.	スペル修正: sslCertCheckやPollingなどのスペルミスを修正。
+	5.	可読性の向上: インデントを統一し、コードを読みやすくしました。
+
+これで、エラーは解消されるはずです。必要に応じてさらに詳細を教えてください！
+
+
 onMounted(() => {
   type DataType = Record<string, Record<string, any>>;
 
