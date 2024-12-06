@@ -1,3 +1,44 @@
+const https = require('https');
+const fs = require('fs');
+const express = require('express');
+
+const app = express();
+
+// サーバー証明書と秘密鍵を読み込み
+const options = {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.crt'),
+    ca: fs.readFileSync('server.crt'), // クライアント証明書の検証用
+    requestCert: true, // クライアント証明書を要求
+    rejectUnauthorized: true, // クライアント証明書がない場合拒否
+};
+
+// クライアント証明書の検証
+app.use((req, res, next) => {
+    const clientCert = req.socket.getPeerCertificate();
+    if (req.client.authorized) {
+        console.log(`Authorized client: ${clientCert.subject.CN}`);
+        next();
+    } else if (clientCert.subject) {
+        res.status(403).send(`Client certificate is invalid: ${clientCert.subject.CN}`);
+    } else {
+        res.status(401).send('Client certificate is required.');
+    }
+});
+
+// サンプルエンドポイント
+app.get('/', (req, res) => {
+    res.send('Hello, HTTPS with client certificate!');
+});
+
+// HTTPSサーバーを起動
+https.createServer(options, app).listen(3000, () => {
+    console.log('HTTPS Server running on https://localhost:3000');
+});
+
+
+
+
 証明書のインポートに失敗する場合、以下のポイントを確認してください。問題の原因を特定しやすくするため、一般的なトラブルシューティングの流れを示します。
 
 1. 証明書ファイル形式の確認
