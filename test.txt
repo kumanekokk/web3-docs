@@ -1,3 +1,113 @@
+以下は、OpenSSLを使用して自己署名証明書を作成し、それを用いてNode.jsのHTTPSサーバーを立て、クライアント証明書を使ったアクセスを設定する手順です。
+
+1. 証明書とキーの作成
+
+1-1. サーバー用の秘密鍵を生成
+
+openssl genrsa -out server.key 2048
+
+1-2. サーバー証明書の署名要求（CSR）を生成
+
+openssl req -new -key server.key -out server.csr
+
+	•	Common Name にはサーバーのホスト名（例: localhost）を指定。
+
+1-3. サーバー証明書を自己署名で生成
+
+openssl x509 -req -in server.csr -signkey server.key -out server.crt -days 365
+
+1-4. クライアント用の秘密鍵を生成
+
+openssl genrsa -out client.key 2048
+
+1-5. クライアント証明書の署名要求（CSR）を生成
+
+openssl req -new -key client.key -out client.csr
+
+	•	Common Name に任意の名前を指定。
+
+1-6. クライアント証明書をCA（自己署名）で署名して生成
+
+openssl x509 -req -in client.csr -CA server.crt -CAkey server.key -CAcreateserial -out client.crt -days 365
+
+1-7. クライアント証明書を使いやすい形式（PKCS#12）に変換
+
+openssl pkcs12 -export -out client.p12 -inkey client.key -in client.crt
+
+	•	client.p12 をブラウザにインポートすることで利用可能。
+
+2. Node.js HTTPSサーバーの設定
+
+2-1. 必要なパッケージをインストール
+
+npm install express https
+
+2-2. HTTPSサーバーを作成
+
+以下のようなスクリプト（例: server.js）を作成します。
+
+const https = require('https');
+const fs = require('fs');
+const express = require('express');
+
+const app = express();
+
+// サーバー証明書と秘密鍵を読み込み
+const options = {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.crt'),
+    ca: fs.readFileSync('server.crt'), // クライアント証明書の検証用
+    requestCert: true, // クライアント証明書を要求
+    rejectUnauthorized: true, // クライアント証明書がない場合拒否
+};
+
+// クライアント証明書の検証
+app.use((req, res, next) => {
+    const clientCert = req.socket.getPeerCertificate();
+    if (req.client.authorized) {
+        console.log(`Authorized client: ${clientCert.subject.CN}`);
+        next();
+    } else if (clientCert.subject) {
+        res.status(403).send(`Client certificate is invalid: ${clientCert.subject.CN}`);
+    } else {
+        res.status(401).send('Client certificate is required.');
+    }
+});
+
+// サンプルエンドポイント
+app.get('/', (req, res) => {
+    res.send('Hello, HTTPS with client certificate!');
+});
+
+// HTTPSサーバーを起動
+https.createServer(options, app).listen(3000, () => {
+    console.log('HTTPS Server running on https://localhost:3000');
+});
+
+3. クライアント側の設定とアクセス
+
+3-1. クライアント証明書をインポート
+
+	•	作成した client.p12 をブラウザやクライアントツールにインポートします。
+
+3-2. サーバーへアクセス
+
+ブラウザで https://localhost:3000 にアクセスします。クライアント証明書を選択して接続してください。
+
+4. 動作確認
+
+	•	クライアント証明書が正しく提供されていれば、Hello, HTTPS with client certificate! と表示されます。
+	•	証明書が不正、または提供されない場合、403または401エラーが返ります。
+
+補足
+
+	•	証明書の期限や設定を適切に管理してください。
+	•	本手順はローカル環境での動作確認を想定しており、実運用では商用CAや信頼された証明書を利用することを推奨します。
+
+
+
+
+
 クライアント側でcurlを使用して、クライアント証明書を利用してHTTPSサーバーにアクセスする方法を以下に説明します。
 
 1. 必要なファイルを準備
