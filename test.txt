@@ -1,3 +1,86 @@
+PowerShell の Invoke-WebRequest を使用して、クライアント証明書を使って HTTPS サーバーにアクセスする手順を説明します。
+
+1. 必要なファイルを準備
+
+以下のファイルが既に作成済みであることを前提とします。
+	•	クライアント証明書（PKCS#12形式）: client.p12
+	•	サーバー証明書: server.crt（サーバーの自己署名証明書）
+
+2. クライアント証明書をインポート
+
+PowerShell で Invoke-WebRequest を使用するには、クライアント証明書をローカルの証明書ストアにインポートする必要があります。
+
+2-1. 証明書ストアにインポート
+
+以下のコマンドでクライアント証明書をインポートします。
+
+Import-PfxCertificate -FilePath "path\to\client.p12" -CertStoreLocation Cert:\CurrentUser\My
+
+	•	-FilePath は client.p12 ファイルのパスを指定します。
+	•	実行後、証明書が Cert:\CurrentUser\My ストアに追加されます。
+	•	パスワードを求められる場合は、client.p12 作成時に設定したものを入力してください。
+
+2-2. 証明書のサムプリントを取得
+
+インポートした証明書のサムプリント（Thumbprint）を取得します。
+
+Get-ChildItem Cert:\CurrentUser\My
+
+サムプリントは後で Invoke-WebRequest で証明書を指定する際に使用します。
+
+3. Invoke-WebRequest を使用したアクセス
+
+以下は HTTPS サーバーにアクセスするための基本的なコマンドです。
+
+$thumbprint = "your_certificate_thumbprint"
+$cert = Get-Item Cert:\CurrentUser\My\$thumbprint
+
+Invoke-WebRequest -Uri "https://localhost:3000" -Certificate $cert -SslProtocol Tls12
+
+3-1. コマンドの詳細
+
+	•	$thumbprint: 前の手順で取得したクライアント証明書のサムプリントを指定します。
+	•	$cert: PowerShell で証明書オブジェクトを取得します。
+	•	-Certificate $cert: クライアント証明書を指定します。
+	•	-SslProtocol Tls12: SSL/TLSプロトコルを明示的に設定します（Tls12 を推奨）。
+
+4. サーバー証明書の検証をスキップ（必要に応じて）
+
+自己署名証明書を使用している場合、サーバー証明書の検証に失敗する可能性があります。これを回避するため、次のスクリプトで検証をスキップできます。
+
+Add-Type @"
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+
+public class TrustAllCertsPolicy : ICertificatePolicy {
+    public bool CheckValidationResult(ServicePoint srvPoint, X509Certificate certificate, WebRequest request, int certificateProblem) {
+        return true;
+    }
+}
+"@
+
+[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+
+$thumbprint = "your_certificate_thumbprint"
+$cert = Get-Item Cert:\CurrentUser\My\$thumbprint
+
+Invoke-WebRequest -Uri "https://localhost:3000" -Certificate $cert -SslProtocol Tls12
+
+5. 動作確認
+
+	•	サーバーを起動しておきます（例: node server.js）。
+	•	上記のスクリプトを実行すると、サーバーからのレスポンス（Hello, HTTPS with client certificate!）が取得されます。
+
+注意事項
+
+	•	サーバー証明書を信頼されたCA証明書に置き換えると、検証スキップは不要です。
+	•	クライアント証明書の有効期限やサーバー証明書の整合性を定期的に確認してください。
+
+以上で、Invoke-WebRequest を使用したクライアント証明書認証によるHTTPSアクセスの手順は完了です。
+
+
+
+
 以下は、OpenSSLを使用して自己署名証明書を作成し、それを用いてNode.jsのHTTPSサーバーを立て、クライアント証明書を使ったアクセスを設定する手順です。
 
 1. 証明書とキーの作成
