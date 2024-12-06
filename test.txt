@@ -1,3 +1,87 @@
+Python の requests ライブラリを使用して自己署名証明書を扱う際、デフォルトではサーバー証明書の検証が行われます。そのため、自己署名証明書を使用すると以下のようなエラーが発生します。
+
+よくあるエラー
+
+requests.exceptions.SSLError: HTTPSConnectionPool(host='localhost', port=3000): 
+SSL: CERTIFICATE_VERIFY_FAILED
+
+このエラーが発生する理由は、requests がサーバー証明書を信頼するためのルート証明書として自己署名証明書を認識していないためです。
+
+解決方法
+
+1. サーバー証明書の検証を無効化する
+
+開発・テスト環境であれば、サーバー証明書の検証を無効化することで解決できます。
+
+import requests
+
+response = requests.get('https://localhost:3000', verify=False)
+print(response.text)
+
+	•	verify=False: サーバー証明書の検証をスキップします。
+	•	注意: 検証をスキップすることでセキュリティリスクが高まるため、本番環境では使用しないでください。
+
+実行時に次のような警告が表示されますが、機能上は問題ありません。
+
+InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised.
+
+警告を非表示にする（任意）
+
+以下のコードを追加すると、警告を非表示にできます。
+
+import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+# 警告を非表示にする
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+response = requests.get('https://localhost:3000', verify=False)
+print(response.text)
+
+2. 自己署名証明書を指定して検証を行う
+
+自己署名証明書を信頼させる場合、verify オプションに証明書ファイルのパスを指定します。
+	1.	サーバー証明書ファイルを準備
+サーバー証明書（例: server.crt）をローカルに保存します。
+	2.	証明書を指定してアクセス
+
+import requests
+
+response = requests.get('https://localhost:3000', verify='path/to/server.crt')
+print(response.text)
+
+	•	verify='path/to/server.crt': サーバー証明書ファイルを指定。
+	•	自己署名証明書が指定されている場合でも検証が成功します。
+
+3. クライアント証明書を利用する場合
+
+クライアント証明書と秘密鍵を使用する場合は、以下のように cert パラメータを指定します。
+
+import requests
+
+response = requests.get(
+    'https://localhost:3000',
+    cert=('path/to/client.crt', 'path/to/client.key'),
+    verify='path/to/server.crt'
+)
+print(response.text)
+
+	•	cert=('client.crt', 'client.key'): クライアント証明書と秘密鍵を指定。
+	•	verify='server.crt': サーバーの自己署名証明書を指定。
+
+自己証明書をテスト環境で使う際のベストプラクティス
+
+	1.	開発環境:
+	•	検証を無効化（verify=False）を利用して簡易に設定。
+	2.	テスト環境:
+	•	サーバー証明書を指定（verify='server.crt'）して検証を有効化。
+	3.	本番環境:
+	•	商用CAの証明書を使用し、標準的な検証を有効にする。
+
+これらの方法を状況に応じて使い分けてください。
+
+
+
 PowerShell の Invoke-WebRequest を使用して、クライアント証明書を使って HTTPS サーバーにアクセスする手順を説明します。
 
 1. 必要なファイルを準備
