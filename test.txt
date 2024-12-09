@@ -1,3 +1,115 @@
+requests ライブラリを使って TLS 1.3 を使用するためには、システムにインストールされた OpenSSL ライブラリが TLS 1.3 をサポートしている必要があります。また、Python の requests は内部で urllib3 を使用しており、これが TLS 1.3 を利用可能な場合、特別な設定をしなくても自動的に TLS 1.3 を使用します。
+
+以下に、TLS 1.3 を利用するための詳細な手順を説明します。
+
+1. システム要件を確認
+	1.	OpenSSL のバージョン確認
+OpenSSL 1.1.1 以降が TLS 1.3 をサポートします。以下のコマンドで確認してください。
+
+openssl version
+
+結果例:
+
+OpenSSL 1.1.1  11 Sep 2018
+
+
+	2.	Python のバージョン確認
+Python 3.7 以上であれば、TLS 1.3 が利用可能です。
+
+python --version
+
+
+	3.	requests と依存ライブラリのバージョン確認
+最新バージョンを使用することを推奨します。以下のコマンドでアップデートしてください。
+
+pip install --upgrade requests
+
+2. TLS 1.3 を指定してリクエストを送信
+
+requests ライブラリ自体には TLS バージョンを指定するオプションはありませんが、カスタム SSLContext を設定することで明示的に TLS 1.3 を指定できます。
+
+以下はその具体例です。
+
+import requests
+import ssl
+from urllib3 import PoolManager
+from requests.adapters import HTTPAdapter
+
+# TLS 1.3 を使用するカスタム HTTPAdapter を作成
+class TLS13Adapter(HTTPAdapter):
+    def init_poolmanager(self, *args, **kwargs):
+        ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+        ctx.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1 | ssl.OP_NO_TLSv1_2  # TLS 1.0/1.1/1.2 を無効化
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_3
+        ctx.maximum_version = ssl.TLSVersion.TLSv1_3
+        kwargs['ssl_context'] = ctx
+        return PoolManager(*args, **kwargs)
+
+# セッションを作成し、TLS 1.3 を強制
+session = requests.Session()
+session.mount("https://", TLS13Adapter())
+
+# リクエストを送信
+response = session.get("https://localhost:3000", verify="path/to/server.crt")
+print(response.text)
+
+ポイント
+	•	ssl.OP_NO_TLSv1 などで古いバージョンの TLS を無効化。
+	•	ctx.minimum_version と ctx.maximum_version で TLS 1.3 を明示的に指定。
+
+3. サーバー側の設定を確認
+
+TLS 1.3 を利用するには、サーバー側でも対応している必要があります。Node.js の場合、次の設定で TLS 1.3 を有効にできます。
+
+Node.js サーバー例
+
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.crt'),
+  secureOptions: require('crypto').constants.SSL_OP_NO_TLSv1 |
+                 require('crypto').constants.SSL_OP_NO_TLSv1_1 |
+                 require('crypto').constants.SSL_OP_NO_TLSv1_2 // TLS 1.0/1.1/1.2 を無効化
+};
+
+https.createServer(options, (req, res) => {
+  res.writeHead(200);
+  res.end('Hello, TLS 1.3!');
+}).listen(3000, () => {
+  console.log('TLS 1.3 server running on https://localhost:3000');
+});
+
+4. 動作確認
+	1.	サーバーを起動する（例: node server.js）。
+	2.	Python スクリプトを実行する。
+	3.	サーバーが TLS 1.3 を使用していることを確認するには、以下のような方法があります。
+
+OpenSSL を使った確認
+
+openssl s_client -connect localhost:3000 -tls1_3
+
+結果に以下のような行が含まれていれば成功です。
+
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+
+Python で確認
+
+Python のリクエストで response.raw.version を確認できます。
+
+print(response.raw.version)
+
+注意事項
+	•	古い環境や依存関係が整っていない場合、TLS 1.3 が利用できないことがあります。
+	•	本番環境では、証明書やセキュリティ設定を適切に管理してください。
+
+これで Python の requests で TLS 1.3 を使用する方法は完了です。
+
+
+
+
+
 Python の requests ライブラリを使用して自己署名証明書を扱う際、デフォルトではサーバー証明書の検証が行われます。そのため、自己署名証明書を使用すると以下のようなエラーが発生します。
 
 よくあるエラー
