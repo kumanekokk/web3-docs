@@ -1,3 +1,71 @@
+以下は、PowerShellで指定したパスのフォルダ容量リストを表示するスクリプトです。サブフォルダがある場合は、階層構造も視覚的にわかりやすく表示します。
+
+# 指定したディレクトリのフォルダ容量を表示する関数
+function Get-FolderSizes {
+    param (
+        [string]$Path = ".",
+        [string]$Prefix = ""
+    )
+
+    # 指定されたパスが有効か確認
+    if (-Not (Test-Path $Path)) {
+        Write-Host "エラー: 指定したパスは存在しないか無効です。" -ForegroundColor Red
+        return
+    }
+
+    # 現在のフォルダのサイズを取得
+    $size = (Get-ChildItem -Path $Path -Recurse -Force | Measure-Object -Property Length -Sum).Sum
+    $sizeGB = "{0:N2}" -f ($size / 1GB) + " GB"
+
+    # フォルダ名とサイズを表示
+    Write-Host "$Prefix$([System.IO.Path]::GetFileName($Path)) ($sizeGB)"
+
+    # サブフォルダを取得して再帰的に処理
+    $subDirs = Get-ChildItem -Path $Path -Directory -Force
+    foreach ($subDir in $subDirs) {
+        Get-FolderSizes -Path $subDir.FullName -Prefix "$Prefix    ├── "
+    }
+}
+
+# メイン処理
+param (
+    [string]$TargetPath = "."
+)
+
+Write-Host "ディレクトリ: $TargetPath の容量リスト" -ForegroundColor Cyan
+Get-FolderSizes -Path $TargetPath
+
+実行方法
+	1.	上記コードを、たとえば Get-FolderSizes.ps1 というファイル名で保存します。
+	2.	PowerShellを開き、保存したスクリプトを実行できるようにスクリプト実行ポリシーを変更します（必要に応じて）:
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+
+	3.	スクリプトを実行します:
+
+.\Get-FolderSizes.ps1 -TargetPath "C:\Path\To\Directory"
+
+出力例
+
+C:\Users\Example\Documents を指定した場合の出力例:
+
+ディレクトリ: C:\Users\Example\Documents の容量リスト
+Documents (1.20 GB)
+    ├── Folder1 (0.40 GB)
+    ├── Folder2 (0.60 GB)
+    ├── Folder3 (0.20 GB)
+        ├── Subfolder1 (0.05 GB)
+        ├── Subfolder2 (0.15 GB)
+
+補足
+	•	フォルダサイズの計算には再帰的にすべてのファイルを処理します。大きなフォルダの場合、処理に時間がかかることがあります。
+	•	サブフォルダの表示階層はインデント（├──）で表現されています。
+
+
+
+
+
 #!/bin/bash
 
 # 指定されたパスを変数に代入
