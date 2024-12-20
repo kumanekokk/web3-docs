@@ -1,3 +1,38 @@
+#!/bin/bash
+
+# 指定されたパスを変数に代入
+TARGET_DIR=${1:-.}  # 引数がない場合はカレントディレクトリを対象
+
+# 指定されたディレクトリが存在するか確認
+if [ ! -d "$TARGET_DIR" ]; then
+  echo "エラー: 指定したパスは存在しないかディレクトリではありません。"
+  exit 1
+fi
+
+# フォルダ容量と階層構造を表示する関数
+function display_folder_size() {
+  local DIR_PATH=$1
+  local PREFIX=$2
+
+  # 現在のフォルダ容量を取得
+  local SIZE=$(du -sh "$DIR_PATH" 2>/dev/null | cut -f1)
+  echo "${PREFIX}${DIR_PATH##*/} (${SIZE})"
+
+  # サブディレクトリを処理
+  local SUBDIRS=$(find "$DIR_PATH" -mindepth 1 -maxdepth 1 -type d | sort)
+  for SUBDIR in $SUBDIRS; do
+    display_folder_size "$SUBDIR" "$PREFIX  ├── "
+  done
+}
+
+# 結果の表示
+echo "ディレクトリ: $TARGET_DIR の容量リスト"
+display_folder_size "$TARGET_DIR" ""
+
+
+
+
+
 以下に、画像の内容を基にチェックリスト形式で校正を作成しました。全体を確認しながら、該当項目ごとに検証を進めてください。
 
 仕様書/設計書の記載内容確認と実装フロー
