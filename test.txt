@@ -1,3 +1,124 @@
+以下のPowerShellスクリプトでは、フォルダ容量の結果をコンソールに表示するだけでなく、指定したテキストファイルに保存できるように改良しました。出力は-OutputFile パラメータでファイル名を指定します。
+
+# 指定したディレクトリのフォルダ容量を表示し、結果をファイルに保存する関数
+function Get-FolderSizes {
+    param (
+        [string]$Path = ".",
+        [string]$Prefix = "",
+        [ref]$FolderCount = 0,
+        [int]$CurrentDepth = 0,
+        [int]$MaxDepth = [int]::MaxValue,
+        [string]$OutputFile
+    )
+
+    # 現在のフォルダのサイズを取得
+    $size = (Get-ChildItem -Path $Path -Recurse -Force | Measure-Object -Property Length -Sum).Sum
+    $sizeGB = "{0:N2}" -f ($size / 1GB) + " GB"
+
+    # フォルダ名とサイズを記録
+    $outputLine = "$Prefix$([System.IO.Path]::GetFileName($Path)) ($sizeGB)"
+    Write-Host $outputLine
+    Add-Content -Path $OutputFile -Value $outputLine
+
+    # サブフォルダの処理（最大階層に達していない場合）
+    if ($CurrentDepth -lt $MaxDepth) {
+        $subDirs = Get-ChildItem -Path $Path -Directory -Force
+        $currentFolderIndex = 0
+        foreach ($subDir in $subDirs) {
+            $currentFolderIndex++
+            $FolderCount.Value++
+
+            Write-Progress -Activity "Processing folders..." `
+                -Status "Current folder: $($subDir.FullName)" `
+                -PercentComplete (($currentFolderIndex / $subDirs.Count) * 100)
+
+            # 再帰的に処理
+            Get-FolderSizes -Path $subDir.FullName `
+                            -Prefix "$Prefix    ├── " `
+                            -FolderCount $FolderCount `
+                            -CurrentDepth ($CurrentDepth + 1) `
+                            -MaxDepth $MaxDepth `
+                            -OutputFile $OutputFile
+        }
+    }
+}
+
+# メイン処理
+param (
+    [string]$TargetPath = ".",
+    [int]$MaxDepth = [int]::MaxValue, # 階層の最大深さ（デフォルトは無制限）
+    [string]$OutputFile = "FolderSizes.txt" # 結果の出力ファイル
+)
+
+# 進捗状況カウンタ
+$folderCount = [ref]0
+
+# 出力ファイルを初期化
+if (Test-Path $OutputFile) {
+    Remove-Item -Path $OutputFile -Force
+}
+Add-Content -Path $OutputFile -Value "ディレクトリ: $TargetPath の容量リスト（最大深さ: $MaxDepth）"
+
+# 処理開始メッセージ
+Write-Host "ディレクトリ: $TargetPath の容量リストを生成中（最大深さ: $MaxDepth）" -ForegroundColor Cyan
+
+# 処理の実行
+Get-FolderSizes -Path $TargetPath -FolderCount $folderCount -MaxDepth $MaxDepth -OutputFile $OutputFile
+
+# 処理完了メッセージ
+Write-Host "`n処理が完了しました！ 結果は $OutputFile に保存されました。" -ForegroundColor Green
+Write-Host "合計フォルダ数: $($folderCount.Value)" -ForegroundColor Green
+
+改良点
+	1.	-OutputFile パラメータ
+	•	結果を指定したファイルに保存する機能を追加しました。デフォルトは FolderSizes.txt です。
+	2.	Add-Content コマンド
+	•	各フォルダの情報を出力ファイルに追記します。
+	3.	ファイルの初期化
+	•	スクリプト実行時に既存の出力ファイルを削除し、新しい結果を保存します。
+
+実行方法
+
+1. 全階層を出力して保存
+
+.\Get-FolderSizes.ps1 -TargetPath "C:\Path\To\Directory" -OutputFile "Output.txt"
+
+2. 特定の階層まで出力して保存
+
+.\Get-FolderSizes.ps1 -TargetPath "C:\Path\To\Directory" -MaxDepth 2 -OutputFile "Output.txt"
+
+出力例
+
+Output.txt の内容:
+
+ディレクトリ: C:\Path\To\Directory の容量リスト（最大深さ: 2）
+Directory (1.20 GB)
+    ├── Folder1 (0.40 GB)
+    ├── Folder2 (0.60 GB)
+    ├── Folder3 (0.20 GB)
+
+コンソールメッセージ:
+
+ディレクトリ: C:\Path\To\Directory の容量リストを生成中（最大深さ: 2）
+Directory (1.20 GB)
+    ├── Folder1 (0.40 GB)
+    ├── Folder2 (0.60 GB)
+    ├── Folder3 (0.20 GB)
+
+処理が完了しました！ 結果は Output.txt に保存されました。
+合計フォルダ数: 3
+
+注意点
+	•	ファイル名の指定
+-OutputFile でフルパスを指定すれば、任意の場所に出力できます。
+	•	処理のログ確認
+コンソール出力とファイル出力が一致するため、両方で確認できます。
+
+
+
+
+
+
 以下は、サブフォルダの表示階層を指定できるように改良したPowerShellスクリプトです。-MaxDepth パラメータを追加し、再帰処理時に現在の深さを追跡します。
 
 # 指定したディレクトリのフォルダ容量を表示する関数
