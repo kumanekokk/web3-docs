@@ -1,3 +1,64 @@
+# 指定したディレクトリのフォルダ容量を表示する関数
+function Get-FolderSizes {
+    param (
+        [string]$Path = ".",
+        [string]$Prefix = "",
+        [ref]$FolderCount = 0,
+        [int]$CurrentDepth = 0,
+        [int]$MaxDepth = [int]::MaxValue
+    )
+
+    # 現在のフォルダのサイズを取得
+    $size = (Get-ChildItem -Path $Path -Recurse -Force | Measure-Object -Property Length -Sum).Sum
+    $sizeGB = "{0:N2}" -f ($size / 1GB) + " GB"
+
+    # フォルダ名とサイズを表示
+    Write-Host "$Prefix$([System.IO.Path]::GetFileName($Path)) ($sizeGB)"
+
+    # サブフォルダの処理（最大階層に達していない場合）
+    if ($CurrentDepth -lt $MaxDepth) {
+        $subDirs = Get-ChildItem -Path $Path -Directory -Force
+        $currentFolderIndex = 0
+        foreach ($subDir in $subDirs) {
+            $currentFolderIndex++
+            $FolderCount.Value++
+
+            Write-Progress -Activity "Processing folders..." `
+                -Status "Current folder: $($subDir.FullName)" `
+                -PercentComplete (($currentFolderIndex / $subDirs.Count) * 100)
+
+            # 再帰的に処理
+            Get-FolderSizes -Path $subDir.FullName `
+                            -Prefix "$Prefix    ├── " `
+                            -FolderCount $FolderCount `
+                            -CurrentDepth ($CurrentDepth + 1) `
+                            -MaxDepth $MaxDepth
+        }
+    }
+}
+
+# メイン処理
+param (
+    [string]$TargetPath = ".",
+    [int]$MaxDepth = [int]::MaxValue  # 階層の最大深さ（デフォルトは無制限）
+)
+
+# 進捗状況カウンタ
+$folderCount = [ref]0
+
+# 処理開始メッセージ
+Write-Host "ディレクトリ: $TargetPath の容量リスト（最大深さ: $MaxDepth）" -ForegroundColor Cyan
+
+# 処理の実行
+Get-FolderSizes -Path $TargetPath -FolderCount $folderCount -MaxDepth $MaxDepth
+
+# 処理完了メッセージ
+Write-Host "`n処理が完了しました！ 合計フォルダ数: $($folderCount.Value)" -ForegroundColor Green
+
+
+
+
+
 以下は、PowerShellで指定したパスのフォルダ容量リストを表示するスクリプトです。サブフォルダがある場合は、階層構造も視覚的にわかりやすく表示します。
 
 # 指定したディレクトリのフォルダ容量を表示する関数
