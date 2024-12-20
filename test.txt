@@ -1,3 +1,172 @@
+以下のスクリプトでは、各フォルダがどのサイズ分布に属するかを記録し、出力結果に追加しました。分布ごとに対応するフォルダリストを作成し、結果をわかりやすく整理します。
+
+改良スクリプト
+
+# 指定したディレクトリのフォルダ容量を表示し、結果をファイルに保存する関数
+function Get-FolderSizes {
+    param (
+        [string]$Path = ".",
+        [string]$Prefix = "",
+        [ref]$FolderCount = 0,
+        [int]$CurrentDepth = 0,
+        [int]$MaxDepth = [int]::MaxValue,
+        [string]$OutputFile,
+        [hashtable]$SizeDistribution
+    )
+
+    # 現在のフォルダのサイズを取得
+    $size = (Get-ChildItem -Path $Path -Recurse -Force | Measure-Object -Property Length -Sum).Sum
+    $sizeGB = $size / 1GB
+
+    # フォルダ名とサイズを記録
+    $folderName = $([System.IO.Path]::GetFileName($Path))
+    $outputLine = "$Prefix$folderName ({0:N2} GB)" -f $sizeGB
+    Write-Host $outputLine
+    Add-Content -Path $OutputFile -Value $outputLine
+
+    # サイズ分布にフォルダを分類
+    switch ($sizeGB) {
+        {$_ -lt 0.1} { $SizeDistribution["<0.1 GB"] += "$folderName ({0:N2} GB)`n" -f $sizeGB }
+        {$_ -lt 1.0} { $SizeDistribution["0.1-1 GB"] += "$folderName ({0:N2} GB)`n" -f $sizeGB }
+        {$_ -lt 10.0} { $SizeDistribution["1-10 GB"] += "$folderName ({0:N2} GB)`n" -f $sizeGB }
+        {$_ -lt 50.0} { $SizeDistribution["10-50 GB"] += "$folderName ({0:N2} GB)`n" -f $sizeGB }
+        {$_ -ge 50.0} { $SizeDistribution[">50 GB"] += "$folderName ({0:N2} GB)`n" -f $sizeGB }
+    }
+
+    # サブフォルダの処理（最大階層に達していない場合）
+    if ($CurrentDepth -lt $MaxDepth) {
+        $subDirs = Get-ChildItem -Path $Path -Directory -Force
+        $currentFolderIndex = 0
+        foreach ($subDir in $subDirs) {
+            $currentFolderIndex++
+            $FolderCount.Value++
+
+            Write-Progress -Activity "Processing folders..." `
+                -Status "Current folder: $($subDir.FullName)" `
+                -PercentComplete (($currentFolderIndex / $subDirs.Count) * 100)
+
+            # 再帰的に処理
+            Get-FolderSizes -Path $subDir.FullName `
+                            -Prefix "$Prefix    ├── " `
+                            -FolderCount $FolderCount `
+                            -CurrentDepth ($CurrentDepth + 1) `
+                            -MaxDepth $MaxDepth `
+                            -OutputFile $OutputFile `
+                            -SizeDistribution $SizeDistribution
+        }
+    }
+}
+
+# メイン処理
+param (
+    [string]$TargetPath = ".",
+    [int]$MaxDepth = [int]::MaxValue, # 階層の最大深さ（デフォルトは無制限）
+    [string]$OutputFolder = "."       # 出力ファイルを保存するフォルダ
+)
+
+# タイムスタンプ付きの出力ファイル名を生成
+$timestamp = (Get-Date).ToString("yyyyMMdd_HHmmss")
+$outputFileName = "FolderSizes_$timestamp.txt"
+$outputFilePath = Join-Path -Path $OutputFolder -ChildPath $outputFileName
+
+# 進捗状況カウンタ
+$folderCount = [ref]0
+
+# サイズ分布の初期化（対応するフォルダも記録）
+$sizeDistribution = @{
+    "<0.1 GB"   = ""
+    "0.1-1 GB"  = ""
+    "1-10 GB"   = ""
+    "10-50 GB"  = ""
+    ">50 GB"    = ""
+}
+
+# 出力ファイルを初期化
+if (Test-Path $outputFilePath) {
+    Remove-Item -Path $outputFilePath -Force
+}
+Add-Content -Path $outputFilePath -Value "ディレクトリ: $TargetPath の容量リスト（最大深さ: $MaxDepth）"
+
+# 処理開始メッセージ
+Write-Host "ディレクトリ: $TargetPath の容量リストを生成中（最大深さ: $MaxDepth）" -ForegroundColor Cyan
+
+# 処理の実行
+Get-FolderSizes -Path $TargetPath -FolderCount $folderCount -MaxDepth $MaxDepth -OutputFile $outputFilePath -SizeDistribution $sizeDistribution
+
+# サイズ分布の出力
+Add-Content -Path $outputFilePath -Value "`nフォルダサイズ分布:"
+foreach ($key in $sizeDistribution.Keys) {
+    $line = "`n$key:"
+    Write-Host $line
+    Add-Content -Path $outputFilePath -Value $line
+    Add-Content -Path $outputFilePath -Value $sizeDistribution[$key]
+}
+
+# 処理完了メッセージ
+Write-Host "`n処理が完了しました！ 結果は $outputFilePath に保存されました。" -ForegroundColor Green
+Write-Host "合計フォルダ数: $($folderCount.Value)" -ForegroundColor Green
+
+改良点
+	1.	分布ごとにフォルダ一覧を記録
+各サイズ範囲ごとに、対応するフォルダ名とサイズをリストとして保存します。
+	2.	出力の見やすさ向上
+テキストファイルには、分布名の下にフォルダリストが表示されます。
+
+実行方法
+
+スクリプトの実行方法はこれまでと同じです。
+
+出力例
+
+コンソール出力
+
+ディレクトリ: C:\Path\To\Directory の容量リストを生成中（最大深さ: 2）
+Directory (1.20 GB)
+    ├── Folder1 (0.40 GB)
+    ├── Folder2 (0.60 GB)
+    ├── Folder3 (0.20 GB)
+
+<0.1 GB:
+0.1-1 GB:
+    Folder1 (0.40 GB)
+    Folder2 (0.60 GB)
+    Folder3 (0.20 GB)
+1-10 GB:
+10-50 GB:
+>50 GB:
+
+処理が完了しました！ 結果は FolderSizes_20241220_153045.txt に保存されました。
+合計フォルダ数: 3
+
+ファイル出力 (FolderSizes_20241220_153045.txt)
+
+ディレクトリ: C:\Path\To\Directory の容量リスト（最大深さ: 2）
+Directory (1.20 GB)
+    ├── Folder1 (0.40 GB)
+    ├── Folder2 (0.60 GB)
+    ├── Folder3 (0.20 GB)
+
+フォルダサイズ分布:
+
+<0.1 GB:
+
+0.1-1 GB:
+Folder1 (0.40 GB)
+Folder2 (0.60 GB)
+Folder3 (0.20 GB)
+
+1-10 GB:
+
+10-50 GB:
+
+>50 GB:
+
+
+
+
+
+
+
 # 指定したディレクトリのフォルダ容量を表示し、結果をファイルに保存する関数
 function Get-FolderSizes {
     param (
