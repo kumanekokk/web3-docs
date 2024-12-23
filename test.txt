@@ -1,3 +1,150 @@
+以下は、指定したパス全体のディスク使用量に対する各フォルダの容量の割合を計算し、それを棒グラフと数値で表示するスクリプトです。このスクリプトは、PowerShellのMicrosoft.PowerShell.Utilityモジュールを使用してグラフ化を行います。
+
+スクリプト
+
+# 指定したディレクトリのフォルダ容量を計算して割合を表示する関数
+function Get-FolderUsagePercentage {
+    param (
+        [string]$TargetPath = ".",
+        [int]$MaxDepth = 1,          # 階層の最大深さ
+        [string]$OutputFolder = "."  # 結果ファイルを保存するフォルダ
+    )
+
+    # フォルダごとのサイズを記録する配列
+    $folderSizes = @()
+    $totalSize = 0
+
+    # フォルダのサイズを再帰的に計算
+    function CalculateFolderSize {
+        param (
+            [string]$Path,
+            [int]$CurrentDepth = 0
+        )
+
+        # 現在のフォルダのサイズを取得
+        $size = (Get-ChildItem -Path $Path -Recurse -Force -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum).Sum
+        $totalSize += $size
+        $folderSizes += @{
+            Path = $Path
+            Size = $size
+        }
+
+        # サブフォルダを再帰的に処理
+        if ($CurrentDepth -lt $MaxDepth) {
+            Get-ChildItem -Path $Path -Directory -Force -ErrorAction SilentlyContinue | ForEach-Object {
+                CalculateFolderSize -Path $_.FullName -CurrentDepth ($CurrentDepth + 1)
+            }
+        }
+    }
+
+    # 処理開始
+    Write-Host "ディレクトリ: $TargetPath の容量計算を開始します..." -ForegroundColor Cyan
+    CalculateFolderSize -Path $TargetPath
+
+    # 合計サイズが0の場合はエラー
+    if ($totalSize -eq 0) {
+        Write-Host "フォルダ内に有効なデータがありません。" -ForegroundColor Red
+        return
+    }
+
+    # フォルダごとの割合を計算
+    $folderPercentages = $folderSizes | ForEach-Object {
+        [PSCustomObject]@{
+            Path      = $_.Path
+            SizeGB    = "{0:N2}" -f ($_.Size / 1GB)
+            Percentage = "{0:N2}" -f (($_.Size / $totalSize) * 100)
+        }
+    }
+
+    # 結果を表示
+    Write-Host "容量の割合計算が完了しました。結果を表示します。" -ForegroundColor Green
+    $folderPercentages | Format-Table -AutoSize
+
+    # 棒グラフを作成
+    $chartData = $folderPercentages | ForEach-Object { $_.Percentage }
+    $chartLabels = $folderPercentages | ForEach-Object { $_.Path }
+    $chartTitle = "ディスク使用量: $TargetPath"
+
+    [System.Windows.Forms.Application]::EnableVisualStyles()
+    $form = New-Object System.Windows.Forms.Form
+    $form.Text = $chartTitle
+    $form.Width = 800
+    $form.Height = 600
+
+    $chart = New-Object System.Windows.Forms.DataVisualization.Charting.Chart
+    $chart.Width = 780
+    $chart.Height = 550
+    $chart.Left = 10
+    $chart.Top = 10
+
+    $chartArea = New-Object System.Windows.Forms.DataVisualization.Charting.ChartArea
+    $chart.ChartAreas.Add($chartArea)
+
+    $series = New-Object System.Windows.Forms.DataVisualization.Charting.Series
+    $series.ChartType = [System.Windows.Forms.DataVisualization.Charting.SeriesChartType]::Bar
+    $chart.Series.Add($series)
+
+    for ($i = 0; $i -lt $chartData.Count; $i++) {
+        $series.Points.Add($chartData[$i])
+        $series.Points[$i].AxisLabel = $chartLabels[$i]
+        $series.Points[$i].Label = "$($chartData[$i])%"
+    }
+
+    $form.Controls.Add($chart)
+    $form.Add_Shown({ $form.Activate() })
+    [System.Windows.Forms.Application]::Run($form)
+
+    # 出力ファイルの保存
+    $timestamp = (Get-Date).ToString("yyyyMMdd_HHmmss")
+    $outputFile = Join-Path -Path $OutputFolder -ChildPath "FolderUsage_$timestamp.txt"
+    $folderPercentages | Out-File -FilePath $outputFile -Encoding UTF8
+
+    Write-Host "結果がファイルに保存されました: $outputFile" -ForegroundColor Green
+}
+
+# 実行例
+Get-FolderUsagePercentage -TargetPath "C:\Path\To\Directory" -MaxDepth 1
+
+改良点
+	1.	フォルダの割合計算
+全体のディスク使用量に対する各フォルダの容量の割合を計算。
+	2.	棒グラフで視覚化
+PowerShellのSystem.Windows.Forms.DataVisualization.Chartingを使用して棒グラフを表示。
+	3.	出力結果の保存
+比率を含む結果をタイムスタンプ付きのファイルに保存。
+
+実行例
+
+コンソール出力
+
+ディレクトリ: C:\Path\To\Directory の容量計算を開始します...
+容量の割合計算が完了しました。結果を表示します。
+
+Path                              SizeGB Percentage
+----                              ------ ----------
+C:\Path\To\Directory\Folder1      0.40   20.00
+C:\Path\To\Directory\Folder2      1.60   80.00
+結果がファイルに保存されました: FolderUsage_20241220_153045.txt
+
+棒グラフ
+
+ウィンドウ内に、各フォルダの容量割合を棒グラフで表示。
+
+ファイル出力 (FolderUsage_20241220_153045.txt)
+
+Path                              SizeGB Percentage
+----                              ------ ----------
+C:\Path\To\Directory\Folder1      0.40   20.00
+C:\Path\To\Directory\Folder2      1.60   80.00
+
+必要なモジュール
+	•	Microsoft.PowerShell.Utility
+グラフを作成するには、PowerShellでWindows Formsを有効にしている必要があります。
+
+
+
+
+
 以下のスクリプトでは、各フォルダがどのサイズ分布に属するかを記録し、出力結果に追加しました。分布ごとに対応するフォルダリストを作成し、結果をわかりやすく整理します。
 
 改良スクリプト
