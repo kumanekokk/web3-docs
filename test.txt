@@ -1,3 +1,36 @@
+Vue CLIでビルドする際に index.html のファイル名を変更するには、Vue CLIの設定ファイル（vue.config.js）を使います。以下の手順で設定できます。
+
+手順
+	1.	プロジェクトのルートディレクトリに vue.config.js ファイルを作成または編集します。
+	2.	htmlWebpackPlugin.options.filename を指定して、index.html の名前を変更します。
+
+以下は具体的な設定例です。
+
+module.exports = {
+  chainWebpack: config => {
+    config.plugin('html').tap(args => {
+      args[0].filename = 'custom-name.html'; // 変更後のファイル名
+      return args;
+    });
+  }
+};
+
+解説
+	•	chainWebpack は Webpack の設定をカスタマイズするために使います。
+	•	htmlWebpackPlugin は Vue CLI が内部的に使用しているプラグインで、filename オプションで出力するHTMLファイル名を指定できます。
+
+実行例
+
+上記の設定を適用した状態で以下を実行すると、dist フォルダ内に custom-name.html という名前でHTMLファイルが生成されます。
+
+npm run build
+
+注意点
+	•	出力ファイル名を変更した場合、デプロイ環境でその新しい名前を正しく参照するように設定を更新してください。
+	•	ビルド後のHTMLファイルを参照する仕組み（例: サーバー設定や静的ファイルホスティングの設定）に影響が出る可能性があるので注意してください。
+
+
+
 1. プロセス見直し
 
 現状の課題
