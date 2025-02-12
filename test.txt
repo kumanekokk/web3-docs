@@ -1,3 +1,86 @@
+VSCodeでスペルミスをチェックする方法はいくつかあります。
+
+1. 拡張機能「Code Spell Checker」を使う（おすすめ）
+
+「Code Spell Checker」という拡張機能を使うと、コードやテキストのスペルミスをリアルタイムで指摘してくれます。
+
+手順
+	1.	拡張機能をインストール
+	•	Ctrl + Shift + X（拡張機能パネルを開く）
+	•	「Code Spell Checker」と検索
+	•	インストール
+	2.	スペルチェックの動作を確認
+	•	スペルミスがある単語は 青色の波線 が表示される
+	•	Ctrl + . を押すと、修正候補が表示される
+	3.	設定をカスタマイズ（オプション）
+	•	settings.json に以下を追加すると、特定の単語を辞書に追加できる
+
+"cSpell.words": [
+    "OpenAI", "ChatGPT"
+]
+
+
+
+✅ メリット:
+	•	軽量で動作が速い
+	•	英文やコードコメントのチェックに最適
+	•	自動補正はないが、修正候補を提示
+
+2. 拡張機能「Spell Right」を使う
+
+「Spell Right」もスペルチェックができる拡張機能ですが、「Code Spell Checker」と比べると若干設定が難しいです。
+
+手順
+	1.	拡張機能パネル（Ctrl + Shift + X）で「Spell Right」を検索してインストール
+	2.	言語設定を変更（デフォルトは英語のみ）
+	•	settings.json に以下を追加すると、日本語と英語の両方をチェックできる
+
+"spellright.language": ["en", "ja"]
+
+
+
+✅ メリット:
+	•	日本語もチェック可能
+	•	Markdown や LaTeX での文書作成に便利
+
+3. Linter（ESLint / Pylint）と組み合わせる
+	•	Pythonなら pylint
+	•	pip install pylint でインストール
+	•	.pylintrc に spelling のルールを追加
+	•	JavaScriptなら eslint-plugin-spellcheck
+	•	npm install --save-dev eslint-plugin-spellcheck
+	•	.eslintrc.json に設定を追加
+
+✅ メリット:
+	•	コードの文法チェックと合わせてスペルミスも確認できる
+
+4. GitHub Copilotを活用（補完機能）
+
+GitHub Copilotを使っている場合、正しい単語の補完をしてくれるので、スペルミスを減らすことができます。
+
+✅ メリット:
+	•	コード補完時に間違いを減らせる
+	•	スペルミスの防止に役立つ
+
+どの方法を選ぶべき？
+
+✅ リアルタイムでスペルミスをチェックしたい → Code Spell Checker（おすすめ）
+✅ 日本語もチェックしたい → Spell Right
+✅ コードの文法チェックも同時にしたい → ESLint / Pylint
+✅ そもそもスペルミスしないようにしたい → GitHub Copilot
+
+どれが使いやすそうですか？
+
+
+
+
+
+
+
+
+
+
+
 Excelでスペルミスを抽出する方法はいくつかあります。以下の方法を試してみてください。
 
 1. Excelの「スペルチェック」機能を使う
