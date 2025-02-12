@@ -1,3 +1,76 @@
+Excelでスペルミスを抽出する方法はいくつかあります。以下の方法を試してみてください。
+
+1. Excelの「スペルチェック」機能を使う
+
+Excelには標準でスペルチェック機能があります。
+
+手順
+	1.	セルを選択（またはシート全体）
+	2.	F7キーを押す（または「校閲」タブ →「スペルチェック」）
+	3.	スペルミスがある場合、修正候補が表示される
+
+※ 注意: 日本語には対応していませんが、英単語のスペルチェックができます。
+
+2. COUNTIF関数を使って辞書と照合する
+
+特定の単語リストと比較してスペルミスを検出する方法です。
+
+手順
+	1.	正しい単語のリストを別のシートに作成（例: Sheet2 の A:A に単語リストを配置）
+	2.	チェックしたい単語が入ったセル（例: B2）に以下の関数を入力
+
+=IF(COUNTIF(Sheet2!A:A, B2)=0, "スペルミス", "OK")
+
+→ もし B2 の単語がリストにない場合、「スペルミス」と表示されます。
+
+3. VBAを使ってスペルミスをハイライトする
+
+ExcelのVBAを使うと、スペルミスを自動で検出して色を付けることができます。
+
+手順
+	1.	VBAエディタ（Alt + F11）を開く
+	2.	「挿入」→「標準モジュール」を選択
+	3.	以下のコードを入力
+
+Sub スペルミスハイライト()
+    Dim cell As Range
+    Dim check As Object
+    Set check = CreateObject("Word.Application") ' Wordのスペルチェックを使用
+
+    For Each cell In Selection
+        If Not IsEmpty(cell.Value) Then
+            If check.CheckSpelling(cell.Value) = False Then
+                cell.Interior.Color = RGB(255, 200, 200) ' 赤系の色でハイライト
+            End If
+        End If
+    Next cell
+
+    check.Quit
+    Set check = Nothing
+End Sub
+
+	4.	チェックしたいセル範囲を選択
+	5.	VBAを実行（Alt + F8 → 「スペルミスハイライト」→ 実行）
+
+→ スペルミスがあるセルが赤くハイライトされます。
+
+どの方法を選ぶべき？
+
+✅ 簡単にチェックしたい → 方法①（スペルチェック機能）
+✅ 特定の単語リストと比較したい → 方法②（COUNTIF関数）
+✅ 自動でハイライトしたい → 方法③（VBA）
+
+どれが使いやすそうですか？
+
+
+
+
+
+
+
+
+
+
 electron-vue-typescript-webpack-2022 の環境で、フロントエンドの Vue ファイルからバックエンドの Node サーバーにデータを渡す方法はいくつかありますが、主に以下の 2 つの方法が一般的です。
 
 ① ipcRenderer と ipcMain を使う（Electron の IPC 通信）
