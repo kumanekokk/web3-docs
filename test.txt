@@ -1,3 +1,145 @@
+Python を使って CORS 制約を回避する方法はいくつかあります。
+
+方法 1: Flask をプロキシとして使う（推奨）
+
+Python の Flask を使って CORS フリーのプロキシ API を作成し、そこを経由してリクエストを送る方法です。
+
+手順
+	1.	Flask をインストール
+
+pip install flask flask-cors requests
+
+
+	2.	Flask プロキシを作成（proxy.py）
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import requests
+
+app = Flask(__name__)
+CORS(app)  # すべてのオリジンを許可（開発用）
+
+@app.route("/proxy", methods=["GET", "POST"])
+def proxy():
+    url = "https://api.example.com/data"  # ここをアクセスしたいAPIに変更
+    headers = {key: value for key, value in request.headers if key.lower() != "host"}
+
+    if request.method == "GET":
+        response = requests.get(url, headers=headers)
+    else:
+        response = requests.post(url, json=request.json, headers=headers)
+
+    return jsonify(response.json()), response.status_code
+
+if __name__ == "__main__":
+    app.run(port=5000)
+
+
+	3.	クライアント側（JavaScript）で fetch を実行
+
+fetch("http://localhost:5000/proxy")
+    .then(response => response.json())
+    .then(data => console.log(data));
+
+
+
+✔ メリット: CORS を完全に回避可能
+✔ デメリット: Python サーバーを立てる必要がある
+
+方法 2: Python の requests を使って直接 API にアクセス（バックエンド向け）
+
+もし フロントエンドを経由せずに Python だけで API にアクセスする 場合、CORS の制約は適用されないので、requests を使って直接リクエストできます。
+
+例
+
+import requests
+
+url = "https://api.example.com/data"
+headers = {
+    "User-Agent": "Mozilla/5.0",
+    "Authorization": "Bearer your_token_here"
+}
+
+response = requests.get(url, headers=headers)
+
+print(response.json())
+
+✔ メリット: CORS 制約なし
+✔ デメリット: JavaScript からは直接使えない
+
+方法 3: Selenium でブラウザ経由のリクエストを行う（裏技）
+
+ブラウザ自体を Python で操作し、CORS チェックを回避する 方法。
+
+手順
+	1.	Selenium をインストール
+
+pip install selenium webdriver-manager
+
+
+	2.	Chrome で CORS 無効化してリクエスト
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+options = webdriver.ChromeOptions()
+options.add_argument("--disable-web-security")
+options.add_argument("--user-data-dir=/tmp/chrome-user")
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+driver.get("https://api.example.com/data")  # CORS 無視でアクセス可能
+
+
+
+✔ メリット: 完全にブラウザを再現
+✔ デメリット: 動作が遅い、実用性が低い
+
+方法 4: mitmproxy を使って CORS ヘッダーを書き換える
+
+mitmproxy を使って、API のレスポンスに Access-Control-Allow-Origin: * を追加する方法もある。
+	1.	mitmproxy をインストール
+
+pip install mitmproxy
+
+
+	2.	modify_cors.py を作成
+
+from mitmproxy import http
+
+def response(flow: http.HTTPFlow):
+    flow.response.headers["Access-Control-Allow-Origin"] = "*"
+
+
+	3.	mitmproxy を起動
+
+mitmdump -s modify_cors.py
+
+
+	4.	プロキシ設定を http://localhost:8080 に変更し、ブラウザから API を呼び出す
+
+✔ メリット: サーバー側の CORS 設定を変更せずに回避可能
+✔ デメリット: 設定が面倒
+
+結論
+
+方法	使える環境	メリット	デメリット
+Flask プロキシ（推奨）	フロントエンド + Python	CORS 完全回避、自由度高い	Python サーバーが必要
+Python requests	Python のみ	CORS 制約なし	フロントエンドからは使えない
+Selenium	Python + ブラウザ	CORS チェックなし	実用性が低い
+mitmproxy	ネットワークレベル	既存 API に変更不要	設定が複雑
+
+➡ 開発環境なら Flask プロキシ、本番なら API 側の CORS 設定を変更してもらうのがベスト！
+
+
+
+
+
+
+
+
+
+
 Postman や curl などのツールが CORS 制約を回避できるのは、ブラウザのセキュリティモデルに依存していない ためです。
 
 1. CORS は「ブラウザの制約」だから
