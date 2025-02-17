@@ -1,3 +1,176 @@
+Node.js + Express を使って CORS 制約を回避し、API にアクセスする方法はいくつかあります。
+
+方法 1: Express をプロキシとして使う（推奨）
+
+Node.js を CORS フリーのプロキシサーバー にして、そこを経由して API にアクセスする方法です。
+
+手順
+	1.	必要なモジュールをインストール
+
+npm install express cors axios
+
+
+	2.	Express プロキシサーバーを作成（server.js）
+
+const express = require("express");
+const axios = require("axios");
+const cors = require("cors");
+
+const app = express();
+app.use(cors()); // すべてのオリジンを許可
+app.use(express.json());
+
+app.use("/proxy", async (req, res) => {
+    try {
+        const response = await axios({
+            method: req.method,
+            url: "https://api.example.com/data", // ここをアクセスしたいAPIに変更
+            headers: { ...req.headers, host: undefined }, // host ヘッダーは削除
+            data: req.body,
+        });
+        res.json(response.data);
+    } catch (error) {
+        res.status(error.response?.status || 500).json({ error: error.message });
+    }
+});
+
+app.listen(3000, () => console.log("Proxy server running on port 3000"));
+
+
+	3.	フロントエンドからリクエスト
+
+fetch("http://localhost:3000/proxy")
+    .then(response => response.json())
+    .then(data => console.log(data));
+
+
+
+✔ メリット: CORS を完全に回避可能
+✔ デメリット: Node.js サーバーを立てる必要がある
+
+方法 2: Express に CORS ヘッダーを追加
+
+もし API が自作のもので、Express でホストしているなら、cors ミドルウェアを使って CORS を許可 するのが簡単です。
+
+手順
+	1.	cors をインストール
+
+npm install cors
+
+
+	2.	CORS ヘッダーを追加
+
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+app.use(cors()); // すべてのオリジンを許可
+
+app.get("/data", (req, res) => {
+    res.json({ message: "Hello, CORS!" });
+});
+
+app.listen(3000, () => console.log("Server running on port 3000"));
+
+
+
+✔ メリット: 設定が簡単
+✔ デメリット: 既存の API に適用できない
+
+方法 3: http-proxy-middleware を使う（フロントエンド開発用）
+
+React や Vue の開発環境なら、http-proxy-middleware を使って CORS を回避 できます。
+
+手順
+	1.	モジュールをインストール
+
+npm install http-proxy-middleware
+
+
+	2.	src/setupProxy.js を作成
+
+const { createProxyMiddleware } = require("http-proxy-middleware");
+
+module.exports = function (app) {
+    app.use(
+        "/api",
+        createProxyMiddleware({
+            target: "https://api.example.com",
+            changeOrigin: true,
+            pathRewrite: { "^/api": "" },
+        })
+    );
+};
+
+
+	3.	フロントエンドからリクエスト
+
+fetch("/api/data")
+    .then(response => response.json())
+    .then(data => console.log(data));
+
+
+
+✔ メリット: React/Vue 開発時に簡単に CORS 回避
+✔ デメリット: 本番環境では使えない
+
+方法 4: Puppeteer でヘッドレスブラウザを使う（裏技）
+
+Node.js の puppeteer を使って ヘッドレスブラウザ経由でリクエスト する方法もあります。
+
+手順
+	1.	Puppeteer をインストール
+
+npm install puppeteer
+
+
+	2.	リクエストを実行
+
+const puppeteer = require("puppeteer");
+
+(async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto("https://api.example.com/data");
+    const content = await page.evaluate(() => document.body.innerText);
+    console.log(content);
+    await browser.close();
+})();
+
+
+
+✔ メリット: CORS を完全に無視
+✔ デメリット: 動作が遅い、本番では非推奨
+
+方法 5: Chrome の CORS 制約を無効化（開発用）
+
+Chrome を CORS 無効化オプション付きで起動すると、CORS 制約を回避できます。
+
+chrome --disable-web-security --user-data-dir=/tmp/chrome-user
+
+✔ メリット: 設定不要
+✔ デメリット: 開発用のみ、本番では危険
+
+結論
+
+方法	使える環境	メリット	デメリット
+Express プロキシ（推奨）	フロントエンド + Node.js	CORS 完全回避、自由度高い	Node.js サーバーが必要
+Express の CORS 許可	API 側の修正可能なら	設定が簡単	既存の API には適用できない
+http-proxy-middleware	React/Vue の開発環境	設定が簡単	本番では使えない
+Puppeteer	Node.js	CORS 完全回避	遅い、本番向きでない
+Chrome の CORS 無効化	開発環境のみ	設定不要	本番では危険
+
+➡ 本番環境では Express プロキシを使うのがベスト！
+
+
+
+
+
+
+
+
+
+
 Node.js + Express を使って、ブラウザの JavaScript から fetch で送信されたデータを受け取り、それをそのまま API に POST するコード を作成します。
 
 1. Express サーバー（Node.js）を作成
