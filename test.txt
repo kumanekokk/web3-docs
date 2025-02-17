@@ -1,3 +1,121 @@
+JavaScript（特にブラウザ環境）では、CORS（Cross-Origin Resource Sharing）制約により、異なるオリジンのAPIに直接アクセスできないことがあります。しかし、以下の方法で回避できます。
+
+1. サーバーサイドのプロキシを使う（推奨）
+
+バックエンド（Node.js, Python, PHPなど）を用意し、サーバー経由でAPIにリクエストを送る。
+
+例（Node.js + Express）
+
+const express = require("express");
+const axios = require("axios");
+const cors = require("cors");
+
+const app = express();
+app.use(cors()); // CORSを許可
+app.use(express.json());
+
+app.get("/api/proxy", async (req, res) => {
+    try {
+        const response = await axios.get("https://api.example.com/data");
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.listen(3000, () => console.log("Server running on port 3000"));
+
+→ JavaScriptで fetch("/api/proxy") すればCORS制約なしでAPIを利用できる。
+
+2. CORSを許可するブラウザ拡張機能を使う
+
+開発用に限定するなら、以下のような拡張機能を使えば一時的にCORS制約を回避できる。
+	•	「Moesif CORS」（Chrome）
+	•	「Allow CORS: Access-Control-Allow-Origin」（Firefox）
+
+3. API側でCORSを許可してもらう
+
+APIの管理者に Access-Control-Allow-Origin: * などのCORSヘッダーを追加してもらう。
+
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+Access-Control-Allow-Headers: Content-Type
+
+4. JSONPを使う（古い手法）
+
+APIが callback パラメータ付きのJSONPレスポンスを返すなら、 <script> タグで回避可能。
+
+function handleResponse(data) {
+    console.log(data);
+}
+
+const script = document.createElement("script");
+script.src = "https://api.example.com/data?callback=handleResponse";
+document.body.appendChild(script);
+
+→ ただし、GETリクエストしか使えず、現在では非推奨。
+
+5. ブラウザの開発者モードでCORSを無効化する（一時的な開発用）
+
+Chromeなら以下のオプションで起動するとCORSチェックが無効化される。
+
+chrome --disable-web-security --user-data-dir
+
+※ セキュリティリスクがあるため、開発環境のみで使用すること！
+
+6. curlを使ってAPIにアクセスする（JavaScript経由で実行）
+
+Node.js環境なら child_process モジュールを使って curl を実行できる。
+
+const { exec } = require("child_process");
+
+exec("curl -X GET https://api.example.com/data", (error, stdout, stderr) => {
+    if (error) {
+        console.error(`Error: ${error.message}`);
+        return;
+    }
+    console.log(`Response: ${stdout}`);
+});
+
+→ ただし、ブラウザでは curl は直接実行できない。
+
+7. WebSocketを使う
+
+もしAPIがWebSocketをサポートしているなら、CORSを回避できる場合がある。
+
+const ws = new WebSocket("wss://api.example.com/socket");
+
+ws.onopen = () => {
+    ws.send("Hello Server!");
+};
+
+ws.onmessage = (event) => {
+    console.log("Received:", event.data);
+};
+
+→ ただし、API側がWebSocket対応している必要あり。
+
+まとめ
+
+方法	使える環境	メリット	デメリット
+サーバー側でプロキシを作成（推奨）	Node.js, Python	CORS問題なし、自由に処理可能	サーバーが必要
+ブラウザ拡張機能	開発用ブラウザ	簡単	本番環境で使えない
+API側でCORS許可	API管理者が対応可能なら	ベストな解決策	API側の対応が必要
+JSONP	古いAPI	一部のAPIで使える	非推奨、GETのみ
+ChromeのCORS無効化	ローカル開発	簡単	セキュリティリスクあり
+Node.jsでcurlを実行	サーバーサイド	シンプル	ブラウザでは不可
+WebSocket	WebSocket対応API	CORS回避可能	APIが対応していない場合が多い
+
+開発時はブラウザ拡張、本番ではプロキシを使うのが現実的！
+
+
+
+
+
+
+
+
+
 VSCodeでスペルミスをチェックする方法はいくつかあります。
 
 1. 拡張機能「Code Spell Checker」を使う（おすすめ）
