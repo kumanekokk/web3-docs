@@ -1,3 +1,72 @@
+JavaScript の fetch で Content-Type を指定しても、ブラウザの開発ツールでリクエストヘッダーに表示されない場合、以下の原因が考えられます。
+
+1. GET リクエストでは Content-Type は通常不要
+
+fetch で GET リクエストを送信する場合、リクエストボディがないため Content-Type は送信されません。例えば、以下のようなコードでは Content-Type は実際のリクエストに含まれません。
+
+fetch("https://example.com/api/data", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
+
+→ 解決策: Content-Type が必要なのは POST や PUT など、ボディを含むリクエストのみです。
+
+2. ブラウザが Content-Type を自動設定する
+
+fetch で body を設定すると、ブラウザは Content-Type を自動的に適切な値に設定します。例えば、以下のコードでは Content-Type を明示的に指定しなくても application/json になります。
+
+fetch("https://example.com/api/data", {
+  method: "POST",
+  body: JSON.stringify({ key: "value" }),
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
+
+ただし、一部のブラウザでは headers に明示的に設定しても、デバッグツール上で表示されないことがあります（内部で fetch による最適化が行われるため）。
+
+3. CORS (Cross-Origin Resource Sharing) の影響
+
+異なるオリジン（クロスオリジン）へリクエストを送信する場合、カスタム Content-Type を指定すると「プリフライトリクエスト」が発生することがあります。もしサーバー側が Access-Control-Allow-Headers で Content-Type を許可していない場合、ブラウザはヘッダーを削除する可能性があります。
+
+→ 確認方法: ブラウザの開発ツールで 「ネットワーク」タブの「プリフライトリクエスト（OPTIONS）」 を確認し、サーバーが Content-Type を許可しているかをチェックしてください。
+
+4. Content-Type の値が「単純リクエスト」の条件を満たしている
+
+CORS の仕様では、次の Content-Type のいずれかであれば「単純リクエスト」として扱われ、ブラウザがヘッダーを省略して送信することがあります。
+	•	application/x-www-form-urlencoded
+	•	multipart/form-data
+	•	text/plain
+
+例えば、以下のコードでは Content-Type を指定しても、ブラウザによって表示されない可能性があります。
+
+fetch("https://example.com/api", {
+  method: "POST",
+  body: "key=value",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  }
+});
+
+これは CORS の仕様に従った挙動であり、リクエスト自体には影響しません。
+
+まとめ
+	•	GET リクエストでは Content-Type は無視される
+	•	fetch の body に応じてブラウザが Content-Type を自動設定する
+	•	CORS によって Content-Type が削除される場合がある
+	•	「単純リクエスト」の場合、ヘッダーが省略されることがある
+
+ブラウザの開発ツールだけでなく、サーバーログでも Content-Type を確認すると、実際のリクエストヘッダーを把握しやすいです。
+
+
+
+
+
+
+
+
 Python を使って CORS 制約を回避する方法はいくつかあります。
 
 方法 1: Flask をプロキシとして使う（推奨）
