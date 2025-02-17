@@ -1,3 +1,76 @@
+Node.js の axios で JSON データを POST する場合、通常は Content-Type: application/json が自動的に設定されます。
+
+基本的な POST リクエスト
+
+以下のように axios.post() を使えば、デフォルトで Content-Type: application/json が設定されます。
+
+const axios = require("axios");
+
+axios.post("https://example.com/api/data", {
+  key: "value",
+  anotherKey: 123
+})
+.then(response => {
+  console.log("Response:", response.data);
+})
+.catch(error => {
+  console.error("Error:", error);
+});
+
+送信されるリクエストヘッダーの例:
+
+Content-Type: application/json; charset=utf-8
+
+axios は data にオブジェクトを渡すと、自動的に JSON.stringify() し、適切な Content-Type を設定します。
+
+headers を明示的に指定する場合
+
+手動で Content-Type を指定することもできます。
+
+axios.post("https://example.com/api/data", 
+  { key: "value", anotherKey: 123 }, 
+  {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }
+)
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+
+Content-Type が意図したとおりにならない場合の確認ポイント
+	1.	オブジェクトを直接渡しているか？
+	•	data に JSON.stringify() した文字列を渡すと、 axios は Content-Type を設定しないことがあります。
+
+axios.post("https://example.com/api/data", JSON.stringify({ key: "value" }), {
+  headers: { "Content-Type": "application/json" }
+});
+
+→ これは問題ないが、通常はオブジェクトのまま渡せばOK。
+
+	2.	transformRequest の影響
+	•	axios は transformRequest によって data を自動変換します。
+	•	もし transformRequest をカスタマイズしている場合、適切に JSON.stringify() されているか確認。
+	3.	サーバーが Content-Type を変更している
+	•	axios 側では Content-Type: application/json を送っていても、サーバー側で上書きされている可能性もある。
+
+CORS 対応 (フロントエンドからリクエストする場合)
+
+ブラウザ環境で CORS 制限がある場合、サーバー側で Access-Control-Allow-Headers: Content-Type を許可する必要があります。
+
+まとめ
+	•	axios.post(url, data) で JSON.stringify() しなくても Content-Type: application/json になる。
+	•	headers: { "Content-Type": "application/json" } を指定すれば明示的に設定可能。
+	•	data に JSON.stringify() した文字列を渡すと axios が Content-Type を自動設定しない場合がある。
+	•	CORS の影響で Content-Type をサーバー側で許可しないとリクエストが失敗することがある。
+
+
+
+
+
+
+
+
 JavaScript の fetch で Content-Type を指定しても、ブラウザの開発ツールでリクエストヘッダーに表示されない場合、以下の原因が考えられます。
 
 1. GET リクエストでは Content-Type は通常不要
