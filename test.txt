@@ -1,3 +1,83 @@
+Node.js + Express を使って、ブラウザの JavaScript から fetch で送信されたデータを受け取り、それをそのまま API に POST するコード を作成します。
+
+1. Express サーバー（Node.js）を作成
+
+server.js
+
+const express = require("express");
+const axios = require("axios");
+const cors = require("cors");
+
+const app = express();
+app.use(cors()); // すべてのオリジンを許可
+app.use(express.json()); // JSON データをパース
+
+// フロントエンドからの POST データを API にそのまま転送
+app.post("/proxy", async (req, res) => {
+    try {
+        const response = await axios.post("https://api.example.com/data", req.body, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        res.json(response.data);
+    } catch (error) {
+        res.status(error.response?.status || 500).json({ error: error.message });
+    }
+});
+
+app.listen(3000, () => console.log("Proxy server running on port 3000"));
+
+2. フロントエンド（ブラウザの JavaScript）
+
+const data = {
+    name: "John Doe",
+    email: "john@example.com"
+};
+
+fetch("http://localhost:3000/proxy", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => console.log("API Response:", data))
+.catch(error => console.error("Error:", error));
+
+説明
+	1.	フロントエンドの fetch
+	•	ユーザーが入力したデータを POST で http://localhost:3000/proxy に送信。
+	2.	Node.js（Express）
+	•	POST /proxy で受け取ったデータをそのまま外部 API (https://api.example.com/data) に転送。
+	•	axios.post を使ってデータを送信し、レスポンスをそのままクライアントに返す。
+	3.	CORS 回避
+	•	cors を使って、フロントエンドの JavaScript からのリクエストを許可。
+
+動作確認
+	1.	Node.js サーバーを起動
+
+node server.js
+
+
+	2.	ブラウザで fetch を実行
+	•	http://localhost:3000/proxy に POST したデータが https://api.example.com/data に送信される。
+	•	API のレスポンスがそのままフロントエンドに返る。
+
+結論
+
+この方法なら、CORS 制約を回避しながら、フロントエンドから外部 API に安全にデータを送信できます。
+
+
+
+
+
+
+
+
+
+
 JavaScript（特にブラウザ環境）では、CORS（Cross-Origin Resource Sharing）制約により、異なるオリジンのAPIに直接アクセスできないことがあります。しかし、以下の方法で回避できます。
 
 1. サーバーサイドのプロキシを使う（推奨）
