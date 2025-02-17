@@ -1,3 +1,66 @@
+Postman や curl などのツールが CORS 制約を回避できるのは、ブラウザのセキュリティモデルに依存していない ためです。
+
+1. CORS は「ブラウザの制約」だから
+
+CORS（Cross-Origin Resource Sharing）は ブラウザが実装しているセキュリティ機能 です。
+つまり、JavaScript で fetch や XMLHttpRequest を使うと CORS の制約を受けますが、ブラウザの外で動作するツール（Postman, curl, Node.js など）は CORS の影響を受けません。
+
+ツール	CORS の影響
+ブラウザの fetch, XMLHttpRequest	影響を受ける（制限あり）
+Postman, curl, Insomnia, wget	影響を受けない
+Node.js の axios, request など	影響を受けない
+
+2. CORS は「サーバー → ブラウザ」のアクセス制御
+
+CORS は API サーバー側が「どのオリジンからのリクエストを許可するか」 を決める仕組みです。
+しかし、CORS 制約が適用されるのは「ブラウザからのリクエスト」に対してのみ。
+	•	Postman や curl はサーバーに直接リクエストを送るため、CORS のチェックを受けない。
+	•	ブラウザ経由の JavaScript は、CORS の制約を受ける。
+
+3. ブラウザは「プリフライトリクエスト」を送る
+
+ブラウザは fetch で Content-Type: application/json や Authorization ヘッダーを送る場合、事前に プリフライトリクエスト（OPTIONS メソッド） を API に送ります。
+サーバーが適切な Access-Control-Allow-Origin ヘッダーを返さないと、本リクエストはブロックされます。
+
+しかし、Postman や curl はプリフライトリクエストを送らない ため、API 側が CORS を設定していなくても直接リクエストが可能です。
+
+4. じゃあ、Postman で CORS エラーが出ることはある？
+
+基本的に Postman では CORS 制約は発生しませんが、API 側で「オリジンをチェックするロジック」がある場合はブロックされることがあります。
+
+例: API がリクエストヘッダーの Origin を検査している場合
+
+# Flask (Python) の例
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route("/data", methods=["GET"])
+def data():
+    origin = request.headers.get("Origin")
+    if origin and origin != "https://trusted-site.com":
+        return jsonify({"error": "CORS policy does not allow this origin"}), 403
+    return jsonify({"message": "Success"})
+
+if __name__ == "__main__":
+    app.run()
+
+上記の API に対して、Postman で Origin: https://untrusted-site.com を手動で追加すると、CORS エラーになる可能性があります。
+
+結論
+	•	CORS は ブラウザのみが実施する制約 なので、Postman や curl では影響を受けない。
+	•	ブラウザは プリフライトリクエスト（OPTIONS） を送るが、Postman や curl は送らない。
+	•	ただし、API 側で Origin をチェックしている場合は、Postman でもブロックされる可能性がある。
+
+
+
+
+
+
+
+
+
+
 JavaScript（特にブラウザ環境）では、CORS（Cross-Origin Resource Sharing）制約により、異なるオリジンのAPIに直接アクセスできないことがあります。しかし、以下の方法で回避できます。
 
 1. サーバーサイドのプロキシを使う（推奨）
